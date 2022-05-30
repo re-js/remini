@@ -1,0 +1,19 @@
+{
+  "testEnvironment": "jest-environment-jsdom",
+  "setupFilesAfterEnv": [
+    "<rootDir>/jest"
+  ],
+  "modulePathIgnorePatterns": [
+    "<rootDir>/src/"
+  ],
+  "testMatch": [
+    "<rootDir>/tests/**/*.test.ts*"
+  ],
+  "moduleNameMapper": {
+    "remini": "<rootDir>/src"
+  },
+  "coveragePathIgnorePatterns": [
+    "node_modules",
+    "tests"
+  ]
+}

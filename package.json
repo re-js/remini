@@ -1,0 +1,58 @@
+{
+  "name": "remini",
+  "version": "0.9.0",
+  "description": "Global state management with React",
+  "repository": {
+    "url": "https://github.com/remini-state-management/remini"
+  },
+  "bugs": {
+    "url": "https://github.com/remini-state-management/remini/issues"
+  },
+  "homepage": "https://github.com/remini-state-management/remini#readme",
+  "license": "MIT",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "jest",
+    "src"
+  ],
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "reactive-box": "0.7.3"
+  },
+  "devDependencies": {
+    "@babel/core": "7.17.10",
+    "@babel/preset-env": "7.17.10",
+    "@babel/preset-react": "7.16.7",
+    "@babel/preset-typescript": "7.16.7",
+    "@testing-library/react": "13.2.0",
+    "@types/jest": "27.5.0",
+    "@types/react": "18.0.9",
+    "babel-jest": "28.1.0",
+    "jest": "28.1.0",
+    "jest-environment-jsdom": "28.1.0",
+    "react": "18.1.0",
+    "react-dom": "18.1.0"
+  },
+  "author": "Slava Bereza <mail@betula.co> (http://betula.co)",
+  "keywords": [
+    "state",
+    "model",
+    "reactive",
+    "shared state",
+    "state management",
+    "react hooks",
+    "react",
+    "typescript",
+    "javascript"
+  ],
+  "browserslist": [
+    "last 2 Chrome versions"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}
