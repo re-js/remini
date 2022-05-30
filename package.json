@@ -1,14 +1,14 @@
 {
   "name": "remini",
-  "version": "0.9.0",
+  "version": "0.0.0",
   "description": "Global state management with React",
   "repository": {
-    "url": "https://github.com/remini-state-management/remini"
+    "url": "https://github.com/betula/remini"
   },
   "bugs": {
-    "url": "https://github.com/remini-state-management/remini/issues"
+    "url": "https://github.com/betula/remini/issues"
   },
-  "homepage": "https://github.com/remini-state-management/remini#readme",
+  "homepage": "https://github.com/betula/remini#readme",
   "license": "MIT",
   "main": "src/index.js",
   "types": "src/index.d.ts",
