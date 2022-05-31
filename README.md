@@ -18,6 +18,7 @@ You should clear understand where is a place to your logic, how you can write as
 - How to organize your code clean with minimal React components and convinient separated logic
 - How to speed up your application and reduce boilerplate
 
+
 # Remini
 
 [![npm version](https://img.shields.io/npm/v/remini?style=flat-square)](https://www.npmjs.com/package/remini) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/remini?style=flat-square)](https://bundlephobia.com/result?p=remini) [![code coverage](https://img.shields.io/coveralls/github/betula/remini?style=flat-square)](https://coveralls.io/github/betula/remini) [![typescript supported](https://img.shields.io/npm/types/typescript?style=flat-square)](./src/index.d.ts)
@@ -27,6 +28,7 @@ Tiny frontend with service-oriented architecture.
 The key to winning is the shared state and logic. Pure React doesn't have a convenient way to organize shared states that can be used whole the application. Suggested React ways are passing state by props thought nesting components from parent to child, and using Context for giving shared access to some state values in children components. Both ways can't share state with any part of your app!
 
 Architecture with a shared state provides more simplest code. You can control your state and logic in separate files that can be accessed whole the app. You can easily change your shared state and read it everywhere.
+
 
 ## The dark mode switcher
 
@@ -47,16 +49,16 @@ We will keep the dark mode enabled state in this way.
 To update the value of a reactive variable, we will use the "update" function. That takes the dark mode reactive variable as the first argument and the updater function as the second one. The updater function receives the current state in the first argument and returned the new state of dark mode.
 
 ```javascript
-  // dark-mode.shared.js
-  import { re, update } from "remini"
+// dark-mode.shared.js
+import { re, update } from "remini"
 
-  // create new reactive variable with "false" by default
-  export const $darkMode = re(false)
+// create new reactive variable with "false" by default
+export const $darkMode = re(false)
 
-  // create a function that should change dark mode to opposite each time calling
-  export const toggleDarkMode = () => {
-    update($darkMode, (enabled) => !enabled)
-  }
+// create a function that should change dark mode to opposite each time calling
+export const toggleDarkMode = () => {
+  update($darkMode, (enabled) => !enabled)
+}
 ```
 
 Now we can read and subscribe to dark mode changes everywhere we need.
@@ -64,18 +66,18 @@ Now we can read and subscribe to dark mode changes everywhere we need.
 For easy binding to the React components, the "useRe" hook function is used. It allows you to get the value of the reactive variable, as well as automatically update the React component when the value changes.
 
 ```javascript
-  import { useRe } from "remini"
-  import { $darkMode, toggleDarkMode } from "./dark-mode.shared.js"
+import { useRe } from "remini"
+import { $darkMode, toggleDarkMode } from "./dark-mode.shared.js"
 
-  const DarkModeButton = () => {
-    const darkMode = useRe($darkMode)
+export const DarkModeButton = () => {
+  const darkMode = useRe($darkMode)
 
-    return (
-      <button onClick={toggleDarkMode}>
-        Switch to {darkMode ? "light" : "dark"} mode
-      </button>
-    )
-  }
+  return (
+    <button onClick={toggleDarkMode}>
+      Switch to {darkMode ? "light" : "dark"} mode
+    </button>
+  )
+}
 ```
 
 Excellent! Now you can easily derive dark mode state to any React component using the same way. This is very simple, you should get state of the dark mode using the "useRe" hook, and it's all that you need. Each time when dark mode state will be changed, and all components using it will be updated automatically.
@@ -85,15 +87,15 @@ And finally, we should make some code updates, because we almost forget to save 
 For accessing storage we will use the "localStorage" browser API. We will call "getItem" to retrieve the saved state, and call "setItem" to save it.
 
 ```javascript
-  import { write, on } from "remini"
+import { write, on } from "remini"
 
-  // try to get choice from previous browser session when reactive variable create
-  write($darkMode, localStorage.getItem("darkMode") === "on")
+// try to get choice from previous browser session when reactive variable create
+write($darkMode, localStorage.getItem("darkMode") === "on")
 
-  // update user choice in browser local storage each time then it changed
-  on($darkMode, (enabled) => {
-    localStorage.setItem("darkMode", enabled ? "on" : "off")
-  })
+// update user choice in browser local storage each time then it changed
+on($darkMode, (enabled) => {
+  localStorage.setItem("darkMode", enabled ? "on" : "off")
+})
 ```
 
 The last operation in this example call of "on" function. It means that we subscribe to changes in dark mode reactive variable, and react on them each time changes for saving state to browser persistence storage.
@@ -102,27 +104,13 @@ Brilliant! Now you can use it everywhere you want, it's worked well and should p
 
 It's looking good and provides you with convenient opportunities for controlling your shared state, and deriving in any parts of your application. You can create as many reactive variables as you want, it's quick and useful!
 
+
 ## Perfect frontend with modular architecture.
-
-<!--
-**Pure reactivity**
-
-```javascript
-import { re, read, write, update, wrap, on } from "remini"
-
-const $value = re(0)
-const $next = wrap(() => read($value) + 1)
-
-on($value, n => console.log('The current value:', n))
-
-update($value, n => n + 1)  // The current value: 1
-write($value, 2)            // The current value: 2
-
-console.log(read($next))    // 3
-```
--->
-
 <!-- **Modularity** -->
+
+- No need to wrap the application to Context Provider for each module.
+- Import and use, easy code for embedding.
+- Created just when it is used, by demand, that increases in performance.
 
 ```javascript
 // counter.shared.js
@@ -160,31 +148,74 @@ const Reset = () => {
   return <button onClick={reset}>↻</button>
 }
 
-export const App = () => {
-  return <>
+export const App = () => (
+  <>
     <Counter />
     <Counter />
     <Reset />
   </>
-}
+)
 ```
 
 [![Edit Counter with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/counter-with-remini-mp2ldi?file=/src/App.js)
 
-<!--
 
-## Modularity
-- No need to wrap Application to Context Provider for each module
-- import and using, easy code for embbedding
-- created just when it used, by demand, that increase in performance
+## Clear React components and convinient separated logic
+
+```javascript
+// Counter.js
+import { read, useLogic, re, update, wrap } from "remini";
+
+const CounterLogic = () => {
+  const $value = re(0);
+  const inc = () => update($value, (n) => n + 1);
+
+  return wrap(() => ({
+    value: read($value),
+    inc
+  }));
+};
+
+export const Counter = () => {
+  const { value, inc } = useLogic(CounterLogic);
+
+  return (
+    <p>
+      {value}
+      <button onClick={inc}>➪</button>
+    </p>
+  );
+};
+```
+
+[![Edit Logic free React component with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/logic-free-react-component-with-remini-4bklxc?file=/src/Counter.js)
+
+<!--
 
 ## Work together with Redux
 
-## The authorized user state
-
-## Product cart
+## Simple unit testing
 
 -->
+
+<!--
+**Pure reactivity**
+
+```javascript
+import { re, read, write, update, wrap, on } from "remini"
+
+const $value = re(0)
+const $next = wrap(() => read($value) + 1)
+
+on($value, n => console.log('The current value:', n))
+
+update($value, n => n + 1)  // The current value: 1
+write($value, 2)            // The current value: 2
+
+console.log(read($next))    // 3
+```
+-->
+
 
 Enjoy your code!
 
