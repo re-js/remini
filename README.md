@@ -160,7 +160,7 @@ export const App = () => (
 [![Edit Counter with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/counter-with-remini-mp2ldi?file=/src/App.js)
 
 
-## Clear React components and convinient separated logic
+## Clear React components and convenient separated logic
 
 ```javascript
 // Counter.js
