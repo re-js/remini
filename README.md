@@ -20,6 +20,8 @@ You should clear understand where is a place to your logic, how you can write as
 
 # Remini
 
+[![npm version](https://img.shields.io/npm/v/remini?style=flat-square)](https://www.npmjs.com/package/remini) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/remini?style=flat-square)](https://bundlephobia.com/result?p=remini) [![code coverage](https://img.shields.io/coveralls/github/betula/remini?style=flat-square)](https://coveralls.io/github/betula/remini) [![typescript supported](https://img.shields.io/npm/types/typescript?style=flat-square)](./src/index.d.ts)
+
 Tiny frontend with service-oriented architecture.
 
 The key to winning is the shared state and logic. Pure React doesn't have a convenient way to organize shared states that can be used whole the application. Suggested React ways are passing state by props thought nesting components from parent to child, and using Context for giving shared access to some state values in children components. Both ways can't share state with any part of your app!
