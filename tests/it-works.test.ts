@@ -3,7 +3,7 @@ import {
   on, once, sync, cycle,
   shared, free, mock, clear,
   event, fire, filter, map,
-} from '../src';
+} from 'remini';
 
 describe('should works', () => {
 
