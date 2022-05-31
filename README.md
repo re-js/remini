@@ -83,13 +83,11 @@ And finally, we should make some code updates, because we almost forget to save 
 For accessing storage we will use the "localStorage" browser API. We will call "getItem" to retrieve the saved state, and call "setItem" to save it.
 
 ```javascript
-  // try to get choice from previous browser session when reactive variable create
-  export const $darkMode = re(
-    localStorage.getItem("darkMode") === "on"
-  )
-```
+  import { write, on } from "remini"
 
-```javascript
+  // try to get choice from previous browser session when reactive variable create
+  write($darkMode, localStorage.getItem("darkMode") === "on")
+
   // update user choice in browser local storage each time then it changed
   on($darkMode, (enabled) => {
     localStorage.setItem("darkMode", enabled ? "on" : "off")
@@ -150,7 +148,7 @@ const Counter = observe(() => {
 
   return <p>
     {read($value)}
-    -> <button onClick={inc}>+</button> ->
+    <button onClick={inc}>becomes</button>
     {read($next)}
   </p>
 })
@@ -168,6 +166,8 @@ export const App = () => {
   </>
 }
 ```
+
+[![Edit Counter with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/counter-with-remini-mp2ldi?file=/src/App.js)
 
 <!--
 

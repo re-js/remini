@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { re, useRe, write } from '../src';
+import { re, useRe, write } from 'remini';
 
 describe('should work', () => {
 

@@ -216,8 +216,8 @@ const _inst = (target, args) => {
   return [instance, unsub];
 };
 
-const shared = (fn) => {
-  let rec = shareds.get(fn);
+const shared = (target) => {
+  let rec = shareds.get(target);
   if (!rec) {
     rec = _inst(target);
     shareds.set(target, rec);

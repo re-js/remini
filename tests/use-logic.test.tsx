@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import { on, re, select, useRe, write, useLogic, read, useJsx } from '../src';
+import { on, re, select, useRe, write, useLogic, read, useJsx } from 'remini';
 
 describe('should work', () => {
 

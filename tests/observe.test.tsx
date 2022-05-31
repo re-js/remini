@@ -1,7 +1,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { re, read, write, update, observe } from '../src';
+import { re, read, write, update, observe } from 'remini';
 
 type ForwardRefButtonProps = {
   r: any;
