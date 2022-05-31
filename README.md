@@ -150,7 +150,7 @@ const Counter = observe(() => {
 
   return <p>
     {read($value)}
-    <button onClick={inc}>becomes</button>
+    <button onClick={inc}>➪</button>
     {read($next)}
   </p>
 })
