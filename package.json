@@ -54,7 +54,8 @@
     "react hooks",
     "react",
     "typescript",
-    "javascript"
+    "javascript",
+    "modularity"
   ],
   "browserslist": [
     "last 2 Chrome versions"

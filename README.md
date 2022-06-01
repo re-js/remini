@@ -23,7 +23,7 @@ You should clear understand where is a place to your logic, how you can write as
 
 [![npm version](https://img.shields.io/npm/v/remini?style=flat-square)](https://www.npmjs.com/package/remini) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/remini?style=flat-square)](https://bundlephobia.com/result?p=remini) [![code coverage](https://img.shields.io/coveralls/github/betula/remini?style=flat-square)](https://coveralls.io/github/betula/remini) [![typescript supported](https://img.shields.io/npm/types/typescript?style=flat-square)](./src/index.d.ts)
 
-Tiny frontend with service-oriented architecture.
+Tiny frontend with modular architecture.
 
 The key to winning is the shared state and logic. Pure React doesn't have a convenient way to organize shared states that can be used whole the application. Suggested React ways are passing state by props thought nesting components from parent to child, and using Context for giving shared access to some state values in children components. Both ways can't share state with any part of your app!
 
@@ -67,7 +67,7 @@ For easy binding to the React components, the "useRe" hook function is used. It 
 
 ```javascript
 import { useRe } from "remini"
-import { $darkMode, toggleDarkMode } from "./dark-mode.shared.js"
+import { $darkMode, toggleDarkMode } from "./dark-mode.shared"
 
 export const DarkModeButton = () => {
   const darkMode = useRe($darkMode)
@@ -87,7 +87,7 @@ And finally, we should make some code updates, because we almost forget to save 
 For accessing storage we will use the "localStorage" browser API. We will call "getItem" to retrieve the saved state, and call "setItem" to save it.
 
 ```javascript
-import { write, on } from "remini"
+// import { write, on } from "remini"
 
 // try to get choice from previous browser session when reactive variable create
 write($darkMode, localStorage.getItem("darkMode") === "on")
@@ -102,11 +102,22 @@ The last operation in this example call of "on" function. It means that we subsc
 
 Brilliant! Now you can use it everywhere you want, it's worked well and should provide benefits for your users!
 
+[![Edit DarkMode module with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/lucid-rui-5updlc?file=/src/App.js)
+
 It's looking good and provides you with convenient opportunities for controlling your shared state, and deriving in any parts of your application. You can create as many reactive variables as you want, it's quick and useful!
 
+<!--
+## Modularity
 
+Perfect frontend with modular architecture.
+
+- No need to wrap the application to Context Provider for each module.
+- Import and use, easy code for embedding.
+- Created just when it is used, by demand, that increases in performance.
+-->
+
+<!--
 ## Perfect frontend with modular architecture.
-<!-- **Modularity** -->
 
 - No need to wrap the application to Context Provider for each module.
 - Import and use, easy code for embedding.
@@ -189,6 +200,8 @@ export const Counter = () => {
 ```
 
 [![Edit Logic free React component with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/logic-free-react-component-with-remini-4bklxc?file=/src/Counter.js)
+
+-->
 
 <!--
 
