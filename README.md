@@ -102,9 +102,57 @@ The last operation in this example call of "on" function. It means that we subsc
 
 Brilliant! Now you can use it everywhere you want, it's worked well and should provide benefits for your users!
 
-[![Edit DarkMode module with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/lucid-rui-5updlc?file=/src/App.js)
+[![Edit DarkMode module with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/darkmode-module-with-remini-5updlc?file=/src/App.js)
 
 It's looking good and provides you with convenient opportunities for controlling your shared state, and deriving in any parts of your application. You can create as many reactive variables as you want, it's quick and useful!
+
+## Work together with Redux
+
+It's easy! You can simply create Remini reactive variable from Redux store, and use it everywhere you want!
+
+```javascript
+// ./remini-store.js
+import { re, write } from "remini"
+import { store } from "./redux-store"
+
+export const $store = re(store.getState())
+
+store.subscribe(() => {
+  write($store, store.getState())
+})
+```
+
+And you can make cached selectors for performance optimization reasons.
+
+```javascript
+// ./remini-selectors.js
+import { select } from "remini"
+import { $store } from "./remini-store"
+
+export const $user = select($store, (state) => state.user)
+
+export const $fullName = select(
+  $user,
+  (user) => `${user.firstName} ${user.lastName}`
+)
+```
+
+And use it everywhere.
+
+```javascript
+import { useRe } from "remini"
+import { $fullName } from "./remini-selectors"
+
+export const UserInfo = () => {
+  const fullName = useRe($fullName)
+
+  return <p>{fullName}</p>
+}
+```
+
+As you can see, everything is quite simple and can be effectively used together!
+
+[![Edit Redux with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/redux-with-remini-ou9v4e?file=/src/components/UserInfo.js)
 
 <!--
 ## Modularity
@@ -114,7 +162,7 @@ Perfect frontend with modular architecture.
 - No need to wrap the application to Context Provider for each module.
 - Import and use, easy code for embedding.
 - Created just when it is used, by demand, that increases in performance.
--->
+
 
 <!--
 ## Perfect frontend with modular architecture.
