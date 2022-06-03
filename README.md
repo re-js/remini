@@ -89,7 +89,7 @@ For accessing storage we will use the "localStorage" browser API. We will call "
 ```javascript
 // import { write, on } from "remini"
 
-// try to get choice from previous browser session when reactive variable create
+// get choice from previous browser session when reactive variable create
 write($darkMode, localStorage.getItem("darkMode") === "on")
 
 // update user choice in browser local storage each time then it changed
@@ -105,6 +105,8 @@ Brilliant! Now you can use it everywhere you want, it's worked well and should p
 [![Edit DarkMode module with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/darkmode-module-with-remini-5updlc?file=/src/App.js)
 
 It's looking good and provides you with convenient opportunities for controlling your shared state, and deriving in any parts of your application. You can create as many reactive variables as you want, it's quick and useful!
+
+<!--
 
 ## Work together with Redux
 
@@ -153,6 +155,8 @@ export const UserInfo = () => {
 As you can see, everything is quite simple and can be effectively used together!
 
 [![Edit Redux with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/redux-with-remini-ou9v4e?file=/src/components/UserInfo.js)
+
+-->
 
 <!--
 ## Modularity
@@ -277,6 +281,7 @@ console.log(read($next))    // 3
 ```
 -->
 
+<hr />
 
 Enjoy your code!
 
