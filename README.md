@@ -281,7 +281,6 @@ console.log(read($next))    // 3
 ```
 -->
 
-<hr />
 
 Enjoy your code!
 
