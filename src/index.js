@@ -384,7 +384,6 @@ configure.once(User, () => {});
 
 Call of "configure.once" should be throw when in called twice.
 
-
 [] Add remaining functionality
 
 re.shallow()
@@ -398,5 +397,35 @@ useWrite.shallow()
 
 [] Rename "re" to "box"
 [] Rename "unsubs" to "isolate"
+
+[] Update shared logic syntax
+
+export const getSharedBooks = shared(() => {
+  const $books = box([]);
+  return {
+    $books,
+    add: (book) => update($books, books => [...books, book]),
+    load: async () => {}
+  }
+});
+
+export const getSharedBooks = shared(() => {
+  const $books = box([]);
+  const add = (book) => update($books, books => [...books, book]);
+  const load = async () => {}
+
+  return { $books, add, load }
+});
+
+await getSharedBooks().load();
+await getSharedLibrary().load();
+
+const getSharedCounter = shared(() => {})
+const { $count, inc, dec } = getSharedCounter();
+
+Other will be looks like below
+
+mock(sharedBooks, {})
+configure(sharedBooks, () => {})
 
 */
