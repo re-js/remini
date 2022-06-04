@@ -22,12 +22,12 @@ At first you have a **state** 😊
 
 ```javascript
 const $user = box({ email: 'a@x.com' })
-const $enabled = box(false)
+const $enabled = box(true)
 const $counter = box(42)
 const $books = box([ 'The Little Prince', 'Alice in Wonderland' ])
 ```
 
-At second bind **state to React** component!
+At second **bind state to React** component!
 
 ```javascript
 const Books = () => {
@@ -59,18 +59,22 @@ const BookForm = () => {
 At fourth **share your logic** 😉
 
 ```javascript
-const $loading = box(false)
+// ./books.shared.js
+export const $books = box([])
+export const $loading = box(false)
 
-const load = async () => {
+export const load = async () => {
   write($loading, true)
 
   const response = await fetch('https://example.com/api/books')
-  const books = await response.json();
+  const books = await response.json()
 
   write($books, books)
   write($loading, false)
 }
+```
 
+```javascript
 const Books = () => {
   const loading = useRe($loading)
   
@@ -82,7 +86,7 @@ const Books = () => {
 }
 ```
 
-<hr />
+
 
 <!-- Perfect code-splitting, pretty and minimalistic syntax, well structured and maintainable codebase. -->
 
@@ -363,5 +367,15 @@ console.log(read($next))    // 3
 -->
 
 
+## References
+
+- [Why?]()
+- [The dark mode switcher]()
+- [Perfect frontend with modular architecture]()
+- [Work together with Redux]()
+
+<!--
+- [Pure reactivity]()
+-->
 Enjoy your code!
 
