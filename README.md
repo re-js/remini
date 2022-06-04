@@ -373,9 +373,8 @@ console.log(read($next))    // 3
 - [The dark mode switcher]()
 - [Perfect frontend with modular architecture]()
 - [Work together with Redux]()
+- [Simple unit testing]()
+- [Pure reactivity on Node.js]()
 
-<!--
-- [Pure reactivity]()
--->
 Enjoy your code!
 
