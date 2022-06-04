@@ -4,8 +4,89 @@
 
 ## Global state management with React
 
+- Easy to learn
+- Small and quick
+- from tiny to complex apps
+
+<!--
+The key to winning is the shared state and logic. Pure React doesn't have a convenient way to organize shared states that can be used whole the application. 
+
+Suggested React ways are passing state by props thought nesting components from parent to child, and using Context for giving shared access to some state values in children components. Both ways can't share state with any part of your app!
+
+Architecture with a shared state provides more simplest code. You can control your state and logic in separate files that can be accessed whole the app. You can easily change your shared state and read it everywhere.
+-->
+
+## Get started
+
+At first you have a **state** 😊
+
+```javascript
+const $user = box({ email: 'a@x.com' })
+const $enabled = box(false)
+const $counter = box(42)
+const $books = box([ 'Little Prince', 'Alice in Wonderland' ])
+```
+
+At second bind **state to React** component!
+
+```javascript
+const Books = () => {
+  const books = useRe($books)
+  return <ul>
+    {books.map(book => <li>{book}</li>)}
+  </ul>
+}
+```
+
+At third **update the state** 👍
+
+```javascript
+const BookForm = () => {
+  const [name, setName] = React.useState('')
+
+  return <p>
+    <input 
+      value={name}
+      onChange={event => setName(event.target.value)} 
+      />
+    <button
+      onClick={() => update($books, books => [...books, name])}
+      >Add</button>
+  </p>
+}
+```
+
+At fourth **share your logic** 😉
+
+```javascript
+const $loading = box(false)
+
+const load = async () => {
+  write($loading, true)
+
+  const response = await fetch('https://example.com/api/books')
+  const books = await response.json();
+
+  write($books, books)
+  write($loading, false)
+}
+
+const Books = () => {
+  const loading = useRe($loading)
+  
+  return <p>
+    {loading ? 'Loading...' : (
+      <button onClick={load}>Load</button>
+    )}
+  </p>
+}
+```
+
+<hr />
+
 <!-- Perfect code-splitting, pretty and minimalistic syntax, well structured and maintainable codebase. -->
 
+<!--
 Your coding time saver!
 
 Minimal, well structured, and flexible codebase save a lot of developer time for maintain and grouth your React applications.
@@ -24,11 +105,11 @@ You should clear understand where is a place to your logic, how you can write as
 
 ## Tiny frontend with modular architecture.
 
-The key to winning is the shared state and logic. Pure React doesn't have a convenient way to organize shared states that can be used whole the application. Suggested React ways are passing state by props thought nesting components from parent to child, and using Context for giving shared access to some state values in children components. Both ways can't share state with any part of your app!
-
-Architecture with a shared state provides more simplest code. You can control your state and logic in separate files that can be accessed whole the app. You can easily change your shared state and read it everywhere.
+-->
 
 
+
+<!--
 ## The dark mode switcher
 
 A good example of a shared state benefit is the Dark mode switcher. Because you should get access to user choice in a big set of React components, it is very inconvenient to use props passing pattern.
@@ -105,6 +186,7 @@ Brilliant! Now you can use it everywhere you want, it's worked well and should p
 
 It's looking good and provides you with convenient opportunities for controlling your shared state, and deriving in any parts of your application. You can create as many reactive variables as you want, it's quick and useful!
 
+-->
 <!--
 
 ## Work together with Redux
