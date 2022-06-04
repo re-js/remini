@@ -75,7 +75,7 @@ export const load = async () => {
 ```
 
 ```javascript
-const Books = () => {
+const BooksLoad = () => {
   const loading = useRe($loading)
   
   return <p>
