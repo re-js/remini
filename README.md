@@ -24,7 +24,7 @@ At first you have a **state** 😊
 const $user = box({ email: 'a@x.com' })
 const $enabled = box(false)
 const $counter = box(42)
-const $books = box([ 'Little Prince', 'Alice in Wonderland' ])
+const $books = box([ 'The Little Prince', 'Alice in Wonderland' ])
 ```
 
 At second bind **state to React** component!
