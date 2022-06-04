@@ -428,4 +428,6 @@ Other will be looks like below
 mock(sharedBooks, {})
 configure(sharedBooks, () => {})
 
+[] Use "map" instead of "select" (consider Occam's Razor)
+
 */
