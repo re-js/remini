@@ -5,8 +5,12 @@
 ## Global state management with React
 
 - Easy to learn
-- Small and quick
+- Small and concise
 - From tiny to complex apps
+
+<!--
+- Small and fast|nimble|concise
+-->
 
 <!--
 The key to winning is the shared state and logic. Pure React doesn't have a convenient way to organize shared states that can be used whole the application. 
