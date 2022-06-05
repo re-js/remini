@@ -20,6 +20,20 @@ Suggested React ways are passing state by props thought nesting components from 
 Architecture with a shared state provides more simplest code. You can control your state and logic in separate files that can be accessed whole the app. You can easily change your shared state and read it everywhere.
 -->
 
+## Simple counter demo
+
+```javascript
+import { box, update, useBox } from 'remini';
+
+const $count = box(0)
+const inc = () => update($count, c => c + 1)
+
+const Counter = () => {
+  const count = useBox($count)
+  return <p>{count} <button onClick={inc}>➪</button></p>;
+};
+```
+
 ## Get started
 
 At first you have a **state** 😊
@@ -373,32 +387,6 @@ write($value, 2)            // The current value: 2
 console.log(read($next))    // 3
 ```
 -->
-
-## Simple counter demo
-
-```javascript
-import React from 'react';
-import { box, update, useBox } from 'remini';
-
-const $count = box(0)
-const inc = () => update($count, c => c + 1)
-
-const Counter = () => {
-  const count = useBox($count)
-  return <p>
-    {count} <button onClick={inc}>+</button>
-  </p>;
-};
-
-const App = () => (
-  <>
-    <Counter />
-    <Counter />
-  </>
-);
-
-export default App;
-```
 
 
 ## References
