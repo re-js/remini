@@ -1,27 +1,26 @@
 import {
-  re, wrap, read, write, update, select, readonly,
+  box, wrap, read, write, update, readonly,
   on, once, sync, cycle,
-  shared, free, mock, clear,
   event, fire, filter, map,
 } from 'remini';
 
 describe('should works', () => {
 
   test('re, read, write', () => {
-    const a = re(0);
+    const a = box(0);
     write(a, 10);
     expect(read(a)).toBe(10);
   });
 
   test('update', () => {
-    const a = re(0);
+    const a = box(0);
     update(a, (v) => v + 3);
     expect(read(a)).toBe(3);
   });
 
   test('wrap', () => {
-    const a = re(1);
-    const b = re(2);
+    const a = box(1);
+    const b = box(2);
 
     const k = wrap(a);
     const p = wrap(() => read(a) + read(a));
@@ -47,13 +46,13 @@ describe('should works', () => {
     expect(read(q)).toBe(22);
   });
 
-  test('select', () => {
-    const a = re(1);
-    const b = re(2);
+  test('box map', () => {
+    const a = box(1);
+    const b = box(2);
 
-    const k = select(a, (v) => v + 5);
-    const n = select(k, (v) => '&' + v);
-    const m = select(b, (v) => v + read(n));
+    const k = map(a, (v) => v + 5);
+    const n = map(k, (v) => '&' + v);
+    const m = map(b, (v) => v + read(n));
 
     expect(read(m)).toBe('2&6');
     write(a, 10);
@@ -64,7 +63,7 @@ describe('should works', () => {
   });
 
   test('readonly', () => {
-    const a = re(1);
+    const a = box(1);
     const k = readonly(a);
 
     expect(read(k)).toBe(1);
@@ -79,8 +78,8 @@ describe('should works', () => {
     const x = jest.fn();
     const y = jest.fn();
 
-    const a = re(1);
-    const b = re(2);
+    const a = box(1);
+    const b = box(2);
 
     on(() => read(a) + read(b), (v) => x(v));
     on(a, (v) => y(v));
@@ -100,8 +99,8 @@ describe('should works', () => {
     const x = jest.fn();
     const y = jest.fn();
 
-    const a = re(1);
-    const b = re(2);
+    const a = box(1);
+    const b = box(2);
 
     sync(() => read(a) + read(b), (v) => x(v));
     sync(a, (v) => y(v));
@@ -121,7 +120,7 @@ describe('should works', () => {
     const x = jest.fn();
     const y = jest.fn();
 
-    const a = re(1);
+    const a = box(1);
 
     once(() => read(a), (v) => x(v));
     once(a, (v) => y(v));
@@ -142,8 +141,8 @@ describe('should works', () => {
   test('cycle', () => {
     const x = jest.fn();
 
-    const a = re(1);
-    const b = re(0);
+    const a = box(1);
+    const b = box(0);
 
     cycle(() => x(read(a) + read(b)));
 
@@ -171,7 +170,7 @@ describe('should works', () => {
     expect(x).toBeCalledWith(2); x.mockReset();
   });
 
-  test('map', () => {
+  test('event map', () => {
     const x = jest.fn();
     const y = jest.fn();
     const z = jest.fn();
@@ -202,7 +201,7 @@ describe('should works', () => {
   test('filter', () => {
     const x = jest.fn();
 
-    const r = re(false);
+    const r = box(false);
     const e = event();
 
     const p = filter(e, (v) => read(r) || v % 2 === 0);

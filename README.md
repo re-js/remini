@@ -35,7 +35,7 @@ At second **bind state to React** component!
 
 ```javascript
 const Books = () => {
-  const books = useRe($books)
+  const books = useBox($books)
   return <ul>
     {books.map(book => <li>{book}</li>)}
   </ul>
@@ -80,7 +80,7 @@ export const load = async () => {
 
 ```javascript
 const BooksLoad = () => {
-  const loading = useRe($loading)
+  const loading = useBox($loading)
   
   return <p>
     {loading ? 'Loading...' : (
@@ -370,15 +370,45 @@ console.log(read($next))    // 3
 ```
 -->
 
+## Simple counter demo
+
+```javascript
+import React from 'react';
+import { box, update, useBox } from 'remini';
+
+const $count = box(0)
+const inc = () => update($count, c => c + 1)
+
+const Counter = () => {
+  const count = useBox($count)
+  return <p>
+    {count} <button onClick={inc}>+</button>
+  </p>;
+};
+
+const App = () => (
+  <>
+    <Counter />
+    <Counter />
+  </>
+);
+
+export default App;
+```
+
 
 ## References
 
 - [Why?]()
 - [The dark mode switcher]()
-- [Perfect frontend with modular architecture]()
 - [Work together with Redux]()
-- [Simple unit testing]()
 - [Pure reactivity on Node.js]()
+
+
 
 Enjoy your code!
 
+
+<!-- - [Perfect frontend with modular architecture]() -->
+
+<!-- - [Simple unit testing]() -->

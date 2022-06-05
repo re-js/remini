@@ -1,15 +1,15 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { re, useRe, write } from 'remini';
+import { box, useBox, write } from 'remini';
 
 describe('should work', () => {
 
   test('useRe', () => {
     const spy = jest.fn();
-    const h = re(0);
+    const h = box(0);
 
     function A() {
-      const val = useRe(h);
+      const val = useBox(h);
       spy(val);
       return <button onClick={() => write(h, 20)} />;
     }

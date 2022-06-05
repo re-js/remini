@@ -13,7 +13,6 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "files": [
-    "jest",
     "src"
   ],
   "scripts": {
