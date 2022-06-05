@@ -5,7 +5,7 @@
 ## Global state management with React
 
 - Easy to learn
-- Small and concise
+- Small and quick
 - From tiny to complex apps
 
 <!--
