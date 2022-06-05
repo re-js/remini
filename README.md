@@ -167,9 +167,9 @@ It's looking good and provides you with convenient opportunities for controlling
 
 
 ```bash
-npm install realar
+npm install remini
 # or
-yarn add realar
+yarn add remini
 ```
 
 Enjoy your code!
