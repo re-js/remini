@@ -22,3 +22,48 @@ const Counter = () => {
   </p>;
 };
 ```
+
+## Perfect frontend with modular architecture.
+
+- No need to wrap the application to Context Provider for each module.
+- Import and use, easy code for embedding.
+
+## Modular counter demo
+
+```javascript
+// ./counter.shared.js
+import { box, wrap, read, write, shared } from "remini"
+
+export const $count = box(0)
+export const $next = wrap(() => read($count) + 1)
+
+export const inc = () => update($count, n => n + 1)
+export const reset = () => write($count, 0)
+```
+
+```javascript
+import { observe, read } from "remini"
+import { $count, $next, inc } from "./counter.shared"
+
+const Counter = observe(() => (
+  <p>
+    {read($count)}
+    <button onClick={inc}>➪</button>
+    {read($next)}
+  </p>
+))
+
+const Reset = () => (
+  <button onClick={reset}>↻</button>
+)
+
+export const App = () => (
+  <>
+    <Counter />
+    <Counter />
+    <Reset />
+  </>
+)
+```
+
+[![Edit Counter with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/counter-with-remini-mp2ldi?file=/src/App.js)

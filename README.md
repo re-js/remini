@@ -99,7 +99,7 @@ We will keep the dark mode enabled state in this way.
 To update the value of a reactive variable, we will use the `update` function. That takes the dark mode reactive variable as the first argument and the updater function as the second one. The updater function receives the current state in the first argument and returned the new state of dark mode.
 
 ```javascript
-// dark-mode.shared.js
+// ./dark-mode.shared.js
 import { box, update } from 'remini'
 
 // create new reactive variable with "false" by default
