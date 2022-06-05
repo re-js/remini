@@ -166,4 +166,10 @@ It's looking good and provides you with convenient opportunities for controlling
 - [Pure reactivity with Node.js](./docs/nodejs.md)
 
 
+```bash
+npm install realar
+# or
+yarn add realar
+```
+
 Enjoy your code!
