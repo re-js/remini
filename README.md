@@ -53,8 +53,13 @@ const BookForm = () => {
   const [name, setName] = React.useState('')
 
   return <p>
-    <input value={name} onChange={event => setName(event.target.value)}/>
-    <button onClick={() => add(name)}>Add</button>
+    <input 
+      value={name}
+      onChange={event => setName(event.target.value)} 
+      />
+    <button
+      onClick={() => add(name)}
+      >Add</button>
   </p>
 }
 ```
