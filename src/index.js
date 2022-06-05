@@ -1,20 +1,19 @@
 import {
   sel,
   expr,
-  box,
+  box as _flat_box,
   untrack as _flat_untrack,
   transaction as _flat_batch
 } from 'reactive-box';
 
 
 export {
-  re, wrap, read, write, update, select, readonly,
+  box, wrap, read, write, update, readonly,
   on, once, sync, cycle,
-  shared, free, mock, unmock, clear,
   event, fire, filter, map,
   unsubs, un,
   batch, untrack,
-  observe, useRe, useLogic, useJsx, useWrite,
+  observe, useBox, useJsx,
   key_remini
 };
 
@@ -30,7 +29,6 @@ try {
 
 const key_remini = '.remini';
 const key_fn = 'fn';
-const key_all = 'all';
 const key_unsafe = 'unsafe';
 const key_untrack = 'untrack';
 const key_function = 'function';
@@ -101,7 +99,7 @@ const _ent = (h) => {
   return ent;
 };
 
-const re = (v) => _ent(box(v));
+const box = (v) => _ent(_flat_box(v));
 const wrap = (r, w) => _ent([
   (r[key_remini] ? r[key_remini][0] : sel(r)[0]),
   (w && untrack_fn((v) => w[key_remini] ? w[key_remini][1](v) : w(v)))
@@ -113,7 +111,7 @@ read[key_untrack] = untrack_fn(read);
 const write = (r, v) => r[key_remini][1](v);
 const update = untrack_fn((r, fn) => write(r, fn(read(r))));
 
-const select = (r, v) => _ent([sel(() => v(read(r)))[0]]);
+const box_map = (r, v) => _ent([sel(() => v(read(r)))[0]]);
 const readonly = (r) => _ent([r[key_remini][0]]);
 
 
@@ -157,7 +155,7 @@ const cycle = (fn) => {
 //
 
 const event = () => {
-  const h = box([]);
+  const h = _flat_box([]);
   return _ent([
     h[0],
     (v) => h[1]([v]),
@@ -167,7 +165,7 @@ const event = () => {
 
 const fire = (r, v) => r[key_remini][1](v);
 
-const map = (r, fn) => (
+const event_map = (r, fn) => (
   _ent([
     r[key_remini][0],
     0,
@@ -194,65 +192,14 @@ const filter = (r, fn) => (
 
 
 //
-// Shareds
+// Top level
 //
 
-const shareds = new Map();
-
-const _inst = (target, args) => {
-  args = args || [];
-  let instance, unsub;
-  const collect = _flat_unsubs();
-  const track = _flat_untrack();
-  try {
-    instance =
-      !target.prototype
-        ? target(...args)
-        : new target(...args);
-  } finally {
-    unsub = collect();
-    track();
-  }
-  return [instance, unsub];
-};
-
-const shared = (target) => {
-  let rec = shareds.get(target);
-  if (!rec) {
-    rec = _inst(target);
-    shareds.set(target, rec);
-  }
-  return rec[0];
-};
-
-const free = (...targets) => {
-  try {
-    targets.forEach((target) => {
-      const rec = shareds.get(target);
-      rec && rec[1]();
-    });
-  } finally {
-    targets.forEach((target) => shareds.delete(target));
-  }
-};
-free[key_all] = () => {
-  shareds.forEach((h) => h[1]());
-  shareds.clear();
-};
-
-const mock = (target, mocked) => (
-  shareds.set(target, [mocked, () => {}, 1]),
-  mocked
+const map = (r, fn) => (
+  r[key_remini][2]
+    ? event_map(r, fn)
+    : box_map(r, fn)
 );
-
-const unmock = (...targets) => (
-  targets.forEach(target => shareds.delete(target))
-);
-unmock[key_all] = () => (
-  shareds.forEach((h, k) => h[2] && shareds.delete(k))
-);
-
-const clear = () => shareds.clear();
 
 
 //
@@ -292,7 +239,7 @@ observe[key_nomemo] = (target) => (
 );
 
 
-const useRe = (target, deps) => {
+const useBox = (target, deps) => {
   deps || (deps = []);
   const force_update = context_is_observe || useForceUpdate();
   const h = React.useMemo(() => {
@@ -315,34 +262,7 @@ const useRe = (target, deps) => {
   return h[2] ? h[0]() : h[0];
 };
 
-const useLogic = (target, deps) => {
-  deps || (deps = []);
-  const force_update = context_is_observe || useForceUpdate();
-  const h = React.useMemo(() => {
-    const p = re(deps);
-    const i = _inst(target, [p]);
-
-    let ret_re_uns;
-    const is_ret_re = i[0] && i[0][key_remini];
-    if (is_ret_re && !context_is_observe) {
-      ret_re_uns = unsubs(() => on(i[0], force_update));
-    }
-
-    const ret = () => is_ret_re ? read(i[0]) : i[0];
-    const uns = () => (i[1](), ret_re_uns && ret_re_uns());
-
-    return [ret, () => uns, p];
-  }, []);
-
-  React.useMemo(() => write(h[2], deps), deps);
-  React.useEffect(h[1], [h]);
-
-  return h[0]();
-};
-
 const useJsx = (fn, deps) => React.useMemo(() => observe(fn), deps || []);
-
-const useWrite = write;
 
 
 //
@@ -366,37 +286,13 @@ The readonly event of reactive variable changing
 event($a);
 
 
-[] Add "configure" function
-
-It should be called immediately when a shared was instantiated
-
-configure(User, (instance) => {
-  on(
-    () => read(shared(GlobalState).address),
-    (address) => update(instance.user, (usr) => ({ ...usr, address }))
-  );
-  write(instance.storage, "localStorage");
-});
-
-Call of "shared(User)" should be available inside configure body
-
-configure.once(User, () => {});
-
-Call of "configure.once" should be throw when in called twice.
-
-
 [] Add remaining functionality
 
-re.shallow()
+box.shallow()
 wrap.shallow()
-select.shallow()
 on.shallow()
 onсe.shallow()
 sync.shallow()
-useRe.shallow()
-useWrite.shallow()
-
-[] Rename "re" to "box"
-[] Rename "unsubs" to "isolate"
+useBox.shallow()
 
 */

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import { re, useRe, write, useJsx, read } from 'remini';
+import { box, useBox, write, useJsx, read } from 'remini';
 
 describe('should work', () => {
 
@@ -9,12 +9,12 @@ describe('should work', () => {
     const x = jest.fn();
     const y = jest.fn();
 
-    const a = re(0);
-    const b = re(10);
+    const a = box(0);
+    const b = box(10);
 
     const A = () => {
       x();
-      useRe(a);
+      useBox(a);
       const B = useJsx(() => (y(), read(b), <></>))
       return <B></B>;
     }

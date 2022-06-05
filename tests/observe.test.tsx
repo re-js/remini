@@ -1,7 +1,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { re, read, write, update, observe } from 'remini';
+import { box, read, write, update, observe } from 'remini';
 
 type ForwardRefButtonProps = {
   r: any;
@@ -19,7 +19,7 @@ describe('should work', () => {
 
   test('observe', () => {
     const spy = jest.fn();
-    const h = re(0);
+    const h = box(0);
 
     const A = observe(() => {
       spy(read(h));
@@ -39,7 +39,7 @@ describe('should work', () => {
   test('observe with ref forwarding', () => {
     let node;
 
-    const r = re('');
+    const r = box('');
     const add = () => update(r, (v) => v + 'a');
 
     function A() {
@@ -58,8 +58,8 @@ describe('should work', () => {
   test('observe memo', () => {
     const spy = jest.fn();
 
-    const a = re(0);
-    const b = re(0);
+    const a = box(0);
+    const b = box(0);
 
     const B = observe(() => (spy(), <i>{read(b)}</i>));
     const A = observe(() => <><b>{read(a)}</b><B /></>);
