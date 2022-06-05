@@ -273,8 +273,8 @@ const useJsx = (fn, deps) => React.useMemo(() => observe(fn), deps || []);
 
 [] Add the query syntax:
 
-const $a = re(0)
-re($a, select((a) => a.user), select((u) => u.nickname))
+const $a = box(0)
+box($a, map((a) => a.user), map((u) => u.nickname))
 
 That expression should return readonly selected store, and
 
@@ -286,7 +286,7 @@ The readonly event of reactive variable changing
 event($a);
 
 
-[] Add remaining functionality
+[] Add shallow support
 
 box.shallow()
 wrap.shallow()
@@ -294,5 +294,8 @@ on.shallow()
 onсe.shallow()
 sync.shallow()
 useBox.shallow()
+
+
+[] Add "readonly" function support for events
 
 */
