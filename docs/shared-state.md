@@ -32,7 +32,7 @@ const Counter = () => {
 
 ```javascript
 // ./counter.shared.js
-import { box, wrap, read, write, shared } from "remini"
+import { box, wrap, read, write, shared } from 'remini'
 
 export const $count = box(0)
 export const $next = wrap(() => read($count) + 1)
@@ -42,8 +42,8 @@ export const reset = () => write($count, 0)
 ```
 
 ```javascript
-import { observe, read } from "remini"
-import { $count, $next, inc, reset } from "./counter.shared"
+import { observe, read } from 'remini'
+import { $count, $next, inc, reset } from './counter.shared'
 
 const Counter = observe(() => (
   <p>
