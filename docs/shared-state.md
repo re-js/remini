@@ -43,7 +43,7 @@ export const reset = () => write($count, 0)
 
 ```javascript
 import { observe, read } from "remini"
-import { $count, $next, inc } from "./counter.shared"
+import { $count, $next, inc, reset } from "./counter.shared"
 
 const Counter = observe(() => (
   <p>
