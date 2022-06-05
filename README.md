@@ -45,17 +45,16 @@ const Books = () => {
 At third **update the state** 👍
 
 ```javascript
+const add = (name) => update($books, books => [...books, name])
+```
+
+```javascript
 const BookForm = () => {
   const [name, setName] = React.useState('')
 
   return <p>
-    <input 
-      value={name}
-      onChange={event => setName(event.target.value)} 
-      />
-    <button
-      onClick={() => update($books, books => [...books, name])}
-      >Add</button>
+    <input value={name} onChange={event => setName(event.target.value)}/>
+    <button onClick={() => add(name)}>Add</button>
   </p>
 }
 ```
