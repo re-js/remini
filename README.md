@@ -90,6 +90,7 @@ const BooksLoad = () => {
 }
 ```
 
+<!--
 ## Simple counter demo
 
 ```javascript
@@ -100,10 +101,13 @@ const inc = () => update($count, c => c + 1)
 
 const Counter = () => {
   const count = useBox($count)
-  return <p>{count} <button onClick={inc}>➪</button></p>;
+  return <p>
+    {count} 
+    <button onClick={inc}>➪</button>
+  </p>;
 };
 ```
-
+-->
 
 <!-- Perfect code-splitting, pretty and minimalistic syntax, well structured and maintainable codebase. -->
 
@@ -130,7 +134,7 @@ You should clear understand where is a place to your logic, how you can write as
 
 
 
-<!--
+
 ## The dark mode switcher
 
 A good example of a shared state benefit is the Dark mode switcher. Because you should get access to user choice in a big set of React components, it is very inconvenient to use props passing pattern.
@@ -143,7 +147,7 @@ What is necessary to implement:
 
 Will clearly demonstrate how to create, use and propagate a shared state.
 
-Each shared state is stored in a special place created by calling the "re" function. This will be a reactive variable, which means we will be able to update all places where it is used when it changes.
+Each shared state is stored in a special place created by calling the "box" function. This will be a reactive variable, which means we will be able to update all places where it is used when it changes.
 
 We will keep the dark mode enabled state in this way.
 
@@ -151,10 +155,10 @@ To update the value of a reactive variable, we will use the "update" function. T
 
 ```javascript
 // dark-mode.shared.js
-import { re, update } from "remini"
+import { box, update } from "remini"
 
 // create new reactive variable with "false" by default
-export const $darkMode = re(false)
+export const $darkMode = box(false)
 
 // create a function that should change dark mode to opposite each time calling
 export const toggleDarkMode = () => {
@@ -164,14 +168,14 @@ export const toggleDarkMode = () => {
 
 Now we can read and subscribe to dark mode changes everywhere we need.
 
-For easy binding to the React components, the "useRe" hook function is used. It allows you to get the value of the reactive variable, as well as automatically update the React component when the value changes.
+For easy binding to the React components, the "useBox" hook function is used. It allows you to get the value of the reactive variable, as well as automatically update the React component when the value changes.
 
 ```javascript
-import { useRe } from "remini"
+import { useBox } from "remini"
 import { $darkMode, toggleDarkMode } from "./dark-mode.shared"
 
 export const DarkModeButton = () => {
-  const darkMode = useRe($darkMode)
+  const darkMode = useBox($darkMode)
 
   return (
     <button onClick={toggleDarkMode}>
@@ -181,7 +185,7 @@ export const DarkModeButton = () => {
 }
 ```
 
-Excellent! Now you can easily derive dark mode state to any React component using the same way. This is very simple, you should get state of the dark mode using the "useRe" hook, and it's all that you need. Each time when dark mode state will be changed, and all components using it will be updated automatically.
+Excellent! Now you can easily derive dark mode state to any React component using the same way. This is very simple, you should get state of the dark mode using the "useBox" hook, and it's all that you need. Each time when dark mode state will be changed, and all components using it will be updated automatically.
 
 And finally, we should make some code updates, because we almost forget to save user choice to browser local storage, to keep persistent between browser sessions.
 
@@ -203,11 +207,15 @@ The last operation in this example call of "on" function. It means that we subsc
 
 Brilliant! Now you can use it everywhere you want, it's worked well and should provide benefits for your users!
 
+<!--
+
 [![Edit DarkMode module with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/darkmode-module-with-remini-5updlc?file=/src/App.js)
+
+-->
 
 It's looking good and provides you with convenient opportunities for controlling your shared state, and deriving in any parts of your application. You can create as many reactive variables as you want, it's quick and useful!
 
--->
+
 <!--
 
 ## Work together with Redux
@@ -387,7 +395,6 @@ console.log(read($next))    // 3
 ## References
 
 - [Why?]()
-- [The dark mode switcher]()
 - [Work together with Redux]()
 - [Pure reactivity on Node.js]()
 
@@ -395,6 +402,7 @@ console.log(read($next))    // 3
 
 Enjoy your code!
 
+<!-- - [The dark mode switcher]() -->
 
 <!-- - [Perfect frontend with modular architecture]() -->
 
