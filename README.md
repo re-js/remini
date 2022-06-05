@@ -20,20 +20,6 @@ Suggested React ways are passing state by props thought nesting components from 
 Architecture with a shared state provides more simplest code. You can control your state and logic in separate files that can be accessed whole the app. You can easily change your shared state and read it everywhere.
 -->
 
-## Simple counter demo
-
-```javascript
-import { box, update, useBox } from 'remini';
-
-const $count = box(0)
-const inc = () => update($count, c => c + 1)
-
-const Counter = () => {
-  const count = useBox($count)
-  return <p>{count} <button onClick={inc}>➪</button></p>;
-};
-```
-
 ## Get started
 
 At first you have a **state** 😊
@@ -59,10 +45,6 @@ const Books = () => {
 At third **update the state** 👍
 
 ```javascript
-const add = (name) => update($books, books => [...books, name])
-```
-
-```javascript
 const BookForm = () => {
   const [name, setName] = React.useState('')
 
@@ -72,7 +54,7 @@ const BookForm = () => {
       onChange={event => setName(event.target.value)} 
       />
     <button
-      onClick={() => add(name)}
+      onClick={() => update($books, books => [...books, name])}
       >Add</button>
   </p>
 }
@@ -108,6 +90,19 @@ const BooksLoad = () => {
 }
 ```
 
+## Simple counter demo
+
+```javascript
+import { box, update, useBox } from 'remini';
+
+const $count = box(0)
+const inc = () => update($count, c => c + 1)
+
+const Counter = () => {
+  const count = useBox($count)
+  return <p>{count} <button onClick={inc}>➪</button></p>;
+};
+```
 
 
 <!-- Perfect code-splitting, pretty and minimalistic syntax, well structured and maintainable codebase. -->
