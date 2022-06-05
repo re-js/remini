@@ -1,7 +1,7 @@
 # Pure reactivity with Node.js
 
 ```javascript
-import { box, read, write, update, wrap, on } from "remini"
+import { box, read, write, update, wrap, on } from 'remini'
 
 const $value = box(0)
 const $next = wrap(() => read($value) + 1)

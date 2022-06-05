@@ -4,8 +4,8 @@ It's easy! You can simply create Remini reactive variable from Redux store, and 
 
 ```javascript
 // ./remini-store.js
-import { box, write } from "remini"
-import { store } from "./redux-store"
+import { box, write } from 'remini'
+import { store } from './redux-store'
 
 export const $store = box(store.getState())
 
@@ -18,8 +18,8 @@ And you can make cached selectors for performance optimization reasons.
 
 ```javascript
 // ./remini-selectors.js
-import { map } from "remini"
-import { $store } from "./remini-store"
+import { map } from 'remini'
+import { $store } from './remini-store'
 
 export const $user = map($store, (state) => state.user)
 
@@ -32,8 +32,8 @@ export const $fullName = map(
 And use it everywhere.
 
 ```javascript
-import { useBox } from "remini"
-import { $fullName } from "./remini-selectors"
+import { useBox } from 'remini'
+import { $fullName } from './remini-selectors'
 
 export const UserInfo = () => {
   const fullName = useBox($fullName)
