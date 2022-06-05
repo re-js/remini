@@ -207,11 +207,7 @@ The last operation in this example call of "on" function. It means that we subsc
 
 Brilliant! Now you can use it everywhere you want, it's worked well and should provide benefits for your users!
 
-<!--
-
 [![Edit DarkMode module with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/darkmode-module-with-remini-5updlc?file=/src/App.js)
-
--->
 
 It's looking good and provides you with convenient opportunities for controlling your shared state, and deriving in any parts of your application. You can create as many reactive variables as you want, it's quick and useful!
 
