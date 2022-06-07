@@ -19,7 +19,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "reactive-box": "0.7.3"
+    "reactive-box": "0.8.0"
   },
   "devDependencies": {
     "@babel/core": "7.17.10",
