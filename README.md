@@ -1,6 +1,6 @@
 # Remini
 
-[![npm version](https://img.shields.io/npm/v/remini?style=flat-square)](https://www.npmjs.com/package/remini) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/remini@0.2.2?style=flat-square)](https://bundlephobia.com/result?p=remini) [![code coverage](https://img.shields.io/coveralls/github/betula/remini?style=flat-square)](https://coveralls.io/github/betula/remini) [![typescript supported](https://img.shields.io/npm/types/typescript?style=flat-square)](./src/index.d.ts)
+[![npm version](https://img.shields.io/npm/v/remini?style=flat-square)](https://www.npmjs.com/package/remini) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/remini?style=flat-square)](https://bundlephobia.com/result?p=remini) [![code coverage](https://img.shields.io/coveralls/github/betula/remini?style=flat-square)](https://coveralls.io/github/betula/remini) [![typescript supported](https://img.shields.io/npm/types/typescript?style=flat-square)](./src/index.d.ts)
 
 ## Global state management with React
 
