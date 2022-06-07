@@ -3,7 +3,7 @@ import {
   expr,
   box as _flat_box,
   untrack as _flat_untrack,
-  transaction as _flat_batch
+  batch as _flat_batch
 } from 'reactive-box';
 
 
