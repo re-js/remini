@@ -35,7 +35,6 @@ At third **update the state** 👍
 ```javascript
 const BookForm = () => {
   const [name, setName] = React.useState('')
-
   return <p>
     <input 
       value={name}
@@ -71,7 +70,6 @@ export const load = async () => {
 ```javascript
 const BooksLoad = () => {
   const loading = useBox($loading)
-  
   return <p>
     {loading ? 'Loading...' : (
       <button onClick={load}>Load</button>
