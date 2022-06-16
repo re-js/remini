@@ -1,4 +1,4 @@
-# Pure reactivity with Node.js
+# Pure reactivity in Node.js
 
 ```javascript
 import { box, read, write, update, wrap, on } from 'remini'

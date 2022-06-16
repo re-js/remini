@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/remini?style=flat-square)](https://www.npmjs.com/package/remini) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/remini?style=flat-square)](https://bundlephobia.com/result?p=remini) [![code coverage](https://img.shields.io/coveralls/github/betula/remini?style=flat-square)](https://coveralls.io/github/betula/remini) [![typescript supported](https://img.shields.io/npm/types/typescript?style=flat-square)](./src/index.d.ts)
 
-## Global state management with React
+## Simple and powerful state management in React
 
 - Easy to learn
 - Small and quick
@@ -105,7 +105,7 @@ My answer is **Remini** 😍
 - [The dark mode switcher](./docs/dark-mode.md)
 - [Shared state](./docs/shared-state.md)
 - [Work together with Redux](./docs/redux.md)
-- [Pure reactivity with Node.js](./docs/nodejs.md)
+- [Pure reactivity in Node.js](./docs/nodejs.md)
 
 
 ```bash

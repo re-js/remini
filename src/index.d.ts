@@ -11,12 +11,20 @@ export {
 
 declare const key_remini: '.remini';
 
-declare function box(...args: any[]): any;
-declare function wrap(...args: any[]): any;
-declare function read(...args: any[]): any;
-declare function write(...args: any[]): any;
-declare function update(...args: any[]): any;
-declare function readonly(...args: any[]): any;
+type Box<T> = {};
+
+declare const box: <T>(value: T) => Box<T>;
+declare const update: <P>(box: Box<P>, fn: (value: P) => P) => void;
+declare const read: <P>(box: Box<P>) => P;
+declare const write: <P>(box: Box<P>, value: P) => void;
+
+declare const wrap: <P>(
+  getter: (() => P) | Box<P>,
+  setter?: ((value: P) => void) | Box<P>
+) => Box<P>;
+
+declare const readonly: <P>(box: Box<P>) => Box<P>;
+
 
 declare function on(...args: any[]): any;
 declare function once(...args: any[]): any;
@@ -36,5 +44,6 @@ declare function untrack(...args: any[]): any;
 
 declare const observe: any;
 
-declare function useBox(...args: any[]): any;
+declare const useBox: <P>(box: Box<P>) => P;
+
 declare function useJsx(...args: any[]): any;
