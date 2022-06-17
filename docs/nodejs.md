@@ -14,4 +14,4 @@ write($value, 2)            // Next value: 3
 console.log(read($next))    // 3
 ```
 
-[Try it on RunKit](https://runkit.com/betula/62ac2287cdb97e00080fc9d5)
+[![Try it on RunKit](https://badge.runkitcdn.com/>.svg)](https://runkit.com/betula/62ac2287cdb97e00080fc9d5)
