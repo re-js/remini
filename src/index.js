@@ -233,7 +233,7 @@ const useBox = (target, deps) => {
   const force_update = context_is_observe || useForceUpdate();
   const h = React.useMemo(() => {
     if (!target) return [target, () => {}];
-    if (target[key_remini][0]) target = target[key_remini][0];
+    if (target[key_remini] && target[key_remini][0]) target = target[key_remini][0];
 
     if (typeof target === key_function) {
       if (context_is_observe) {
@@ -249,6 +249,16 @@ const useBox = (target, deps) => {
 
   context_is_observe || React.useEffect(h[1], [h]);
   return h[2] ? h[0]() : h[0];
+};
+
+const useBoxes = (targets, deps) => {
+  return useBox(() => {
+    let ret = Array.isArray(targets) ? [] : {};
+    Object.keys(targets).forEach(key => {
+      ret[key] = read(targets[key])
+    });
+    return ret;
+  }, deps);
 };
 
 const useJsx = (fn, deps) => React.useMemo(() => observe(fn), deps || []);
@@ -309,6 +319,7 @@ module.exports = {
   unsubs, un,
   batch, untrack,
   observe, useBox, useJsx,
+  useBoxes,
   useLogic, useWrite,
   key_remini
 };
@@ -346,9 +357,5 @@ useBox.shallow()
 
 
 [] Add "readonly" function support for events
-
-[] Add "useBoxes" syntax
-
-const [x, y] = useBoxes([ $x, $y ]);
 
 */

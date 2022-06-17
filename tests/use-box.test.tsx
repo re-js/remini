@@ -4,7 +4,7 @@ import { box, useBox, write } from 'remini';
 
 describe('should work', () => {
 
-  test('useRe', () => {
+  test('useBox', () => {
     const spy = jest.fn();
     const h = box(0);
 
