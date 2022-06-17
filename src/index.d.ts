@@ -14,7 +14,7 @@ export {
 
 declare const key_remini: '.remini';
 
-interface Box<T> {};
+interface Box<T> {}
 
 declare const box: <T>(value: T) => Box<T>;
 declare const update: <P>(box: Box<P>, fn: (value: P) => P) => void;
