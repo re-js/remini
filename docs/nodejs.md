@@ -6,10 +6,12 @@ import { box, read, write, update, wrap, on } from 'remini'
 const $value = box(0)
 const $next = wrap(() => read($value) + 1)
 
-on($value, n => console.log('The current value:', n))
+on($next, n => console.log('Next value: ' + n))
 
-update($value, n => n + 1)  // The current value: 1
-write($value, 2)            // The current value: 2
+update($value, n => n + 1)  // Next value: 2
+write($value, 2)            // Next value: 3
 
 console.log(read($next))    // 3
 ```
+
+[Try it on RunKit](https://runkit.com/betula/62ac2287cdb97e00080fc9d5)
