@@ -25,7 +25,7 @@ export const $darkMode = box(false)
 
 // create a function that should change dark mode to opposite each time calling
 export const toggleDarkMode = () => {
-  update($darkMode, (enabled) => !enabled)
+  update($darkMode, enabled => !enabled)
 }
 ```
 
@@ -61,7 +61,7 @@ For accessing storage we will use the "localStorage" browser API. We will call "
 write($darkMode, localStorage.getItem('darkMode') === 'on')
 
 // update user choice in browser local storage each time then it changed
-on($darkMode, (enabled) => {
+on($darkMode, enabled => {
   localStorage.setItem('darkMode', enabled ? 'on' : 'off')
 })
 ```

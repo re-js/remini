@@ -21,12 +21,8 @@ And you can make cached selectors for performance optimization reasons.
 import { map } from 'remini'
 import { $store } from './remini-store'
 
-export const $user = map($store, (state) => state.user)
-
-export const $fullName = map(
-  $user,
-  (user) => `${user.firstName} ${user.lastName}`
-)
+export const $user = map($store, state => state.user)
+export const $fullName = map($user, user => `${user.firstName} ${user.lastName}`)
 ```
 
 And use it everywhere.

@@ -6,12 +6,15 @@ export {
   unsubs, un,
   batch, untrack,
   observe, useBox, useJsx,
-  key_remini
+  useLogic, useWrite,
+  key_remini,
+
+  Box
 };
 
 declare const key_remini: '.remini';
 
-type Box<T> = {};
+interface Box<T> {};
 
 declare const box: <T>(value: T) => Box<T>;
 declare const update: <P>(box: Box<P>, fn: (value: P) => P) => void;
@@ -47,3 +50,11 @@ declare const observe: any;
 declare const useBox: <P>(box: Box<P>) => P;
 
 declare function useJsx(...args: any[]): any;
+
+declare const useLogic: {
+  <M>(target: (new () => M) | (() => M)): M;
+  <M, T extends any[]>(target: (new (box: Box<T>) => M) | ((box: Box<T>) => M), deps: T): M;
+  <M>(target: (new () => M) | (() => M), deps: any[]): M;
+};
+
+declare function useWrite(...args: any[]): any;
