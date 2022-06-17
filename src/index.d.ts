@@ -48,7 +48,10 @@ declare function batch(...args: any[]): any;
 declare function untrack(...args: any[]): any;
 
 
-declare function single(...args: any[]): any;
+declare const single: {
+  <M>(target: (new () => M) | (() => M)): M;
+}
+
 declare function free(...args: any[]): any;
 declare function mock(...args: any[]): any;
 declare function unmock(...args: any[]): any;
