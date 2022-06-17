@@ -18,7 +18,6 @@ try {
 
 const key_remini = '.remini';
 const key_fn = 'fn';
-const key_all = 'all';
 const key_unsafe = 'unsafe';
 const key_untrack = 'untrack';
 const key_function = 'function';
@@ -193,10 +192,8 @@ const map = (r, fn) => (
 
 
 //
-// Single
+// Instantiate
 //
-
-const single_map = new Map();
 
 const _inst = (target, args) => {
   args = args || [];
@@ -214,44 +211,6 @@ const _inst = (target, args) => {
   }
   return [instance, unsub];
 };
-
-const single = (target) => {
-  let rec = single_map.get(target);
-  if (!rec) {
-    rec = _inst(target);
-    single_map.set(target, rec);
-  }
-  return rec[0];
-};
-
-const free = (...targets) => {
-  try {
-    targets.forEach((target) => {
-      const rec = single_map.get(target);
-      rec && rec[1]();
-    });
-  } finally {
-    targets.forEach((target) => single_map.delete(target));
-  }
-};
-free[key_all] = () => {
-  single_map.forEach((h) => h[1]());
-  single_map.clear();
-};
-
-const mock = (target, mocked) => (
-  single_map.set(target, [mocked, () => {}, 1]),
-  mocked
-);
-
-const unmock = (...targets) => (
-  targets.forEach(target => single_map.delete(target))
-);
-unmock[key_all] = () => (
-  single_map.forEach((h, k) => h[2] && single_map.delete(k))
-);
-
-const clear = () => single_map.clear();
 
 
 //
@@ -353,6 +312,7 @@ const useLogic = (target, deps) => {
 
 const useWrite = write;
 
+
 //
 // Exports
 //
@@ -363,7 +323,6 @@ module.exports = {
   event, fire, filter, map,
   unsubs, un,
   batch, untrack,
-  single, free, mock, unmock, clear,
   observe, useBox, useJsx,
   useBoxes,
   useLogic, useWrite,

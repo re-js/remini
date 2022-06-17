@@ -5,7 +5,6 @@ export {
   event, fire, filter, map,
   unsubs, un,
   batch, untrack,
-  single, free, mock, unmock, clear,
   observe, useBox, useJsx,
   useBoxes,
   useLogic, useWrite,
@@ -46,17 +45,6 @@ declare function un(...args: any[]): any;
 
 declare function batch(...args: any[]): any;
 declare function untrack(...args: any[]): any;
-
-
-declare const single: {
-  <M>(target: (new () => M) | (() => M)): M;
-}
-
-declare function free(...args: any[]): any;
-declare function mock(...args: any[]): any;
-declare function unmock(...args: any[]): any;
-declare function clear(...args: any[]): any;
-
 
 declare const observe: any;
 

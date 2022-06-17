@@ -1,8 +1,5 @@
 {
   "testEnvironment": "jest-environment-jsdom",
-  "setupFilesAfterEnv": [
-    "<rootDir>/jest"
-  ],
   "modulePathIgnorePatterns": [
     "<rootDir>/src/"
   ],
