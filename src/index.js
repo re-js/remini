@@ -347,4 +347,8 @@ useBox.shallow()
 
 [] Add "readonly" function support for events
 
+[] Add "useBoxes" syntax
+
+const [x, y] = useBoxes([ $x, $y ]);
+
 */
