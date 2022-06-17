@@ -1,21 +1,10 @@
-import {
+const {
   sel,
   expr,
-  box as _flat_box,
-  untrack as _flat_untrack,
-  batch as _flat_batch
-} from 'reactive-box';
-
-
-export {
-  box, wrap, read, write, update, readonly,
-  on, once, sync, cycle,
-  event, fire, filter, map,
-  unsubs, un,
-  batch, untrack,
-  observe, useBox, useJsx,
-  key_remini
-};
+  box: _flat_box,
+  untrack: _flat_untrack,
+  batch: _flat_batch
+} = require('reactive-box');
 
 
 let React;
@@ -263,6 +252,21 @@ const useBox = (target, deps) => {
 };
 
 const useJsx = (fn, deps) => React.useMemo(() => observe(fn), deps || []);
+
+
+//
+// Exports
+//
+
+module.exports = {
+  box, wrap, read, write, update, readonly,
+  on, once, sync, cycle,
+  event, fire, filter, map,
+  unsubs, un,
+  batch, untrack,
+  observe, useBox, useJsx,
+  key_remini
+};
 
 
 //
