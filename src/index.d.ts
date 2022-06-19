@@ -5,8 +5,8 @@ export {
   event, fire, filter, map,
   unsubs, un,
   batch, untrack,
-  observe, useBox, useJsx,
-  useBoxes,
+  observe, useBox, useBoxes, useJsx,
+  prop, cache,
   key_remini,
 
   Box
@@ -44,6 +44,9 @@ declare function un(...args: any[]): any;
 
 declare function batch(...args: any[]): any;
 declare function untrack(...args: any[]): any;
+
+declare const prop: any;
+declare const cache: any;
 
 declare const observe: any;
 

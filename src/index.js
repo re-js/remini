@@ -209,25 +209,35 @@ const map = (r, fn) => (
 
 
 //
-// Instantiate
+// Decorator functions "prop" and "cache"
 //
 
-const _inst = (target, args) => {
-  args = args || [];
-  let instance, unsub;
-  const collect = _flat_unsubs();
-  const track = _flat_untrack();
-  try {
-    instance =
-      !target.prototype
-        ? target(...args)
-        : new target(...args);
-  } finally {
-    unsub = collect();
-    track();
+const obj_def_prop = Object.defineProperty;
+const obj_def_box_prop = (o, p, init) => (
+  (init = _flat_box(init && init())),
+  obj_def_prop(o, p, { get: init[0], set: init[1] })
+);
+
+const prop = (_target, key, descriptor) => (
+  (_target = descriptor && descriptor.initializer), {
+    get() {
+      obj_def_box_prop(this, key, _target);
+      return this[key];
+    },
+    set(value) {
+      obj_def_box_prop(this, key, _target);
+      this[key] = value;
+    },
   }
-  return [instance, unsub];
-};
+);
+
+const cache = (_target, key, descriptor) => ({
+  get() {
+    const [get] = sel(descriptor.get);
+    obj_def_prop(this, key, { get });
+    return this[key];
+  }
+});
 
 
 //
@@ -313,8 +323,8 @@ module.exports = {
   event, fire, filter, map,
   unsubs, un,
   batch, untrack,
-  observe, useBox, useJsx,
-  useBoxes,
+  observe, useBox, useBoxes, useJsx,
+  prop, cache,
   key_remini
 };
 
