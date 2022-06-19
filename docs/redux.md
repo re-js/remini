@@ -28,7 +28,7 @@ export const $fullName = map($user, user => `${user.firstName} ${user.lastName}`
 And use it everywhere.
 
 ```javascript
-import { useBox } from 'remini'
+import { useBox } from 'remini/react'
 import { $fullName } from './remini-selectors'
 
 export const UserInfo = () => {

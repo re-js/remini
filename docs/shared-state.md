@@ -9,7 +9,8 @@ Architecture with a shared state provides more simplest code. You can control yo
 ## Simple counter demo
 
 ```javascript
-import { box, update, useBox } from 'remini';
+import { box, update } from 'remini';
+import { useBox } from 'remini/react';
 
 const $count = box(0)
 const inc = () => update($count, c => c + 1)
@@ -42,7 +43,8 @@ export const reset = () => write($count, 0)
 ```
 
 ```javascript
-import { observe, read } from 'remini'
+import { read } from 'remini'
+import { observe } from 'remini/react'
 import { $count, $next, inc, reset } from './counter.shared'
 
 const Counter = observe(() => (
@@ -67,3 +69,5 @@ export const App = () => (
 ```
 
 [![Edit Counter with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/counter-with-remini-mp2ldi?file=/src/App.js)
+
+And configure [babel jsx wrapper](https://github.com/betula/babel-plugin-jsx-wrapper) for automatic observation arrow function components if you want.

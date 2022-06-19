@@ -34,7 +34,7 @@ Now we can read and subscribe to dark mode changes everywhere we need.
 For easy binding to the React components, the `useBox` hook function is used. It allows you to get the value of the reactive variable, as well as automatically update the React component when the value changes.
 
 ```javascript
-import { useBox } from 'remini'
+import { useBox } from 'remini/react'
 import { $darkMode, toggleDarkMode } from './dark-mode.shared'
 
 export const DarkModeButton = () => {
