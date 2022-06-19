@@ -3,7 +3,6 @@
     "noImplicitAny": false,
     "module": "commonjs",
     "target": "es2015",
-    "jsx": "react",
     "allowJs": true,
     "esModuleInterop": true,
     "declaration": true,
@@ -13,7 +12,11 @@
     "strict": true,
     "baseUrl": "./",
     "paths": {
-      "remini": ["src"]
+      "react": ["node_modules/react"],
+      "remini": ["src"],
+      "remini/react": ["react/src"],
+      "remini/preact": ["preact/src"],
+      "remini/hooks-bindings": ["hooks-bindings/src"]
     },
   },
   "include": ["tests/**/*.ts", "tests/**/*.tsx"],

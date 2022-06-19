@@ -1,8 +1,9 @@
-import React from 'react';
+import { html } from 'htm/react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { box, useBox, write } from 'remini';
+import { box, write } from 'remini';
+import { useBox } from 'remini/react';
 
-describe('should work', () => {
+describe('should work react', () => {
 
   test('useBox', () => {
     const spy = jest.fn();
@@ -11,10 +12,10 @@ describe('should work', () => {
     function A() {
       const val = useBox(h);
       spy(val);
-      return <button onClick={() => write(h, 20)} />;
+      return html`<button onClick=${() => write(h, 20)} />`;
     }
 
-    render(<A />);
+    render(html`<${A} />`);
     expect(spy).toBeCalledWith(0); spy.mockReset();
 
     fireEvent.click(screen.getByRole('button'));

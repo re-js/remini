@@ -1,0 +1,15 @@
+{
+  "name": "remini-preact",
+  "version": "0.0.0",
+  "description": "Preact bindings for Remini",
+  "private": true,
+  "license": "MIT",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "peerDependencies": {
+    "preact": ">=10.2",
+    "remini": ">=0.2"
+  },
+  "author": "Slava Bereza <mail@betula.co> (http://betula.co)",
+  "sideEffects": false
+}

@@ -13,10 +13,14 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "files": [
-    "src"
+    "src",
+    "hooks-bindings",
+    "preact",
+    "react"
   ],
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "clear-cache": "jest --clearCache"
   },
   "dependencies": {
     "reactive-box": "0.8.0"
@@ -28,12 +32,14 @@
     "@babel/preset-env": "7.17.10",
     "@babel/preset-react": "7.16.7",
     "@babel/preset-typescript": "7.16.7",
+    "@testing-library/preact": "3.2.2",
     "@testing-library/react": "13.2.0",
     "@types/jest": "27.5.0",
     "@types/react": "18.0.9",
-    "babel-jest": "28.1.0",
-    "jest": "28.1.0",
-    "jest-environment-jsdom": "28.1.0",
+    "babel-jest": "28.1.1",
+    "htm": "3.1.1",
+    "jest": "28.1.1",
+    "jest-environment-jsdom": "28.1.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "preact": "10.8.1"

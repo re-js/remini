@@ -1,8 +1,10 @@
-import React from 'react';
-import { render, act } from '@testing-library/react';
-import { box, useBoxes, write } from 'remini';
+import { html } from 'htm/preact';
+import { render, act } from '@testing-library/preact';
+import { box, write } from 'remini';
+import { useBoxes } from 'remini/preact';
 
-describe('should work', () => {
+
+describe('should work preact', () => {
 
   test('useBoxes', () => {
     const spy = jest.fn();
@@ -12,10 +14,10 @@ describe('should work', () => {
     function A() {
       const [a,b] = useBoxes([$a, $b]);
       spy(a, b);
-      return <></>;
+      return html`<i></i>`;
     }
 
-    render(<A />);
+    render(html`<${A} />`);
     expect(spy).toBeCalledWith(0, 0); spy.mockReset();
 
     act(() => write($a, 1));

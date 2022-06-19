@@ -7,7 +7,17 @@
     "<rootDir>/tests/**/*.test.ts*"
   ],
   "moduleNameMapper": {
-    "remini": "<rootDir>/src"
+    "^remini$": "<rootDir>/src",
+    "^remini/react$": "<rootDir>/react/src",
+    "^remini/preact$": "<rootDir>/preact/src",
+    "^remini/hooks-bindings": "<rootDir>/hooks-bindings/src",
+    "^htm/preact$": "<rootDir>/node_modules/htm/preact/index.umd.js",
+    "^htm/react$": "<rootDir>/node_modules/htm/react/index.umd.js",
+    "^htm$": "<rootDir>/node_modules/htm/dist/htm.umd.js",
+    "^preact$": "<rootDir>/node_modules/preact/dist/preact.umd.js",
+    "^@testing-library/preact$": "<rootDir>/node_modules/@testing-library/preact/dist/cjs/index.js",
+    "^preact/hooks$": "<rootDir>/node_modules/preact/hooks/dist/hooks.umd.js",
+    "^preact/test-utils$": "<rootDir>/node_modules/preact/test-utils/dist/testUtils.umd.js"
   },
   "coveragePathIgnorePatterns": [
     "node_modules",

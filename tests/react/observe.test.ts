@@ -1,21 +1,23 @@
-import React from 'react';
+import { forwardRef } from 'react';
+import { html } from 'htm/react';
 import { act } from 'react-dom/test-utils';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { box, read, write, update, observe } from 'remini';
+import { box, read, write, update } from 'remini';
+import { observe } from 'remini/react';
 
 type ForwardRefButtonProps = {
   r: any;
   onClick: () => void;
 };
-const ForwardRefButton = React.forwardRef<HTMLButtonElement, ForwardRefButtonProps>(
+const ForwardRefButton = forwardRef<HTMLButtonElement, ForwardRefButtonProps>(
   observe.nomemo((props, ref) => (
-    <button ref={ref} onClick={props.onClick}>
-      {read(props.r)}
-    </button>
+    html`<button ref=${ref} onClick=${props.onClick}>
+      ${read(props.r)}
+    </button>`
   ))
 );
 
-describe('should work', () => {
+describe('should work react', () => {
 
   test('observe', () => {
     const spy = jest.fn();
@@ -23,10 +25,10 @@ describe('should work', () => {
 
     const A = observe(() => {
       spy(read(h));
-      return <button onClick={() => write(h, 20)} />;
+      return html`<button onClick=${() => write(h, 20)} />`;
     });
 
-    render(<A />);
+    render(html`<${A} />`);
     expect(spy).toBeCalledWith(0); spy.mockReset();
 
     fireEvent.click(screen.getByRole('button'));
@@ -43,10 +45,10 @@ describe('should work', () => {
     const add = () => update(r, (v) => v + 'a');
 
     function A() {
-      return <ForwardRefButton onClick={add} r={r} ref={(n: any) => (node = n)} />;
+      return html`<${ForwardRefButton} onClick=${add} r=${r} ref=${(n: any) => (node = n)} />`;
     }
 
-    render(<A />);
+    render(html`<${A} />`);
 
     expect(node).toBeInstanceOf(HTMLButtonElement);
 
@@ -61,10 +63,10 @@ describe('should work', () => {
     const a = box(0);
     const b = box(0);
 
-    const B = observe(() => (spy(), <i>{read(b)}</i>));
-    const A = observe(() => <><b>{read(a)}</b><B /></>);
+    const B = observe(() => (spy(), html`<i>${read(b)}</i>`));
+    const A = observe(() => html`<u><b>${read(a)}</b><${B} /></u>`);
 
-    render(<A />);
+    render(html`<${A} />`);
 
     expect(spy).toBeCalledTimes(1); spy.mockReset();
 
