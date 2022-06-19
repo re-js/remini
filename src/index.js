@@ -22,14 +22,17 @@ try {
 }
 /* istanbul ignore next */
 catch {
-  // Preact optional require.
-  const Hooks = require('preact/hooks');
+  try {
+    // Preact optional require.
+    const Preact = require('preact/hooks');
 
-  useReducer = Hooks.useReducer;
-  useEffect = Hooks.useEffect;
-  useRef = Hooks.useRef;
-  useMemo = Hooks.useMemo;
-  memo = fn => fn; // Preact hasn't memo
+    useReducer = Preact.useReducer;
+    useEffect = Preact.useEffect;
+    useRef = Preact.useRef;
+    useMemo = Preact.useMemo;
+    memo = fn => fn; // Preact hasn't memo
+  }
+  catch {}
 }
 
 
