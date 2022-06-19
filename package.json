@@ -1,7 +1,7 @@
 {
   "name": "remini",
   "version": "0.3.0",
-  "description": "Simple and powerful state management in React",
+  "description": "2 kB Simple and powerful state management in React and Preact",
   "repository": {
     "url": "https://github.com/betula/remini"
   },
@@ -64,6 +64,7 @@
     "state management",
     "react hooks",
     "react",
+    "preact",
     "typescript",
     "javascript",
     "remini"
