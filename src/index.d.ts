@@ -7,7 +7,6 @@ export {
   batch, untrack,
   observe, useBox, useJsx,
   useBoxes,
-  useLogic, useWrite,
   key_remini,
 
   Box
@@ -60,11 +59,3 @@ declare const useBoxes: {
 }
 
 declare function useJsx(...args: any[]): any;
-
-declare const useLogic: {
-  <M>(target: (new () => M) | (() => M)): M;
-  <M, T extends any[]>(target: (new (box: Box<T>) => M) | ((box: Box<T>) => M), deps: T): M;
-  <M>(target: (new () => M) | (() => M), deps: any[]): M;
-};
-
-declare function useWrite(...args: any[]): any;

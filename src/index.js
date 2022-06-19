@@ -302,33 +302,6 @@ const useBoxes = (targets, deps) => {
 
 const useJsx = (fn, deps) => useMemo(() => observe(fn), deps || []);
 
-const useLogic = (target, deps) => {
-  deps || (deps = []);
-  const force_update = context_is_observe || useForceUpdate();
-  const h = useMemo(() => {
-    const p = box(deps);
-    const i = _inst(target, [p]);
-
-    let ret_re_uns;
-    const is_ret_re = i[0] && i[0][key_remini];
-    if (is_ret_re && !context_is_observe) {
-      ret_re_uns = unsubs(() => on(i[0], force_update));
-    }
-
-    const ret = () => is_ret_re ? read(i[0]) : i[0];
-    const uns = () => (i[1](), ret_re_uns && ret_re_uns());
-
-    return [ret, () => uns, p];
-  }, []);
-
-  useMemo(() => write(h[2], deps), deps);
-  useEffect(h[1], [h]);
-
-  return h[0]();
-};
-
-const useWrite = write;
-
 
 //
 // Exports
@@ -342,7 +315,6 @@ module.exports = {
   batch, untrack,
   observe, useBox, useJsx,
   useBoxes,
-  useLogic, useWrite,
   key_remini
 };
 
