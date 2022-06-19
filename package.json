@@ -36,10 +36,14 @@
     "react-dom": "18.1.0"
   },
   "peerDependencies": {
-    "react": ">=16.8"
+    "react": ">=16.8",
+    "preact": ">=10.2"
   },
   "peerDependenciesMeta": {
     "react": {
+      "optional": true
+    },
+    "preact": {
       "optional": true
     }
   },

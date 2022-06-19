@@ -7,13 +7,30 @@ const {
 } = require('reactive-box');
 
 
-let React;
+let useReducer, useEffect, useRef, useMemo, memo;
 
 /* istanbul ignore next */
 try {
   // React optional require.
-  React = require('react');
-} catch {}
+  const React = require('react');
+
+  useReducer = React.useReducer;
+  useEffect = React.useEffect;
+  useRef = React.useRef;
+  useMemo = React.useMemo;
+  memo = React.memo;
+}
+/* istanbul ignore next */
+catch {
+  // Preact optional require.
+  const Hooks = require('preact/hooks');
+
+  useReducer = Hooks.useReducer;
+  useEffect = Hooks.useEffect;
+  useRef = Hooks.useRef;
+  useMemo = Hooks.useMemo;
+  memo = fn => fn; // Preact hasn't memo
+}
 
 
 const key_remini = '.remini';
@@ -221,15 +238,15 @@ let context_is_observe;
 let observe_no_memo_flag;
 
 const useForceUpdate = () => (
-  React.useReducer(() => [], [])[1]
+  useReducer(() => [], [])[1]
 );
 
 const observe = ((target) => {
   function fn() {
     const force_update = useForceUpdate();
-    const ref = React.useRef();
+    const ref = useRef();
     if (!ref.current) ref.current = expr(target, force_update);
-    React.useEffect(() => ref.current[1], []);
+    useEffect(() => ref.current[1], []);
 
     const stack = context_is_observe;
     context_is_observe = 1;
@@ -241,7 +258,7 @@ const observe = ((target) => {
   }
   return observe_no_memo_flag
     ? ((observe_no_memo_flag = 0), fn)
-    : React.memo(fn)
+    : memo(fn)
 });
 
 observe[key_nomemo] = (target) => (
@@ -253,7 +270,7 @@ observe[key_nomemo] = (target) => (
 const useBox = (target, deps) => {
   deps || (deps = []);
   const force_update = context_is_observe || useForceUpdate();
-  const h = React.useMemo(() => {
+  const h = useMemo(() => {
     if (!target) return [target, () => {}];
     if (target[key_remini] && target[key_remini][0]) target = target[key_remini][0];
 
@@ -269,7 +286,7 @@ const useBox = (target, deps) => {
     }
   }, deps);
 
-  context_is_observe || React.useEffect(h[1], [h]);
+  context_is_observe || useEffect(h[1], [h]);
   return h[2] ? h[0]() : h[0];
 };
 
@@ -283,12 +300,12 @@ const useBoxes = (targets, deps) => {
   }, deps);
 };
 
-const useJsx = (fn, deps) => React.useMemo(() => observe(fn), deps || []);
+const useJsx = (fn, deps) => useMemo(() => observe(fn), deps || []);
 
 const useLogic = (target, deps) => {
   deps || (deps = []);
   const force_update = context_is_observe || useForceUpdate();
-  const h = React.useMemo(() => {
+  const h = useMemo(() => {
     const p = box(deps);
     const i = _inst(target, [p]);
 
@@ -304,8 +321,8 @@ const useLogic = (target, deps) => {
     return [ret, () => uns, p];
   }, []);
 
-  React.useMemo(() => write(h[2], deps), deps);
-  React.useEffect(h[1], [h]);
+  useMemo(() => write(h[2], deps), deps);
+  useEffect(h[1], [h]);
 
   return h[0]();
 };
