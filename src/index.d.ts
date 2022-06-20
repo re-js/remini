@@ -32,7 +32,7 @@ export declare const isolate: {
 }
 
 export declare const un: {
-  (fn: () => any): () => void;
+  <M extends () => any>(fn: M): M;
 }
 
 export declare const batch: {
