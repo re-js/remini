@@ -25,28 +25,22 @@ const _flat_unsubs = () => {
   return () => {
     const unsubs = context_unsubs;
     context_unsubs = stack;
-    return () => unsubs && unsubs.forEach(fn => fn());
+    return () => unsubs && (unsubs.forEach(fn => fn()), unsubs.length = 0);
   };
 };
 
-const _safe_call = (fn, m, k /* 0 - return fn(), 1 - return f() */, ctx, args) => {
+const _safe_call = (fn, m, ctx, args) => {
   const f = m();
-  try {
-    const v = fn.apply(ctx, args);
-    if (!k) return v;
-  }
-  finally {
-    const v = f();
-    if (k) return v;
-  }
+  try { return fn.apply(ctx, args) }
+  finally { f() }
 }
-const _safe_scope_fn = (m, k) => (
+const _safe_scope_fn = (m) => (
   (fn) => function () {
-    return _safe_call(fn, m, k, this, arguments);
+    return _safe_call(fn, m, this, arguments);
   }
 );
-const _safe_scope = (m, k) => (
-  (fn) => _safe_call(fn, m, k)
+const _safe_scope = (m) => (
+  (fn) => _safe_call(fn, m)
 );
 
 const batch = _safe_scope(_flat_batch);
@@ -57,13 +51,17 @@ const untrack = _safe_scope(_flat_untrack);
 const untrack_fn = untrack[key_fn] = _safe_scope_fn(_flat_untrack);
 untrack[key_unsafe] = _flat_untrack;
 
-const unsubs = _safe_scope(_flat_unsubs, 1);
-unsubs[key_fn] = _safe_scope_fn(_flat_unsubs, 1);
-unsubs[key_unsafe] = _flat_unsubs;
+const isolate = (fn) => {
+  const f = _flat_unsubs();
+  let v;
+  try { v = fn() }
+  finally { return [v, f()] }
+}
+isolate[key_unsafe] = _flat_unsubs;
 
 
 const un = (unsub) => (
-  unsub && context_unsubs && context_unsubs.push(unsub)
+  unsub && context_unsubs && context_unsubs.push(unsub) && unsub
 );
 
 
@@ -220,7 +218,7 @@ module.exports = {
   box, wrap, read, write, update, readonly,
   on, once, sync, cycle,
   event, fire, filter, map,
-  unsubs, un,
+  isolate, un,
   batch, untrack,
   prop, cache,
   key_remini

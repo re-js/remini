@@ -26,9 +26,14 @@ export declare function fire(...args: any[]): any;
 export declare function filter(...args: any[]): any;
 export declare function map(...args: any[]): any;
 
-export declare function unsubs(...args: any[]): any;
-export declare function un(...args: any[]): any;
+export declare const isolate: {
+  <T>(fn: () => T): [T, () => void];
+  unsafe: () => () => () => void;
+}
 
+export declare const un: {
+  (fn: () => any): () => void;
+}
 
 export declare const batch: {
   <T>(fn: () => T): T;

@@ -2,6 +2,7 @@ import {
   box, wrap, read, write, update, readonly,
   on, once, sync, cycle,
   event, fire, filter, map, batch, untrack,
+  isolate, un
 } from 'remini';
 
 describe('should works', () => {
@@ -270,6 +271,29 @@ describe('should works', () => {
     write(b, 1);
     write(c, 1);
     expect(spy).toBeCalledTimes(0);
+  });
+
+  test('un', () => {
+    const a_spy = jest.fn();
+    const b_spy = jest.fn();
+
+    const [i, u] = isolate(() => {
+      un(a_spy);
+      un(b_spy);
+      return 10;
+    });
+
+    expect(i).toBe(10);
+    expect(a_spy).toBeCalledTimes(0);
+    expect(b_spy).toBeCalledTimes(0);
+
+    u();
+    expect(a_spy).toBeCalledTimes(1); a_spy.mockReset();
+    expect(b_spy).toBeCalledTimes(1); b_spy.mockReset();
+
+    u();
+    expect(a_spy).toBeCalledTimes(0);
+    expect(b_spy).toBeCalledTimes(0);
   });
 });
 
