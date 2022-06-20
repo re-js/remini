@@ -106,6 +106,7 @@ My answer is **Remini** 😍
 - [Shared state](./docs/shared-state.md)
 - [Work together with Redux](./docs/redux.md)
 - [Pure reactivity in Node.js](./docs/nodejs.md)
+- [TRFP](./docs/class-decorators.md)
 
 ```bash
 npm install remini
