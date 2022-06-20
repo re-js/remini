@@ -39,4 +39,18 @@ describe('should work', () => {
     expect(spy_cache).toBeCalledTimes(1);
   });
 
+  test('prop initializer context', () => {
+    class B {
+      constructor(
+        public a: A
+      ) {};
+    }
+    class A {
+      @prop b = new B(this);
+    }
+    const a = new A();
+
+    expect(a.b.a).toBe(a);
+  });
+
 });

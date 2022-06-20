@@ -190,11 +190,11 @@ const obj_def_box_prop = (o, p, init) => (
 const prop = (_target, key, descriptor) => (
   (_target = descriptor && descriptor.initializer), {
     get() {
-      obj_def_box_prop(this, key, _target);
+      obj_def_box_prop(this, key, _target && _target.bind(this));
       return this[key];
     },
     set(value) {
-      obj_def_box_prop(this, key, _target);
+      obj_def_box_prop(this, key, _target && _target.bind(this));
       this[key] = value;
     },
   }
