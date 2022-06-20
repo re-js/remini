@@ -78,7 +78,6 @@ module.exports = (useReducer, useEffect, useRef, useMemo, memo) => {
     }, deps);
   };
 
-  const useJsx = (fn, deps) => useMemo(() => observe(fn), deps || []);
 
   return {
     observe,
