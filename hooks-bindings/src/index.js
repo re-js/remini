@@ -83,6 +83,5 @@ module.exports = (useReducer, useEffect, useRef, useMemo, memo) => {
     observe,
     useBox,
     useBoxes,
-    useJsx,
   }
 }
