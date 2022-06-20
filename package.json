@@ -1,6 +1,6 @@
 {
   "name": "remini",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "2 kB Simple and powerful state management in React and Preact",
   "repository": {
     "url": "https://github.com/betula/remini"
