@@ -295,5 +295,10 @@ describe('should works', () => {
     expect(a_spy).toBeCalledTimes(0);
     expect(b_spy).toBeCalledTimes(0);
   });
+
+  test('un should return first arg', () => {
+    const fn = () => {};
+    expect(un(fn)).toBe(fn);
+  });
 });
 

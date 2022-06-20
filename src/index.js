@@ -59,9 +59,8 @@ const isolate = (fn) => {
 }
 isolate[key_unsafe] = _flat_unsubs;
 
-
 const un = (unsub) => (
-  unsub && context_unsubs && context_unsubs.push(unsub) && unsub
+  unsub && (context_unsubs && context_unsubs.push(unsub), unsub)
 );
 
 
