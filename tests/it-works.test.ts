@@ -277,7 +277,7 @@ describe('should works', () => {
     const a_spy = jest.fn();
     const b_spy = jest.fn();
 
-    const [i, u] = isolate(() => {
+    const { result: i, unsub: u } = isolate(() => {
       un(a_spy);
       un(b_spy);
       return 10;

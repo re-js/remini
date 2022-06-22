@@ -55,7 +55,7 @@ const isolate = (fn) => {
   const f = _flat_unsubs();
   let v;
   try { v = fn() }
-  finally { return [v, f()] }
+  finally { return { result: v, unsub: f() } }
 }
 isolate[key_unsafe] = _flat_unsubs;
 

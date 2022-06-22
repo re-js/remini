@@ -27,7 +27,7 @@ export declare function filter(...args: any[]): any;
 export declare function map(...args: any[]): any;
 
 export declare const isolate: {
-  <T>(fn: () => T): [T, () => void];
+  <T>(fn: () => T): { result: T, unsub: () => void };
   unsafe: () => () => () => void;
 }
 
