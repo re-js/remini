@@ -1,29 +1,17 @@
 
 <div align="center">
 
-
 # Remini
 
-
 <img src="./logo.png" height="150" alt="Remini" />
-
-<br />
-
-## Simple and powerful state management in React and Preact
-
-
-
-<table><tr><td>
-
-- Easy to learn
-- Small and quick
-- From tiny to complex apps
-
-</td></tr></table>
-
-
-
+  
+**Simple** and powerful **state management** in React and Preact
+  
 [![npm version](https://img.shields.io/npm/v/remini?style=flat-square)](https://www.npmjs.com/package/remini) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/remini?style=flat-square)](https://bundlephobia.com/result?p=remini) [![code coverage](https://img.shields.io/coveralls/github/betula/remini?style=flat-square)](https://coveralls.io/github/betula/remini) [![typescript supported](https://img.shields.io/npm/types/typescript?style=flat-square)](./src/index.d.ts)
+
+- [x] **Easy** to learn
+- [x] Small **and quick**
+- [x] From tiny to complex apps
 
 </div>
 
