@@ -33,7 +33,7 @@ const Counter = () => {
 
 ```javascript
 // ./counter.shared.js
-import { box, wrap, read, write, shared } from 'remini'
+import { box, wrap, read, write } from 'remini'
 
 export const $count = box(0)
 export const $next = wrap(() => read($count) + 1)
