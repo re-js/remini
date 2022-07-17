@@ -26,24 +26,13 @@ export declare function fire(...args: any[]): any;
 export declare function filter(...args: any[]): any;
 export declare function map(...args: any[]): any;
 
-export declare const isolate: {
-  <T>(fn: () => T): { result: T, unsub: () => void };
-  unsafe: () => () => () => void;
-}
-
-export declare const un: {
-  <M extends () => any>(fn: M): M;
-}
-
 export declare const batch: {
   <T>(fn: () => T): T;
   fn: <M extends ((...args: any[]) => any)>(fn: M) => M;
-  unsafe: () => () => void;
 }
 export declare const untrack: {
   <T>(fn: () => T): T;
   fn: <M extends ((...args: any[]) => any)>(fn: M) => M;
-  unsafe: () => () => void;
 }
 
 export declare const prop: any;

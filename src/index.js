@@ -5,29 +5,17 @@ const {
   untrack: _flat_untrack,
   batch: _flat_batch
 } = require('reactive-box');
-
+const {
+  attach
+} = require('unsubscriber');
 
 const key_remini = '.remini';
 const key_fn = 'fn';
-const key_unsafe = 'unsafe';
-const key_untrack = 'untrack';
 
 
 //
 // Common
 //
-
-let context_unsubs;
-
-const _flat_unsubs = () => {
-  const stack = context_unsubs;
-  context_unsubs = [];
-  return () => {
-    const unsubs = context_unsubs;
-    context_unsubs = stack;
-    return () => unsubs && (unsubs.forEach(fn => fn()), unsubs.length = 0);
-  };
-};
 
 const _safe_call = (fn, m, ctx, args) => {
   const f = m();
@@ -45,23 +33,9 @@ const _safe_scope = (m) => (
 
 const batch = _safe_scope(_flat_batch);
 batch[key_fn] = _safe_scope_fn(_flat_batch);
-batch[key_unsafe] = _flat_batch;
 
 const untrack = _safe_scope(_flat_untrack);
 const untrack_fn = untrack[key_fn] = _safe_scope_fn(_flat_untrack);
-untrack[key_unsafe] = _flat_untrack;
-
-const isolate = (fn) => {
-  const f = _flat_unsubs();
-  let v;
-  try { v = fn() }
-  finally { return { result: v, unsub: f() } }
-}
-isolate[key_unsafe] = _flat_unsubs;
-
-const un = (unsub) => (
-  unsub && (context_unsubs && context_unsubs.push(unsub), unsub)
-);
 
 
 //
@@ -81,7 +55,6 @@ const wrap = (r, w) => _ent([
 ]);
 
 const read = (r) => r[key_remini][0]();
-read[key_untrack] = untrack_fn(read);
 
 const write = (r, v) => r[key_remini][1](v);
 const update = untrack_fn((r, fn) => write(r, fn(read(r))));
@@ -105,7 +78,7 @@ const _sub_fn = (m /* 1 once, 2 sync */) => untrack_fn((r, fn) => {
       : (v = e[0](), (ev_fn ? ev_fn() : v));
     ev_fn ? fn(v) : fn(v, prev);
   });
-  un(e[1]);
+  attach(e[1]);
   v = e[0]();
   if (ev_fn) v = void 0;
   if (m === 2) fn(v);
@@ -119,7 +92,7 @@ const sync = _sub_fn(2);
 const cycle = (fn) => {
   const e = expr(() => fn(stop));
   const stop = e[1];
-  un(stop);
+  attach(stop);
   e[0]();
   return stop;
 };
@@ -217,7 +190,6 @@ module.exports = {
   box, wrap, read, write, update, readonly,
   on, once, sync, cycle,
   event, fire, filter, map,
-  isolate, un,
   batch, untrack,
   prop, cache,
   key_remini

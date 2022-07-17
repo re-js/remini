@@ -23,7 +23,8 @@
     "clear-cache": "jest --clearCache"
   },
   "dependencies": {
-    "reactive-box": "0.8.0"
+    "reactive-box": "0.8.0",
+    "unsubscriber": "0.9.5"
   },
   "devDependencies": {
     "@babel/core": "7.17.10",
