@@ -19,7 +19,6 @@ export declare const readonly: <P>(box: Box<P>) => Box<P>;
 export declare function on(...args: any[]): any;
 export declare function once(...args: any[]): any;
 export declare function sync(...args: any[]): any;
-export declare function cycle(...args: any[]): any;
 
 export declare function event(...args: any[]): any;
 export declare function fire(...args: any[]): any;

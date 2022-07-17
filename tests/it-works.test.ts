@@ -1,6 +1,6 @@
 import {
   box, wrap, read, write, update, readonly,
-  on, once, sync, cycle,
+  on, once, sync,
   event, fire, filter, map, batch, untrack,
 } from 'remini';
 
@@ -138,23 +138,6 @@ describe('should works', () => {
     expect(y).toBeCalledTimes(1);
   });
 
-  test('cycle', () => {
-    const x = jest.fn();
-
-    const a = box(1);
-    const b = box(0);
-
-    cycle(() => x(read(a) + read(b)));
-
-    expect(x).toBeCalledWith(1); x.mockReset();
-
-    update(a, (v) => v + 1);
-    expect(x).toBeCalledWith(2); x.mockReset();
-
-    write(b, 1);
-    expect(x).toBeCalledWith(3);
-  });
-
   test('event', () => {
     const x = jest.fn();
 
@@ -257,12 +240,12 @@ describe('should works', () => {
     const b_fn = () => untrack(() => read(b));
     const c_fn = untrack.fn(() => read(c));
 
-    cycle(() => {
+    sync(() => {
       a_fn();
       b_fn();
       c_fn();
-      spy();
-    });
+      return {};
+    }, spy);
 
     spy.mockReset();
     write(a, 1);

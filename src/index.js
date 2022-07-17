@@ -89,14 +89,6 @@ const on = _sub_fn();
 const once = _sub_fn(1);
 const sync = _sub_fn(2);
 
-const cycle = (fn) => {
-  const e = expr(() => fn(stop));
-  const stop = e[1];
-  attach(stop);
-  e[0]();
-  return stop;
-};
-
 
 //
 // Events
@@ -188,7 +180,7 @@ const cache = (_target, key, descriptor) => ({
 
 module.exports = {
   box, wrap, read, write, update, readonly,
-  on, once, sync, cycle,
+  on, once, sync,
   event, fire, filter, map,
   batch, untrack,
   prop, cache,
