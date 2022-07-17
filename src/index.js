@@ -9,7 +9,7 @@ const {
   attach
 } = require('unsubscriber');
 
-const key_remini = '.remini';
+const key_remini = '.re';
 const key_fn = 'fn';
 
 
