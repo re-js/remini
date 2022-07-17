@@ -209,16 +209,6 @@ The readonly event of reactive variable changing
 event($a);
 
 
-[] Add shallow support
-
-box.shallow()
-wrap.shallow()
-on.shallow()
-onсe.shallow()
-sync.shallow()
-useBox.shallow()
-
-
 [] Add "readonly" function support for events
 
 */
