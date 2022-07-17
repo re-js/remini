@@ -3,12 +3,12 @@
   "version": "0.3.6",
   "description": "2 kB Simple and powerful state management in React and Preact",
   "repository": {
-    "url": "https://github.com/betula/remini"
+    "url": "https://github.com/re-js/remini"
   },
   "bugs": {
-    "url": "https://github.com/betula/remini/issues"
+    "url": "https://github.com/re-js/remini/issues"
   },
-  "homepage": "https://github.com/betula/remini#readme",
+  "homepage": "https://github.com/re-js/remini#readme",
   "license": "MIT",
   "main": "src/index.js",
   "types": "src/index.d.ts",
