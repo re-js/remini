@@ -13,9 +13,6 @@
 
 ➪ Small **and quick**
 
-➪ From tiny to complex apps
-
-
 </div>
 
 
