@@ -33,6 +33,3 @@ export declare const untrack: {
   <T>(fn: () => T): T;
   fn: <M extends ((...args: any[]) => any)>(fn: M) => M;
 }
-
-export declare const prop: any;
-export declare const cache: any;

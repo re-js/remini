@@ -143,38 +143,6 @@ const map = (r, fn) => (
 
 
 //
-// Decorator functions "prop" and "cache"
-//
-
-const obj_def_prop = Object.defineProperty;
-const obj_def_box_prop = (o, p, init) => (
-  (init = _flat_box(init && init())),
-  obj_def_prop(o, p, { get: init[0], set: init[1] })
-);
-
-const prop = (_target, key, descriptor) => (
-  (_target = descriptor && descriptor.initializer), {
-    get() {
-      obj_def_box_prop(this, key, _target && _target.bind(this));
-      return this[key];
-    },
-    set(value) {
-      obj_def_box_prop(this, key, _target && _target.bind(this));
-      this[key] = value;
-    },
-  }
-);
-
-const cache = (_target, key, descriptor) => ({
-  get() {
-    const [get] = sel(descriptor.get);
-    obj_def_prop(this, key, { get });
-    return this[key];
-  }
-});
-
-
-//
 // Exports
 //
 
@@ -183,7 +151,6 @@ module.exports = {
   on, once, sync,
   event, fire, filter, map,
   batch, untrack,
-  prop, cache,
   key_remini
 };
 
