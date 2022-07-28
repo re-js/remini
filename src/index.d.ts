@@ -1,5 +1,5 @@
 
-export declare const key_remini: '.remini';
+export declare const key_remini: '.re';
 
 export interface Box<T> {}
 
@@ -20,9 +20,6 @@ export declare function on(...args: any[]): any;
 export declare function once(...args: any[]): any;
 export declare function sync(...args: any[]): any;
 
-export declare function event(...args: any[]): any;
-export declare function fire(...args: any[]): any;
-export declare function filter(...args: any[]): any;
 export declare function map(...args: any[]): any;
 
 export declare const batch: {

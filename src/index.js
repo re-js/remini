@@ -1,9 +1,9 @@
 const {
   sel,
   expr,
-  box: _flat_box,
-  untrack: _flat_untrack,
-  batch: _flat_batch
+  box: _re_box,
+  untrack: _re_untrack,
+  batch: _re_batch
 } = require('reactive-box');
 const {
   attach
@@ -31,11 +31,11 @@ const _safe_scope = (m) => (
   (fn) => _safe_call(fn, m)
 );
 
-const batch = _safe_scope(_flat_batch);
-batch[key_fn] = _safe_scope_fn(_flat_batch);
+const batch = _safe_scope(_re_batch);
+batch[key_fn] = _safe_scope_fn(_re_batch);
 
-const untrack = _safe_scope(_flat_untrack);
-const untrack_fn = untrack[key_fn] = _safe_scope_fn(_flat_untrack);
+const untrack = _safe_scope(_re_untrack);
+const untrack_fn = untrack[key_fn] = _safe_scope_fn(_re_untrack);
 
 
 //
@@ -48,7 +48,7 @@ const _ent = (h) => {
   return ent;
 };
 
-const box = (v) => _ent(_flat_box(v));
+const box = (v) => _ent(_re_box(v));
 const wrap = (r, w) => _ent([
   (r[key_remini] ? r[key_remini][0] : sel(r)[0]),
   (w && untrack_fn((v) => w[key_remini] ? w[key_remini][1](v) : w(v)))
@@ -59,7 +59,7 @@ const read = (r) => r[key_remini][0]();
 const write = (r, v) => r[key_remini][1](v);
 const update = untrack_fn((r, fn) => write(r, fn(read(r))));
 
-const box_map = (r, v) => _ent([sel(() => v(read(r)))[0]]);
+const map = (r, v) => _ent([sel(() => v(read(r)))[0]]);
 const readonly = (r) => _ent([r[key_remini][0]]);
 
 
@@ -91,65 +91,13 @@ const sync = _sub_fn(2);
 
 
 //
-// Events
-//
-
-const event = () => {
-  const h = _flat_box([]);
-  return _ent([
-    h[0],
-    (v) => h[1]([v]),
-    sel(() => h[0]()[0])[0]
-  ]);
-};
-
-const fire = (r, v) => r[key_remini][1](v);
-
-const event_map = (r, fn) => (
-  _ent([
-    r[key_remini][0],
-    0,
-    sel(() => (
-      r[key_remini][0](),
-      untrack(() => fn(r[key_remini][2]()))
-    ))[0]
-  ])
-);
-
-const filter = (r, fn) => (
-  _ent([
-    sel((cache) => (
-      r[key_remini][0](),
-      untrack(() => {
-        const v = r[key_remini][2]();
-        return fn(v) ? v : cache;
-      })
-    ))[0],
-    0,
-    r[key_remini][2],
-  ])
-);
-
-
-//
-// Top level
-//
-
-const map = (r, fn) => (
-  r[key_remini][2]
-    ? event_map(r, fn)
-    : box_map(r, fn)
-);
-
-
-//
 // Exports
 //
 
 module.exports = {
   box, wrap, read, write, update, readonly,
   on, once, sync,
-  event, fire, filter, map,
+  map,
   batch, untrack,
   key_remini
 };
@@ -158,24 +106,3 @@ module.exports = {
 //
 // Enjoy and Happy Coding!
 //
-
-/*
-
-[] Add the query syntax:
-
-const $a = box(0)
-box($a, map((a) => a.user), map((u) => u.nickname))
-
-That expression should return readonly selected store, and
-
-const e = event();
-event(e, filter((v) => v), map(v => v * 2));
-
-The readonly event of reactive variable changing
-
-event($a);
-
-
-[] Add "readonly" function support for events
-
-*/

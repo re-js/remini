@@ -1,7 +1,7 @@
 import {
   box, wrap, read, write, update, readonly,
   on, once, sync,
-  event, fire, filter, map, batch, untrack,
+  map, batch, untrack,
 } from 'remini';
 
 describe('should works', () => {
@@ -136,70 +136,6 @@ describe('should works', () => {
     expect(read(a)).toBe(4);
     expect(x).toBeCalledTimes(1);
     expect(y).toBeCalledTimes(1);
-  });
-
-  test('event', () => {
-    const x = jest.fn();
-
-    const e = event();
-    on(e, (v) => x(v));
-
-    expect(x).toBeCalledTimes(0);
-    fire(e, 1);
-    expect(x).toBeCalledWith(1); x.mockReset();
-    fire(e, 1);
-    expect(x).toBeCalledWith(1); x.mockReset();
-    fire(e, 2);
-    expect(x).toBeCalledWith(2); x.mockReset();
-  });
-
-  test('event map', () => {
-    const x = jest.fn();
-    const y = jest.fn();
-    const z = jest.fn();
-
-    const e = event();
-    const k = map(e, (n) => (y(n), Math.ceil(n / 2)));
-
-    on(k, (v) => x(v));
-    on(k, z);
-    expect(x).toBeCalledTimes(0);
-    expect(y).toBeCalledTimes(0);
-    fire(e, 2);
-    expect(x).toBeCalledWith(1); x.mockReset();
-    expect(y).toBeCalledWith(2); y.mockReset();
-    fire(e, 2);
-    expect(x).toBeCalledWith(1); x.mockReset();
-    expect(y).toBeCalledTimes(0);
-    fire(e, 3);
-    fire(e, 3); // TODO: bug, not runned in that order
-    expect(x).toBeCalledWith(2); x.mockReset();
-    expect(y).toBeCalledWith(3);
-
-    expect(z).toHaveBeenNthCalledWith(1, 1);
-    expect(z).toHaveBeenNthCalledWith(2, 1);
-    // expect(z).toHaveBeenNthCalledWith(3, 2); // TODO: bug in reactive box
-  });
-
-  test('filter', () => {
-    const x = jest.fn();
-
-    const r = box(false);
-    const e = event();
-
-    const p = filter(e, (v) => read(r) || v % 2 === 0);
-    on(p, (n) => x(n));
-
-    fire(e, 1);
-    expect(x).toBeCalledTimes(0);
-    fire(e, 2);
-    expect(x).toBeCalledWith(2); x.mockReset();
-    fire(e, 3);
-    expect(x).toBeCalledTimes(0);
-    write(r, true);
-    expect(x).toBeCalledTimes(0);
-    fire(e, 3);
-    expect(x).toBeCalledWith(3);
   });
 
   test('batch', () => {

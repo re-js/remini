@@ -1,7 +1,7 @@
 {
   "name": "remini",
   "version": "0.4.0",
-  "description": "2 kB Simple and powerful state management in React and Preact",
+  "description": "1 kB Simple and powerful state management in React and Preact",
   "repository": {
     "url": "https://github.com/re-js/remini"
   },
@@ -64,7 +64,14 @@
     "preact",
     "typescript",
     "javascript",
-    "remini"
+    "remini",
+    "minimal",
+    "minimalistic",
+    "light",
+    "small",
+    "quick",
+    "any scale",
+    "fast"
   ],
   "browserslist": [
     "last 2 Chrome versions"
