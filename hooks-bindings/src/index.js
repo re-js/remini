@@ -1,9 +1,5 @@
 const { expr } = require('reactive-box');
-const { on, read, key_remini } = require('remini');
-
-
-const key_function = 'function';
-const key_nomemo = 'nomemo';
+const { on, read } = require('remini');
 
 //
 // Bindings factory
@@ -39,7 +35,7 @@ module.exports = (useReducer, useEffect, useRef, useMemo, memo) => {
   });
 
   if (memo) {
-    observe[key_nomemo] = (target) => (
+    observe.nomemo = (target) => (
       (observe_no_memo_flag = 1),
       observe(target)
     );
@@ -50,9 +46,9 @@ module.exports = (useReducer, useEffect, useRef, useMemo, memo) => {
     const force_update = context_is_observe || useForceUpdate();
     const h = useMemo(() => {
       if (!target) return [target, () => {}];
-      if (target[key_remini] && target[key_remini][0]) target = target[key_remini][0];
+      if (target[0]) target = target[0];
 
-      if (typeof target === key_function) {
+      if (typeof target === 'function') {
         if (context_is_observe) {
           return [target, 0, 1];
         } else {

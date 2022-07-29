@@ -1,17 +1,14 @@
 
-export declare const key_remini: '.re';
-
 type Mode = 'writable' | 'readable';
 
-export declare class BoxReadable<T, M extends Mode = 'readable'> {
-  private [key_remini]: [
-    () => T,
-    M extends 'writable'
-      ? ((value: T) => void)
-      : ((value: T) => void) | void
-  ];
-}
-export declare class Box<T> extends BoxReadable<T, 'writable'> {}
+export type BoxReadable<T, M extends Mode = 'readable'> = [
+  () => T,
+  M extends 'writable'
+    ? ((value: T) => void)
+    : ((value: T) => void) | void
+]
+
+export type Box<T> = BoxReadable<T, 'writable'>;
 
 export declare const box: <T>(value: T) => Box<T>;
 export declare const update: <P>(box: Box<P>, fn: (value: P) => P) => void;
@@ -24,7 +21,7 @@ export declare const wrap: {
   ): BoxReadable<P>;
   <P>(
     getter: (() => P) | BoxReadable<P>,
-    setter?: ((value: P) => void) | Box<P>
+    setter: ((value: P) => void) | Box<P>
   ): Box<P>;
 }
 
@@ -45,11 +42,10 @@ export declare const map: {
   <T, R>(box: BoxReadable<T>, fn: (value: T) => R): BoxReadable<R>;
 }
 
-export declare const batch: {
+type Zone = {
   <T>(fn: () => T): T;
   fn: <M extends ((...args: any[]) => any)>(fn: M) => M;
 }
-export declare const untrack: {
-  <T>(fn: () => T): T;
-  fn: <M extends ((...args: any[]) => any)>(fn: M) => M;
-}
+
+export declare const batch: Zone;
+export declare const untrack: Zone;

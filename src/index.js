@@ -1,9 +1,6 @@
 const
-  { sel, expr, box: _re_box, untrack: _re_untrack, batch: _re_batch } = require('reactive-box'),
+  { sel, expr, box, untrack: _re_untrack, batch: _re_batch } = require('reactive-box'),
   { attach } = require('unsubscriber'),
-
-
-  key_remini = '.re',
 
 
 //
@@ -35,25 +32,18 @@ const
 // Entity
 //
 
-  _ent = (h) => {
-    const ent = {};
-    ent[key_remini] = h;
-    return ent;
-  },
+  wrap = (r, w) => [
+    (r[0] ? r[0] : sel(r)[0]),
+    (w && untrack_fn((v) => w[1] ? w[1](v) : w(v)))
+  ],
 
-  box = (v) => _ent(_re_box(v)),
-  wrap = (r, w) => _ent([
-    (r[key_remini] ? r[key_remini][0] : sel(r)[0]),
-    (w && untrack_fn((v) => w[key_remini] ? w[key_remini][1](v) : w(v)))
-  ]),
+  read = (r) => r[0](),
 
-  read = (r) => r[key_remini][0](),
-
-  write = (r, v) => r[key_remini][1](v),
+  write = (r, v) => r[1](v),
   update = untrack_fn((r, fn) => write(r, fn(read(r)))),
 
-  map = (r, v) => _ent([sel(() => v(read(r)))[0]]),
-  readonly = (r) => _ent([r[key_remini][0]]),
+  map = (r, v) => [sel(() => v(read(r)))[0]],
+  readonly = (r) => [r[0]],
 
 
 //
@@ -62,7 +52,7 @@ const
 
   _sub_fn = (m /* 1 once, 2 sync */) => untrack_fn((r, fn) => {
     let v;
-    r = r[key_remini] ? r[key_remini][0] : sel(r)[0];
+    r = r[0] ? r[0] : sel(r)[0];
     const e = expr(r, () => {
       const prev = v;
       v = m === 1
@@ -89,8 +79,7 @@ module.exports = {
   box, wrap, read, write, update, readonly,
   on, once, sync,
   map,
-  batch, untrack,
-  key_remini
+  batch, untrack
 };
 
 
