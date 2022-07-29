@@ -4,7 +4,6 @@ const
 
 
   key_remini = '.re',
-  key_fn = 'fn',
 
 
 //
@@ -26,10 +25,11 @@ const
   ),
 
   batch = _safe_scope(_re_batch),
-  batch_fn = batch[key_fn] = _safe_scope_fn(_re_batch),
+  batch_fn = batch.fn = _safe_scope_fn(_re_batch),
 
   untrack = _safe_scope(_re_untrack),
-  untrack_fn = untrack[key_fn] = _safe_scope_fn(_re_untrack),
+  untrack_fn = untrack.fn = _safe_scope_fn(_re_untrack),
+
 
 //
 // Entity

@@ -70,8 +70,8 @@ describe('should works', () => {
     update(a, (v) => v + 1);
     expect(read(k)).toBe(2);
 
-    expect(() => write(k, 10)).toThrow();
-    expect(() => update(k, (v) => v + 1)).toThrow();
+    expect(() => write(k as any, 10)).toThrow();
+    expect(() => update(k as any, (v: number) => v + 1)).toThrow();
   });
 
   test('on', () => {
