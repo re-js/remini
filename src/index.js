@@ -69,18 +69,16 @@ const readonly = (r) => _ent([r[key_remini][0]]);
 
 const _sub_fn = (m /* 1 once, 2 sync */) => untrack_fn((r, fn) => {
   let v;
-  const ev_fn = r[key_remini] && r[key_remini][2];
   r = r[key_remini] ? r[key_remini][0] : sel(r)[0];
   const e = expr(r, () => {
     const prev = v;
     v = m === 1
-      ? (ev_fn ? ev_fn() : r())
-      : (v = e[0](), (ev_fn ? ev_fn() : v));
-    ev_fn ? fn(v) : fn(v, prev);
+      ? r()
+      : (v = e[0](), v);
+    fn(v, prev);
   });
   attach(e[1]);
   v = e[0]();
-  if (ev_fn) v = void 0;
   if (m === 2) fn(v);
   return e[1];
 });
