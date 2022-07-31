@@ -110,12 +110,61 @@ You should clear understand where is a place to your logic, how you can write as
 My answer is **Remini** 😍
 
 
+## Multiple stores vs single store
+
+One of the manifestations is the **multiple-store** architecture. The main reason is the independent modules decomposition. For flexible growth, you should separate your code. Your app should be built on top of separated modules composition. There is each module contains some data and logic.
+
+It’s a very good architecture decision because you can develop and test each module separately. You can easily reuse modules between projects. And when you use a lazy load for some parts of your app, you will never have any problem with it, just import it and use it. It should be simple!
+
+Ok. The first one is the **separated module decomposition**, and what's the next?
+
+If each module has its own state and logic it is very convenient to use separate stores to control data flow.
+
+At that moment the good time to make the postulate: **each store should be simple**, and never recommend to make deeply nested state. The better way is following to KISS principle.
+
+
+## Selection from store is the rendering optimization.
+
+One of the most frequently used functions during work with the state is the selection. Selection is the transformation of your state, fairly for **performance reasons**. You should update your view components **only when updated the data used inside**.
+
+For example, your user state is big it has a lot of user settings and some stuff. If you have an avatar view component, it should be updated only when the avatar changes, not for each user state update.
+
+```javascript
+import { box, map } from 'remini'
+
+const $user = box({
+  name: 'Joe',
+  email: 'a@x.com',
+  settings: {},
+  avatar: 'https://avatar.com/1.jpg'
+})
+
+const $avatar = map($user, user => user.avatar)
+```
+
+```javascript
+import { useBox } from 'remini/react'
+
+const Avatar = () => {
+  const avatar = useBox($avatar)
+  return (
+    <img src={avatar} />
+  )
+}
+```
+
+You can see how it’s easy to make that tiny, but very effective optimization!
+
+You no need to render anything you should render only what you need! No more, no less)
+
+
 ## References
 
 - [The dark mode switcher](./docs/dark-mode.md)
 - [Shared state](./docs/shared-state.md)
 - [Work together with Redux](./docs/redux.md)
 - [Pure reactivity in Node.js](./docs/nodejs.md)
+
 
 ```bash
 npm install remini
