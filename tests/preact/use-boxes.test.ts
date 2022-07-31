@@ -3,7 +3,6 @@ import { render, act } from '@testing-library/preact';
 import { box, write } from 'remini';
 import { useBoxes } from 'remini/preact';
 
-
 describe('should work preact', () => {
 
   test('useBoxes', () => {

@@ -3,14 +3,14 @@ import { html } from 'htm/react';
 import { act } from 'react-dom/test-utils';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { box, read, write, update } from 'remini';
-import { observe } from 'remini/react';
+import { component } from 'remini/react';
 
 type ForwardRefButtonProps = {
   r: any;
   onClick: () => void;
 };
 const ForwardRefButton = forwardRef<HTMLButtonElement, ForwardRefButtonProps>(
-  observe.nomemo((props, ref) => (
+  component.nomemo((props, ref) => (
     html`<button ref=${ref} onClick=${props.onClick}>
       ${read(props.r)}
     </button>`
@@ -23,7 +23,7 @@ describe('should work react', () => {
     const spy = jest.fn();
     const h = box(0);
 
-    const A = observe(() => {
+    const A = component(() => {
       spy(read(h));
       return html`<button onClick=${() => write(h, 20)} />`;
     });
@@ -63,8 +63,8 @@ describe('should work react', () => {
     const a = box(0);
     const b = box(0);
 
-    const B = observe(() => (spy(), html`<i>${read(b)}</i>`));
-    const A = observe(() => html`<u><b>${read(a)}</b><${B} /></u>`);
+    const B = component(() => (spy(), html`<i>${read(b)}</i>`));
+    const A = component(() => html`<u><b>${read(a)}</b><${B} /></u>`);
 
     render(html`<${A} />`);
 

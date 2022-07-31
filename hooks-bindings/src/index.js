@@ -14,7 +14,7 @@ module.exports = (useReducer, useEffect, useRef, useMemo, memo) => {
     useReducer(() => [], [])[1]
   );
 
-  const observe = ((target) => {
+  const component = ((target) => {
     function fn() {
       const force_update = useForceUpdate();
       const ref = useRef();
@@ -35,9 +35,9 @@ module.exports = (useReducer, useEffect, useRef, useMemo, memo) => {
   });
 
   if (memo) {
-    observe.nomemo = (target) => (
+    component.nomemo = (target) => (
       (observe_no_memo_flag = 1),
-      observe(target)
+      component(target)
     );
   }
 
@@ -76,7 +76,7 @@ module.exports = (useReducer, useEffect, useRef, useMemo, memo) => {
 
 
   return {
-    observe,
+    component,
     useBox,
     useBoxes,
   }

@@ -1,13 +1,16 @@
+import { FC, ForwardRefRenderFunction, MemoExoticComponent } from 'react';
 import { Box } from 'remini';
 
-type Observe = {
-  <R>(component: () => R): () => R;
-  <Props, R>(component: (props: Props) => R): (props: Props) => R;
-  <Props, Ref, R>(component: (props: Props, ref: Ref) => R): (props: Props, ref: Ref) => R;
+type ComponentMemoDecorator = {
+  <P extends object>(component: FC<P>): MemoExoticComponent<FC<P>>;
 }
 
-export declare const observe: Observe & {
-  nomemo: Observe
+type ComponentDecorator = {
+  <P extends object, Ref = {}>(component: ForwardRefRenderFunction<Ref, P>): ForwardRefRenderFunction<Ref, P>
+}
+
+export declare const component: ComponentMemoDecorator & {
+  nomemo: ComponentDecorator
 }
 export declare const useBox: <P>(box: Box<P, 'readable'>) => P;
 export declare const useBoxes: {

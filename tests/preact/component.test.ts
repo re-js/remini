@@ -1,8 +1,7 @@
 import { html } from 'htm/preact';
 import { render, fireEvent, screen } from '@testing-library/preact';
 import { box, read, write } from 'remini';
-import { observe } from 'remini/preact';
-
+import { component } from 'remini/preact';
 
 describe('should work preact', () => {
 
@@ -10,7 +9,7 @@ describe('should work preact', () => {
     const spy = jest.fn();
     const b = box(0);
 
-    const A = observe(() => {
+    const A = component(() => {
       spy(read(b));
       return html`<button onClick=${() => write(b, 20)} />`;
     });
