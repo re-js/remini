@@ -32,8 +32,9 @@ type Subscriber = {
   ): () => void;
 }
 
-export declare const on: Subscriber;
-export declare const once: Subscriber;
+export declare const on: Subscriber & {
+  once: Subscriber
+};
 export declare const sync: Subscriber;
 
 export declare const map: {

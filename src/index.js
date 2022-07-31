@@ -67,7 +67,7 @@ const
   }),
 
   on = _sub_fn(),
-  once = _sub_fn(1),
+  on_once = on.once = _sub_fn(1),
   sync = _sub_fn(2)
 
 
@@ -76,9 +76,12 @@ const
 //
 
 module.exports = {
-  box, wrap, read, write, update, readonly,
-  on, once, sync,
+  box,
+  read, write, update,
+  wrap,
   map,
+  on, sync,
+  readonly,
   batch, untrack
 };
 
