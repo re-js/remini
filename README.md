@@ -125,7 +125,7 @@ At that moment the good time to make the postulate: **each store should be simpl
 
 ## Selection from store
 
-One of the most frequently used functions during work with the state is the selection. Selection is the transformation of your state, fairly for **performance reasons** is the **rendering optimization**. You should update your view components only when updated the data used inside.
+One of the most frequently used functions during work with the state is the selection. Selection is the transformation of your state, fairly for **performance reasons**. You should update your view components only when updated the data used inside. This is the **rendering optimization**.
 
 For example, your user state is big it has a lot of user settings and some stuff. If you have an avatar view component, it should be updated only when the avatar changes, not for each user state update.
 
