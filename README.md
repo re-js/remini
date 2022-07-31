@@ -130,7 +130,7 @@ One of the most frequently used functions during work with the state is the sele
 For example, your user state is big it has a lot of user settings and some stuff. If you have an avatar view component, it should be updated only when the avatar changes, not for each user state update.
 
 ```javascript
-import { box, map } from 'remini'
+import { box, select } from 'remini'
 
 const $user = box({
   name: 'Joe',
@@ -139,7 +139,7 @@ const $user = box({
   avatar: 'https://avatar.com/1.jpg'
 })
 
-const $avatar = map($user, user => user.avatar)
+const $avatar = select($user, user => user.avatar)
 ```
 
 ```javascript
@@ -168,9 +168,9 @@ import { box, read, wrap } from 'remini'
 const $firstName = box('John')
 const $lastName = box('Doe')
 
-const $fullName = wrap(() => {
-  return read($firstName) + ' ' + read($lastName)
-})
+const $fullName = wrap(() => (
+  read($firstName) + ' ' + read($lastName)
+))
 ```
 
 Here we combine several stores into one for convenient use in some view components.

@@ -37,7 +37,7 @@ export declare const on: Subscriber & {
 };
 export declare const sync: Subscriber;
 
-export declare const map: {
+export declare const select: {
   <P, R>(box: Box<P, 'readable'>, fn: (value: P) => R): Box<R, 'readable'>;
 }
 

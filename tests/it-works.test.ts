@@ -1,7 +1,7 @@
 import {
   box, wrap, read, write, update, readonly,
   on, sync,
-  map, batch, untrack,
+  select, batch, untrack,
 } from 'remini';
 
 describe('should works', () => {
@@ -46,13 +46,13 @@ describe('should works', () => {
     expect(read(q)).toBe(22);
   });
 
-  test('box map', () => {
+  test('box select', () => {
     const a = box(1);
     const b = box(2);
 
-    const k = map(a, (v) => v + 5);
-    const n = map(k, (v) => '&' + v);
-    const m = map(b, (v) => v + read(n));
+    const k = select(a, (v) => v + 5);
+    const n = select(k, (v) => '&' + v);
+    const m = select(b, (v) => v + read(n));
 
     expect(read(m)).toBe('2&6');
     write(a, 10);

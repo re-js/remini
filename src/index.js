@@ -42,7 +42,7 @@ const
   write = (r, v) => r[1](v),
   update = untrack_fn((r, fn) => write(r, fn(read(r)))),
 
-  map = (r, v) => [sel(() => v(read(r)))[0]],
+  select = (r, v) => [sel(() => v(read(r)))[0]],
   readonly = (r) => [r[0]],
 
 
@@ -78,7 +78,7 @@ const
 module.exports = {
   box,
   read, write, update,
-  map,
+  select,
   wrap,
   on, sync,
   readonly,

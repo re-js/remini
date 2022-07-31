@@ -70,4 +70,4 @@ export const App = () => (
 
 [![Edit Counter with Remini](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/counter-with-remini-mp2ldi?file=/src/App.js)
 
-And configure [babel jsx wrapper](https://github.com/betula/babel-plugin-jsx-wrapper) for automatic observation arrow function components if you want.
+And configure [babel jsx wrapper](https://github.com/re-js/babel-plugin-jsx-wrapper) for automatic observation arrow function components if you want.
