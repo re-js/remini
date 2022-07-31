@@ -78,8 +78,8 @@ const
 module.exports = {
   box,
   read, write, update,
-  wrap,
   map,
+  wrap,
   on, sync,
   readonly,
   batch, untrack
