@@ -155,7 +155,7 @@ const Avatar = () => {
 
 You can see how it’s easy to make that tiny, but very effective optimization!
 
-You no need to render anything you should render only what you need! No more, no less)
+You no need to render something you should render only what you need! No more, no less)
 
 
 ## Composition of stores
