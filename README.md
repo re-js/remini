@@ -123,9 +123,9 @@ If each module has its own state and logic it is very convenient to use separate
 At that moment the good time to make the postulate: **each store should be simple**, and never recommend to make deeply nested state. The better way is following to KISS principle.
 
 
-## Selection from store is the rendering optimization.
+## Selection from store
 
-One of the most frequently used functions during work with the state is the selection. Selection is the transformation of your state, fairly for **performance reasons**. You should update your view components **only when updated the data used inside**.
+One of the most frequently used functions during work with the state is the selection. Selection is the transformation of your state, fairly for **performance reasons** is the **rendering optimization**. You should update your view components only when updated the data used inside.
 
 For example, your user state is big it has a lot of user settings and some stuff. If you have an avatar view component, it should be updated only when the avatar changes, not for each user state update.
 
@@ -156,6 +156,24 @@ const Avatar = () => {
 You can see how it’s easy to make that tiny, but very effective optimization!
 
 You no need to render anything you should render only what you need! No more, no less)
+
+
+## Composition of stores
+
+Step by step on the application growing upstairs you will have cases of the necessary combination of multiple stores to one. It should be simple)
+
+```javascript
+import { box, read, wrap } from 'remini'
+
+const $firstName = box('John')
+const $lastName = box('Doe')
+
+const $fullName = wrap(() => {
+  return read($firstName) + ' ' + read($lastName)
+})
+```
+
+Here we combine several stores into one for convenient use in some view components.
 
 
 ## References
