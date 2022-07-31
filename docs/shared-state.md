@@ -44,10 +44,10 @@ export const reset = () => write($count, 0)
 
 ```javascript
 import { read } from 'remini'
-import { observe } from 'remini/react'
+import { component } from 'remini/react'
 import { $count, $next, inc, reset } from './counter.shared'
 
-const Counter = observe(() => (
+const Counter = component(() => (
   <p>
     {read($count)}
     <button onClick={inc}>➪</button>
