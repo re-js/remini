@@ -3,7 +3,7 @@
 
 # Remini
 
-<img src="logo.png" height="150" alt="Remini" />
+<img src="https://github.com/re-js/remini/raw/main/logo.png" height="150" alt="Remini" />
   
 **Simple** and powerful **state management** in React and Preact
   
