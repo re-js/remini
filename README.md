@@ -168,9 +168,9 @@ import { box, read, wrap } from 'remini'
 const $firstName = box('John')
 const $lastName = box('Doe')
 
-const $fullName = wrap(() => (
-  read($firstName) + ' ' + read($lastName)
-))
+const $fullName = wrap(() => {
+  return read($firstName) + ' ' + read($lastName)
+})
 ```
 
 Here we combine several stores into one for convenient use in some view components.
