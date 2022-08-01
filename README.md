@@ -184,6 +184,8 @@ Here we combine several stores into one for convenient use in some view componen
 - [Pure reactivity in Node.js](./docs/nodejs.md)
 
 
+## Install
+
 ```bash
 npm install remini
 # or
