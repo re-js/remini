@@ -60,3 +60,5 @@ type Area = {
 
 export declare const batch: Area;
 export declare const untrack: Area;
+
+export declare const un: (unsubscriber: () => void) => () => void;
