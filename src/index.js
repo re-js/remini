@@ -1,6 +1,7 @@
 const
   { sel, expr, box, untrack: _re_untrack, batch: _re_batch } = require('reactive-box'),
   { attach } = require('unsubscriber'),
+  { event, listen } = require('evemin'),
 
 
 //
@@ -50,21 +51,32 @@ const
 // Subscription
 //
 
-  _sub_fn = (m /* 1 once, 2 sync */) => untrack_fn((r, fn) => {
-    let v;
-    r = r[0] ? r[0] : sel(r)[0];
-    const e = expr(r, () => {
-      const prev = v;
-      v = m === 1
-        ? r()
-        : (v = e[0](), v);
-      fn(v, prev);
-    });
-    attach(e[1]);
-    v = e[0]();
-    if (m === 2) fn(v);
-    return e[1];
-  }),
+  _sub_fn = (m /* 1 once, 2 sync */) => (r, fn) => {
+    let v, off;
+    if (typeof r === 'function' && r[0]) {
+      off = listen(r, (d) => {
+        const prev = v;
+        v = d;
+        fn(v, prev);
+      });
+      attach(off);
+
+    } else {
+      r = r[0] ? r[0] : sel(r)[0];
+      const e = expr(r, () => {
+        const prev = v;
+        v = m === 1
+          ? r()
+          : (v = e[0](), v);
+        fn(v, prev);
+      });
+      attach(off = e[1]);
+      v = e[0]();
+      if (m === 2) untrack(() => fn(v));
+    }
+
+    return off;
+  },
 
   on = _sub_fn(),
   on_once = on.once = _sub_fn(1),
@@ -82,7 +94,9 @@ module.exports = {
   wrap,
   on, sync,
   readonly,
-  batch, untrack
+  batch, untrack,
+  event,
+  un: attach
 };
 
 

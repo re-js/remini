@@ -24,7 +24,8 @@
   },
   "dependencies": {
     "reactive-box": "0.8.0",
-    "unsubscriber": "0.9.5"
+    "unsubscriber": "0.9.5",
+    "evemin": "1.0.0"
   },
   "devDependencies": {
     "@testing-library/preact": "3.2.2",

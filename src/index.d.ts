@@ -1,3 +1,5 @@
+import { Event } from 'evemin';
+export { event, Event } from 'evemin';
 
 type Mode = 'writable' | 'readable';
 
@@ -32,10 +34,20 @@ type Subscriber = {
   ): () => void;
 }
 
-export declare const on: Subscriber & {
+export declare const on: {
+  <P>(
+    target: (() => P) | Box<P, 'readable'> | Event<P>,
+    listener: (value: P, prev: P | void) => void
+  ): () => void;
+} & {
   once: Subscriber
 };
-export declare const sync: Subscriber;
+export declare const sync: {
+  <P>(
+    target: (() => P) | Box<P, 'readable'>,
+    listener: (value: P, prev: P | void) => void
+  ): () => void;
+}
 
 export declare const select: {
   <P, R>(box: Box<P, 'readable'>, fn: (value: P) => R): Box<R, 'readable'>;
