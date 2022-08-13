@@ -116,28 +116,6 @@ describe('should works', () => {
     expect(y).toBeCalledWith(5);
   });
 
-  test('on.once', () => {
-    const x = jest.fn();
-    const y = jest.fn();
-
-    const a = box(1);
-
-    on.once(() => read(a), (v) => x(v));
-    on.once(a, (v) => y(v));
-
-    expect(x).not.toBeCalled();
-    expect(y).not.toBeCalled();
-
-    write(a, 3);
-    expect(x).toBeCalledWith(3);
-    expect(y).toBeCalledWith(3);
-
-    update(a, (v) => v + 1);
-    expect(read(a)).toBe(4);
-    expect(x).toBeCalledTimes(1);
-    expect(y).toBeCalledTimes(1);
-  });
-
   test('batch', () => {
     const spy = jest.fn();
     const x = box(0);

@@ -51,13 +51,12 @@ const
 // Subscription
 //
 
-  _sub_fn = (m /* 1 once, 2 sync */) => (r, fn) => {
+  _sub_fn = (sync) => (r, fn) => {
     let v, off;
     if (typeof r === 'function' && r[0]) {
       off = listen(r, (d) => {
         const prev = v;
-        v = d;
-        fn(v, prev);
+        fn(v = d, prev);
       });
       attach(off);
 
@@ -65,22 +64,18 @@ const
       r = r[0] ? r[0] : sel(r)[0];
       const e = expr(r, () => {
         const prev = v;
-        v = m === 1
-          ? r()
-          : (v = e[0](), v);
-        fn(v, prev);
+        fn(v = e[0](), prev);
       });
       attach(off = e[1]);
       v = e[0]();
-      if (m === 2) untrack(() => fn(v));
+      if (sync) untrack(() => fn(v));
     }
 
     return off;
   },
 
   on = _sub_fn(),
-  on_once = on.once = _sub_fn(1),
-  sync = _sub_fn(2)
+  sync = _sub_fn(1)
 
 
 //
