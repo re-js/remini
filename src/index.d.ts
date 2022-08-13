@@ -3,40 +3,40 @@ export { event, Event } from 'evemin';
 
 type Mode = 'writable' | 'readable';
 
-export type Box<T, M extends Mode = 'writable'> = [
+export type Box<T, M extends Mode = 'readable'> = [
   () => T,
   M extends 'writable'
     ? ((value: T) => void)
     : ((value: T) => void) | void
 ]
 
-export declare const box: <T>(value: T) => Box<T>;
-export declare const update: <P>(box: Box<P>, fn: (value: P) => P) => void;
-export declare const read: <P>(box: Box<P, 'readable'>) => P;
-export declare const write: <P>(box: Box<P>, value: P) => void;
+export declare const box: <T>(value: T) => Box<T, 'writable'>;
+export declare const update: <P>(box: Box<P, 'writable'>, fn: (value: P) => P) => void;
+export declare const read: <P>(box: Box<P>) => P;
+export declare const write: <P>(box: Box<P, 'writable'>, value: P) => void;
 
 export declare const wrap: {
   <P>(
-    getter: (() => P) | Box<P, 'readable'>,
-  ): Box<P, 'readable'>;
-  <P>(
-    getter: (() => P) | Box<P, 'readable'>,
-    setter: ((value: P) => void) | Box<P>
+    getter: (() => P) | Box<P>,
   ): Box<P>;
+  <P>(
+    getter: (() => P) | Box<P>,
+    setter: ((value: P) => void) | Box<P, 'writable'>
+  ): Box<P, 'writable'>;
 }
 
-export declare const readonly: <P>(box: Box<P>) => Box<P, 'readable'>;
+export declare const readonly: <P>(box: Box<P>) => Box<P>;
 
 type Subscriber = {
   <P>(
-    target: (() => P) | Box<P, 'readable'>,
+    target: (() => P) | Box<P>,
     listener: (value: P, prev: P | void) => void
   ): () => void;
 }
 
 export declare const on: {
   <P>(
-    target: (() => P) | Box<P, 'readable'> | Event<P>,
+    target: (() => P) | Box<P> | Event<P>,
     listener: (value: P, prev: P | void) => void
   ): () => void;
 } & {
@@ -44,13 +44,13 @@ export declare const on: {
 };
 export declare const sync: {
   <P>(
-    target: (() => P) | Box<P, 'readable'>,
+    target: (() => P) | Box<P>,
     listener: (value: P, prev: P | void) => void
   ): () => void;
 }
 
 export declare const select: {
-  <P, R>(box: Box<P, 'readable'>, fn: (value: P) => R): Box<R, 'readable'>;
+  <P, R>(box: Box<P>, fn: (value: P) => R): Box<R>;
 }
 
 type Area = {
