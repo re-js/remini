@@ -23,9 +23,9 @@
     "clear-cache": "jest --clearCache"
   },
   "dependencies": {
-    "reactive-box": "0.8.0",
-    "unsubscriber": "0.9.5",
-    "evemin": "1.0.0"
+    "reactive-box": ">=0.8.0",
+    "unsubscriber": ">=1.0.0",
+    "evemin": ">=1.0.0"
   },
   "devDependencies": {
     "@testing-library/preact": "3.2.2",
