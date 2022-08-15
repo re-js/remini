@@ -90,8 +90,7 @@ module.exports = {
   on, sync,
   readonly,
   batch, untrack,
-  event,
-  un: attach
+  event
 };
 
 

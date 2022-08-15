@@ -27,13 +27,6 @@ export declare const wrap: {
 
 export declare const readonly: <P>(box: Box<P>) => Box<P>;
 
-type Subscriber = {
-  <P>(
-    target: (() => P) | Box<P>,
-    listener: (value: P, prev: P | void) => void
-  ): () => void;
-}
-
 export declare const on: {
   <P>(
     target: (() => P) | Box<P> | Event<P>,
@@ -58,5 +51,3 @@ type Area = {
 
 export declare const batch: Area;
 export declare const untrack: Area;
-
-export declare const un: (unsubscriber: () => void) => () => void;
