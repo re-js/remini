@@ -75,7 +75,15 @@ const
   },
 
   on = _sub_fn(),
-  sync = _sub_fn(1)
+  sync = _sub_fn(1),
+
+//
+// Javascript integration
+//
+
+  when = (r) => new Promise(ok => {
+    const stop = on(r, (v) => v && (stop(), ok()))
+  })
 
 
 //
@@ -90,7 +98,8 @@ module.exports = {
   on, sync,
   readonly,
   batch, untrack,
-  event
+  event,
+  when
 };
 
 

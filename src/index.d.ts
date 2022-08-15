@@ -51,3 +51,9 @@ type Area = {
 
 export declare const batch: Area;
 export declare const untrack: Area;
+
+export declare const when: {
+  <P>(
+    target: (() => P) | Box<P> | Event<P>
+  ): Promise<void>;
+}
