@@ -8,18 +8,20 @@ const
 // Common
 //
 
-  _safe_call = (fn, m, ctx, args) => {
+  _safe_call = (fn, ctx, args, m) => {
     const f = m();
     try { return fn.apply(ctx, args) }
     finally { f() }
   },
   _safe_scope_fn = (m) => (
     (fn) => function () {
-      return _safe_call(fn, m, this, arguments);
+      return _safe_call(fn, this, arguments, m);
     }
   ),
   _safe_scope = (m) => (
-    (fn) => _safe_call(fn, m)
+    function () {
+      return _safe_call(arguments[0], this, Array.prototype.slice.call(arguments, 1), m);
+    }
   ),
 
   batch = _safe_scope(_re_batch),
@@ -82,12 +84,16 @@ const
 // Javascript integration
 //
 
-  when = (r) => new Promise(ok => {
+  when = (r, f) => new Promise(ok => {
     const
       u = unsubscriber(),
       stop = () => run(u);
     un(stop);
-    collect(u, () => sync(r, (v) => v && (stop(), ok())));
+    collect(u, () => sync(r, (v) => (
+      ((f && untrack(f, v))
+      || (!f && v))
+      && (stop(), ok())
+    )));
   })
 
 

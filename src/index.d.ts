@@ -45,7 +45,7 @@ export declare const select: {
 }
 
 type Area = {
-  <T>(fn: () => T): T;
+  <T, M extends any[]>(fn: ((...args: M) => T), ...args: M): T;
   fn: <M extends ((...args: any[]) => any)>(fn: M) => M;
 }
 
@@ -53,7 +53,11 @@ export declare const batch: Area;
 export declare const untrack: Area;
 
 export declare const when: {
+  (
+    target: (() => any) | Box<any> | Event<any>
+  ): Promise<void>;
   <P>(
-    target: (() => P) | Box<P> | Event<P>
+    target: (() => P) | Box<P> | Event<P>,
+    filter: ((value: P) => any)
   ): Promise<void>;
 }

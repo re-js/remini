@@ -4,7 +4,7 @@ import {
 } from 'remini';
 import { unsubscriber, collect, run } from 'unsubscriber';
 
-describe('event should works', () => {
+describe('event feature', () => {
 
   test('on', () => {
     const spy = jest.fn();
