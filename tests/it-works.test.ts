@@ -237,5 +237,15 @@ describe('should works', () => {
     write(a, 1);
     expect(spy_call).toBeCalledTimes(0);
   });
+
+  test('when can be immediately', async () => {
+    const spy = jest.fn();
+    const spy_call = jest.fn();
+
+    const a = box(5);
+    when(() => (spy_call(), read(a) === 5)).then(spy);
+    await wait_next_tick();
+    expect(spy).toBeCalledTimes(1);
+  });
 });
 

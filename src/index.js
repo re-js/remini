@@ -1,6 +1,6 @@
 const
   { sel, expr, box, untrack: _re_untrack, batch: _re_batch } = require('reactive-box'),
-  { attach } = require('unsubscriber'),
+  { collect, unsubscriber, run, un } = require('unsubscriber'),
   { event, listen } = require('evemin'),
 
 
@@ -58,7 +58,7 @@ const
         const prev = v;
         fn(v = d, prev);
       });
-      attach(off);
+      un(off);
 
     } else {
       r = r[0] ? r[0] : sel(r)[0];
@@ -66,7 +66,7 @@ const
         const prev = v;
         fn(v = e[0](), prev);
       });
-      attach(off = e[1]);
+      un(off = e[1]);
       v = e[0]();
       if (sync) untrack(() => fn(v));
     }
@@ -83,7 +83,11 @@ const
 //
 
   when = (r) => new Promise(ok => {
-    const stop = on(r, (v) => v && (stop(), ok()))
+    const
+      u = unsubscriber(),
+      stop = () => run(u)
+    collect(u, () => sync(r, (v) => v && (stop(), ok())))
+    un(stop)
   })
 
 
