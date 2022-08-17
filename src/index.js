@@ -85,9 +85,9 @@ const
   when = (r) => new Promise(ok => {
     const
       u = unsubscriber(),
-      stop = () => run(u)
-    collect(u, () => sync(r, (v) => v && (stop(), ok())))
-    un(stop)
+      stop = () => run(u);
+    un(stop);
+    collect(u, () => sync(r, (v) => v && (stop(), ok())));
   })
 
 
