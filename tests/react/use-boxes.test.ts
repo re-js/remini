@@ -1,6 +1,6 @@
 import { html } from 'htm/react';
 import { render, act } from '@testing-library/react';
-import { box, write } from 'remini';
+import { box, put } from 'remini';
 import { useBoxes } from 'remini/react';
 
 describe('should work react', () => {
@@ -19,10 +19,10 @@ describe('should work react', () => {
     render(html`<${A} />`);
     expect(spy).toBeCalledWith(0, 0); spy.mockReset();
 
-    act(() => write($a, 1));
+    act(() => put($a, 1));
     expect(spy).toBeCalledWith(1, 0); spy.mockReset();
 
-    act(() => write($b, 5));
+    act(() => put($b, 5));
     expect(spy).toBeCalledWith(1, 5); spy.mockReset();
   });
 

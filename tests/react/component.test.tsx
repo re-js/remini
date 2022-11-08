@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import { html } from 'htm/react';
 import { act } from 'react-dom/test-utils';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { box, read, write, update } from 'remini';
+import { box, val, put, update } from 'remini';
 import { component } from 'remini/react';
 
 type ForwardRefButtonProps = {
@@ -12,7 +12,7 @@ type ForwardRefButtonProps = {
 const ForwardRefButton = forwardRef<HTMLButtonElement, ForwardRefButtonProps>(
   component.nomemo((props, ref) => (
     html`<button ref=${ref} onClick=${props.onClick}>
-      ${read(props.r)}
+      ${val(props.r)}
     </button>`
   ))
 );
@@ -24,8 +24,8 @@ describe('should work react', () => {
     const h = box(0);
 
     const A = component(() => {
-      spy(read(h));
-      return html`<button onClick=${() => write(h, 20)} />`;
+      spy(val(h));
+      return html`<button onClick=${() => put(h, 20)} />`;
     });
 
     render(html`<${A} />`);
@@ -63,20 +63,20 @@ describe('should work react', () => {
     const a = box(0);
     const b = box(0);
 
-    const B = component(() => (spy(), html`<i>${read(b)}</i>`));
-    const A = component(() => html`<u><b>${read(a)}</b><${B} /></u>`);
+    const B = component(() => (spy(), html`<i>${val(b)}</i>`));
+    const A = component(() => html`<u><b>${val(a)}</b><${B} /></u>`);
 
     render(html`<${A} />`);
 
     expect(spy).toBeCalledTimes(1); spy.mockReset();
 
-    act(() => write(a, 1));
+    act(() => put(a, 1));
     expect(spy).toBeCalledTimes(0);
-    act(() => write(b, 1));
+    act(() => put(b, 1));
     expect(spy).toBeCalledTimes(1); spy.mockReset();
-    act(() => write(b, 2));
+    act(() => put(b, 2));
     expect(spy).toBeCalledTimes(1); spy.mockReset();
-    act(() => write(a, 2));
+    act(() => put(a, 2));
     expect(spy).toBeCalledTimes(0);
   });
 

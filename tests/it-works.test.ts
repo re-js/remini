@@ -1,21 +1,21 @@
 import {
-  box, wrap, read, write, update, readonly,
+  box, wrap, val, put, update, readonly,
   on, sync,
-  select, batch, untrack
+  batch, untrack
 } from 'remini';
 
 describe('should works', () => {
 
-  test('re, read, write', () => {
+  test('re, val, put', () => {
     const a = box(0);
-    write(a, 10);
-    expect(read(a)).toBe(10);
+    put(a, 10);
+    expect(val(a)).toBe(10);
   });
 
   test('update', () => {
     const a = box(0);
     update(a, (v) => v + 3);
-    expect(read(a)).toBe(3);
+    expect(val(a)).toBe(3);
   });
 
   test('wrap', () => {
@@ -23,54 +23,38 @@ describe('should works', () => {
     const b = box(2);
 
     const k = wrap(a);
-    const p = wrap(() => read(a) + read(a));
-    const n = wrap(a, (v) => write(a, v + 1));
-    const m = wrap(() => read(a) + 2, (n) => update(b, (v) => v + n));
+    const p = wrap(() => val(a) + val(a));
+    const n = wrap(a, (v) => put(a, v + 1));
+    const m = wrap(() => val(a) + 2, (n) => update(b, (v) => v + n));
     const q = wrap(b, b);
 
-    expect(read(k)).toBe(1);
-    expect(read(p)).toBe(2);
-    expect(read(n)).toBe(1);
-    expect(read(m)).toBe(3);
+    expect(val(k)).toBe(1);
+    expect(val(p)).toBe(2);
+    expect(val(n)).toBe(1);
+    expect(val(m)).toBe(3);
 
-    write(n, 10);
-    expect(read(k)).toBe(11);
-    expect(read(p)).toBe(22);
-    expect(read(n)).toBe(11);
-    expect(read(m)).toBe(13);
+    put(n, 10);
+    expect(val(k)).toBe(11);
+    expect(val(p)).toBe(22);
+    expect(val(n)).toBe(11);
+    expect(val(m)).toBe(13);
 
-    write(m, 10);
-    expect(read(b)).toBe(12);
+    put(m, 10);
+    expect(val(b)).toBe(12);
 
     update(q, (v) => v + 10);
-    expect(read(q)).toBe(22);
-  });
-
-  test('box select', () => {
-    const a = box(1);
-    const b = box(2);
-
-    const k = select(a, (v) => v + 5);
-    const n = select(k, (v) => '&' + v);
-    const m = select(b, (v) => v + read(n));
-
-    expect(read(m)).toBe('2&6');
-    write(a, 10);
-    expect(read(m)).toBe('2&15');
-
-    update(b, (v) => v + 3);
-    expect(read(m)).toBe('5&15');
+    expect(val(q)).toBe(22);
   });
 
   test('readonly', () => {
     const a = box(1);
     const k = readonly(a);
 
-    expect(read(k)).toBe(1);
+    expect(val(k)).toBe(1);
     update(a, (v) => v + 1);
-    expect(read(k)).toBe(2);
+    expect(val(k)).toBe(2);
 
-    expect(() => write(k as any, 10)).toThrow();
+    expect(() => put(k as any, 10)).toThrow();
     expect(() => update(k as any, (v: number) => v + 1)).toThrow();
   });
 
@@ -81,16 +65,16 @@ describe('should works', () => {
     const a = box(1);
     const b = box(2);
 
-    on(() => read(a) + read(b), (v) => x(v));
+    on(() => val(a) + val(b), (v) => x(v));
     on(a, (v) => y(v));
 
     expect(x).not.toBeCalled();
     expect(y).not.toBeCalled();
 
-    write(b, 3);
+    put(b, 3);
     expect(x).toBeCalledWith(4); x.mockReset();
 
-    write(a, 5);
+    put(a, 5);
     expect(x).toBeCalledWith(8);
     expect(y).toBeCalledWith(5);
   });
@@ -102,18 +86,40 @@ describe('should works', () => {
     const a = box(1);
     const b = box(2);
 
-    sync(() => read(a) + read(b), (v) => x(v));
+    sync(() => val(a) + val(b), (v) => x(v));
     sync(a, (v) => y(v));
 
     expect(x).toBeCalledWith(3); x.mockReset();
     expect(y).toBeCalledWith(1); y.mockReset();
 
-    write(b, 3);
+    put(b, 3);
     expect(x).toBeCalledWith(4); x.mockReset();
 
-    write(a, 5);
+    put(a, 5);
     expect(x).toBeCalledWith(8);
     expect(y).toBeCalledWith(5);
+  });
+
+  test('on.once', () => {
+    const x = jest.fn();
+    const y = jest.fn();
+
+    const a = box(1);
+
+    on.once(() => val(a), (v) => x(v));
+    on.once(a, (v) => y(v));
+
+    expect(x).not.toBeCalled();
+    expect(y).not.toBeCalled();
+
+    put(a, 3);
+    expect(x).toBeCalledWith(3);
+    expect(y).toBeCalledWith(3);
+
+    update(a, (v) => v + 1);
+    expect(val(a)).toBe(4);
+    expect(x).toBeCalledTimes(1);
+    expect(y).toBeCalledTimes(1);
   });
 
   test('batch', () => {
@@ -121,21 +127,21 @@ describe('should works', () => {
     const x = box(0);
     const y = box(0);
 
-    on(() => read(x) + read(y), (v) => spy(v));
+    on(() => val(x) + val(y), (v) => spy(v));
 
-    write(x, 1);
-    write(y, 1);
+    put(x, 1);
+    put(y, 1);
     expect(spy).toBeCalledTimes(2); spy.mockReset();
 
     batch(() => {
-      write(x, 2);
-      write(y, 2);
+      put(x, 2);
+      put(y, 2);
     });
     expect(spy).toBeCalledTimes(1); spy.mockReset();
 
     const fn = batch.fn((k: number) => {
-      write(x, k);
-      write(y, k);
+      put(x, k);
+      put(y, k);
     });
     fn(5);
     expect(spy).toBeCalledTimes(1); spy.mockReset();
@@ -154,9 +160,9 @@ describe('should works', () => {
     const b = box(0);
     const c = box(0);
 
-    const a_fn = () => read(a);
-    const b_fn = () => untrack(() => read(b));
-    const c_fn = untrack.fn(() => read(c));
+    const a_fn = () => val(a);
+    const b_fn = () => untrack(() => val(b));
+    const c_fn = untrack.fn(() => val(c));
 
     sync(() => {
       a_fn();
@@ -166,10 +172,10 @@ describe('should works', () => {
     }, spy);
 
     spy.mockReset();
-    write(a, 1);
+    put(a, 1);
     expect(spy).toBeCalledTimes(1); spy.mockReset();
-    write(b, 1);
-    write(c, 1);
+    put(b, 1);
+    put(c, 1);
     expect(spy).toBeCalledTimes(0);
 
     untrack(spy, 10, 11, 12);

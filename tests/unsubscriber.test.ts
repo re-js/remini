@@ -1,5 +1,5 @@
 import {
-  box, read, write,
+  box, val, put,
   on, sync
 } from 'remini';
 import {
@@ -23,16 +23,16 @@ describe('should works', () => {
 
     expect(spy_sync).toBeCalledTimes(1); spy_sync.mockReset();
     expect(spy_on).toBeCalledTimes(0); spy_on.mockReset();
-    write(a, 10);
+    put(a, 10);
     expect(spy_sync).toBeCalledTimes(1); spy_sync.mockReset();
     expect(spy_on).toBeCalledTimes(1); spy_on.mockReset();
 
     run(un);
-    write(a, 11);
+    put(a, 11);
     expect(spy_sync).toBeCalledTimes(0);
     expect(spy_on).toBeCalledTimes(0);
 
-    expect(read(a)).toBe(11);
+    expect(val(a)).toBe(11);
   });
 
 

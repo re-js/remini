@@ -12,8 +12,8 @@ export type Box<T, M extends Mode = 'readable'> = [
 
 export declare const box: <T>(value: T) => Box<T, 'writable'>;
 export declare const update: <P>(box: Box<P, 'writable'>, fn: (value: P) => P) => void;
-export declare const read: <P>(box: Box<P>) => P;
-export declare const write: <P>(box: Box<P, 'writable'>, value: P) => void;
+export declare const val: <P>(box: Box<P>) => P;
+export declare const put: <P>(box: Box<P, 'writable'>, value: P) => void;
 
 export declare const wrap: {
   <P>(
@@ -32,16 +32,19 @@ export declare const on: {
     target: (() => P) | Box<P> | Event<P>,
     listener: (value: P, prev: P | void) => void
   ): () => void;
+} & {
+  once: {
+    <P>(
+      target: (() => P) | Box<P> | Event<P>,
+      listener: (value: P, prev: P | void) => void
+    ): () => void;
+  }
 };
 export declare const sync: {
   <P>(
     target: (() => P) | Box<P>,
     listener: (value: P, prev: P | void) => void
   ): () => void;
-}
-
-export declare const select: {
-  <P, R>(box: Box<P>, fn: (value: P) => R): Box<R>;
 }
 
 type Area = {
@@ -52,12 +55,8 @@ type Area = {
 export declare const batch: Area;
 export declare const untrack: Area;
 
-export declare const when: {
-  (
-    target: (() => any) | Box<any> | Event<any>
-  ): Promise<void>;
+export declare const promise: {
   <P>(
-    target: (() => P) | Box<P> | Event<P>,
-    filter: ((value: P) => any)
-  ): Promise<void>;
-}
+    target: (() => P) | Box<P> | Event<P>
+  ): Promise<P>;
+};
