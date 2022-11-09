@@ -1,6 +1,6 @@
 import {
   box, wrap, val, put, update, readonly,
-  on, sync,
+  on, once, sync,
   batch, untrack
 } from 'remini';
 
@@ -100,14 +100,14 @@ describe('should works', () => {
     expect(y).toBeCalledWith(5);
   });
 
-  test('on.once', () => {
+  test('once', () => {
     const x = jest.fn();
     const y = jest.fn();
 
     const a = box(1);
 
-    on.once(() => val(a), (v) => x(v));
-    on.once(a, (v) => y(v));
+    once(() => val(a), (v) => x(v));
+    once(a, (v) => y(v));
 
     expect(x).not.toBeCalled();
     expect(y).not.toBeCalled();

@@ -45,14 +45,13 @@ export declare const on: {
     target: (() => P) | Box<P> | Event<P>,
     listener: (value: P, prev: P | void) => void
   ): () => void;
-} & {
-  once: {
-    <P>(
-      target: (() => P) | Box<P> | Event<P>,
-      listener: (value: P, prev: P | void) => void
-    ): () => void;
-  }
 };
+export declare const once: {
+  <P>(
+    target: (() => P) | Box<P> | Event<P>,
+    listener: (value: P, prev: P | void) => void
+  ): () => void;
+}
 export declare const sync: {
   <P>(
     target: (() => P) | Box<P>,

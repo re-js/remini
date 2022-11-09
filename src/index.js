@@ -80,7 +80,7 @@ const
   },
 
   on = _sub_fn(),
-  on_once = on.once = _sub_fn(1),
+  once = _sub_fn(1),
   sync = _sub_fn(2),
 
 
@@ -88,7 +88,7 @@ const
 // Javascript integration
 //
 
-  promise = (r) => new Promise(ok => on.once(r, ok)),
+  promise = (r) => new Promise(ok => once(r, ok)),
 
 
 //
@@ -108,7 +108,7 @@ module.exports = {
   box,
   val, put, update,
   wrap,
-  on, sync,
+  on, once, sync,
   readonly,
   batch, untrack,
   event,
