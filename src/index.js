@@ -88,7 +88,16 @@ const
 // Javascript integration
 //
 
-  promise = (r) => new Promise(ok => on.once(r, ok))
+  promise = (r) => new Promise(ok => on.once(r, ok)),
+
+
+//
+// Deprecated, will remove in 2.0.0
+//
+
+  write = put,
+  read = val,
+  select = (r, f) => [sel(() => f(val(r)))[0]]
 
 
 //
@@ -104,7 +113,12 @@ module.exports = {
   batch, untrack,
   event,
   promise,
-  un
+  un,
+
+  // deprecated, will remove in 2.0.0
+  read,
+  write,
+  select
 };
 
 

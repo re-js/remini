@@ -15,6 +15,19 @@ export declare const update: <P>(box: Box<P, 'writable'>, fn: (value: P) => P) =
 export declare const val: <P>(box: Box<P>) => P;
 export declare const put: <P>(box: Box<P, 'writable'>, value: P) => void;
 
+
+/** @deprecated will be removed in 2.0.0, use "val" method instead */
+export declare const read: typeof val;
+
+/** @deprecated will be removed in 2.0.0, use "put" method instead */
+export declare const write: typeof put;
+
+/** @deprecated will be removed in 2.0.0, use "wrap" method instead */
+export declare const select: {
+  <P, R>(box: Box<P>, fn: (value: P) => R): Box<R>;
+}
+
+
 export declare const wrap: {
   <P>(
     getter: (() => P) | Box<P>,
