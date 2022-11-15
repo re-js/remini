@@ -1,6 +1,6 @@
 const
   { sel, expr, box, untrack: _re_untrack, batch: _re_batch } = require('reactive-box'),
-  { collect, unsubscriber, run, un } = require('unsubscriber'),
+  { un, unsubscriber, run, collect } = require('unsubscriber'),
   { event, listen } = require('evemin'),
 
 
@@ -35,17 +35,15 @@ const
 // Entity
 //
 
-  wrap = (r, w) => [
-    (r[0] ? r[0] : sel(r)[0]),
-    (w && untrack_fn((v) => w[1] ? w[1](v) : w(v)))
-  ],
+  wrap = (r, w) => [(r[0] ? r[0] : sel(r)[0])]
+    // if not w, should be array with one element
+    .concat(!w ? [] : untrack_fn((v) => w[1] ? w[1](v) : w(v))),
 
-  read = (r) => r[0](),
+  val = (r) => r[0](),
 
-  write = (r, v) => r[1](v),
-  update = untrack_fn((r, fn) => write(r, fn(read(r)))),
+  put = (r, v) => r[1](v),
+  update = untrack_fn((r, fn) => put(r, fn(val(r)))),
 
-  select = (r, v) => [sel(() => v(read(r)))[0]],
   readonly = (r) => [r[0]],
 
 
@@ -53,12 +51,13 @@ const
 // Subscription
 //
 
-  _sub_fn = (sync) => (r, fn) => {
+  _sub_fn = (m /* 1 once, 2 sync */) => (r, fn) => {
     let v, off;
     if (typeof r === 'function' && r[0]) {
       off = listen(r, (d) => {
         const prev = v;
         fn(v = d, prev);
+        m === 1 && off();
       });
       un(off);
 
@@ -66,35 +65,54 @@ const
       r = r[0] ? r[0] : sel(r)[0];
       const e = expr(r, () => {
         const prev = v;
-        fn(v = e[0](), prev);
+        fn(v = m === 1
+          ? r()
+          : e[0](),
+          prev
+        );
       });
       un(off = e[1]);
       v = e[0]();
-      if (sync) untrack(() => fn(v));
+      if (m === 2) untrack(() => fn(v));
     }
 
     return off;
   },
 
   on = _sub_fn(),
-  sync = _sub_fn(1),
+  once = _sub_fn(1),
+  sync = _sub_fn(2),
 
 
 //
-// Javascript integration
+// Waiting
 //
 
-  when = (r, f) => new Promise(ok => {
+  _wait_fn = (m /* 1 truthy, 2 falsy, 3 next */) => (r) => new Promise(ok => {
     const
       u = unsubscriber(),
       stop = () => run(u);
     un(stop);
-    collect(u, () => sync(r, (v) => (
-      ((f && untrack(f, v))
-      || (!f && v))
-      && (stop(), ok())
+    collect(u, () => (m === 3 ? once : sync)(r, (v) => (
+      ((m === 1 && v)
+      || (m === 2 && !v)
+      || m === 3)
+      && (stop(), ok(v))
     )));
-  })
+  }),
+
+  waitTruthy = _wait_fn(1),
+  waitFalsy = _wait_fn(2),
+  waitNext = _wait_fn(3),
+
+
+//
+// Deprecated, will remove in 2.0.0
+//
+
+  write = put,
+  read = val,
+  select = (r, f) => [sel(() => f(val(r)))[0]]
 
 
 //
@@ -103,14 +121,19 @@ const
 
 module.exports = {
   box,
-  read, write, update,
-  select,
+  val, put, update,
   wrap,
-  on, sync,
+  on, once, sync,
   readonly,
   batch, untrack,
   event,
-  when
+  waitTruthy, waitFalsy, waitNext,
+  un,
+
+  // deprecated, will remove in 2.0.0
+  read,
+  write,
+  select
 };
 
 
