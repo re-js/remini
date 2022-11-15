@@ -46,6 +46,16 @@ describe('should works', () => {
     expect(val(q)).toBe(22);
   });
 
+  test('wrap with one argument should be array with one element', () => {
+    const a = box(1);
+
+    const k = wrap(a);
+    const m = wrap(a, a);
+
+    expect(k.length).toBe(1);
+    expect(m.length).toBe(2);
+  });
+
   test('readonly', () => {
     const a = box(1);
     const k = readonly(a);

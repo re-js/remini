@@ -1,6 +1,6 @@
 const
   { sel, expr, box, untrack: _re_untrack, batch: _re_batch } = require('reactive-box'),
-  { un } = require('unsubscriber'),
+  { un, unsubscriber, run, collect } = require('unsubscriber'),
   { event, listen } = require('evemin'),
 
 
@@ -35,10 +35,9 @@ const
 // Entity
 //
 
-  wrap = (r, w) => [
-    (r[0] ? r[0] : sel(r)[0]),
-    (w && untrack_fn((v) => w[1] ? w[1](v) : w(v)))
-  ],
+  wrap = (r, w) => [(r[0] ? r[0] : sel(r)[0])]
+    // if not w, should be array with one element
+    .concat(!w ? [] : untrack_fn((v) => w[1] ? w[1](v) : w(v))),
 
   val = (r) => r[0](),
 
@@ -58,6 +57,7 @@ const
       off = listen(r, (d) => {
         const prev = v;
         fn(v = d, prev);
+        m === 1 && off();
       });
       un(off);
 
@@ -85,10 +85,25 @@ const
 
 
 //
-// Javascript integration
+// Waiting
 //
 
-  promise = (r) => new Promise(ok => once(r, ok)),
+  _wait_fn = (m /* 1 truthy, 2 falsy, 3 next */) => (r) => new Promise(ok => {
+    const
+      u = unsubscriber(),
+      stop = () => run(u);
+    un(stop);
+    collect(u, () => (m === 3 ? once : sync)(r, (v) => (
+      ((m === 1 && v)
+      || (m === 2 && !v)
+      || m === 3)
+      && (stop(), ok(v))
+    )));
+  }),
+
+  waitTruthy = _wait_fn(1),
+  waitFalsy = _wait_fn(2),
+  waitNext = _wait_fn(3),
 
 
 //
@@ -112,7 +127,7 @@ module.exports = {
   readonly,
   batch, untrack,
   event,
-  promise,
+  waitTruthy, waitFalsy, waitNext,
   un,
 
   // deprecated, will remove in 2.0.0

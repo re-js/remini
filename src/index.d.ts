@@ -67,8 +67,12 @@ type Area = {
 export declare const batch: Area;
 export declare const untrack: Area;
 
-export declare const promise: {
+type Wait = {
   <P>(
     target: (() => P) | Box<P> | Event<P>
   ): Promise<P>;
 };
+
+export declare const waitTruthy: Wait;
+export declare const waitFalsy: Wait;
+export declare const waitNext: Wait;
