@@ -88,7 +88,7 @@ const
 // Waiting
 //
 
-  _wait_fn = (m /* 1 truthy, 2 falsy, 3 next */) => (r) => new Promise(ok => {
+  _promise_fn = (m /* 1 truthy, 2 falsy, 3 next */) => (r) => new Promise(ok => {
     const
       u = unsubscriber(),
       stop = () => run(u);
@@ -101,9 +101,9 @@ const
     )));
   }),
 
-  waitTruthy = _wait_fn(1),
-  waitFalsy = _wait_fn(2),
-  waitNext = _wait_fn(3),
+  promiseTruthy = _promise_fn(1),
+  promiseFalsy = _promise_fn(2),
+  promiseNext = _promise_fn(3),
 
 
 //
@@ -128,7 +128,7 @@ module.exports = {
   readonly,
   batch, untrack,
   event,
-  waitTruthy, waitFalsy, waitNext,
+  promiseTruthy, promiseFalsy, promiseNext,
   un,
 
   // deprecated, will remove in 2.0.0

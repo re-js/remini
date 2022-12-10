@@ -1,6 +1,6 @@
 import {
   box, get, put,
-  waitTruthy, waitFalsy, waitNext,
+  promiseTruthy, promiseFalsy, promiseNext,
   event
 } from 'remini';
 
@@ -11,7 +11,7 @@ describe('wait feature', () => {
   test('waitTruthy works', async () => {
     const spy = jest.fn();
     const a = box(0);
-    waitTruthy(a).then(spy);
+    promiseTruthy(a).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
     put(a, 1);
@@ -23,7 +23,7 @@ describe('wait feature', () => {
     spy.mockReset();
 
     const b = box(0);
-    waitTruthy(() => get(a) && get(b)).then(spy);
+    promiseTruthy(() => get(a) && get(b)).then(spy);
     put(a, 0);
     put(b, 1);
     await wait_next_tick();
@@ -34,7 +34,7 @@ describe('wait feature', () => {
     spy.mockReset();
 
     const e = event<void | string | number>();
-    waitTruthy(e).then(spy);
+    promiseTruthy(e).then(spy);
     e();
     e('');
     e(0);
@@ -49,13 +49,13 @@ describe('wait feature', () => {
   test('waitFalsy works', async () => {
     const spy = jest.fn();
     const a = box(0);
-    waitFalsy(a).then(spy);
+    promiseFalsy(a).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(1);
     spy.mockReset();
 
     const b = event<number>();
-    waitFalsy(b).then(spy);
+    promiseFalsy(b).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
     b(1);
@@ -71,7 +71,7 @@ describe('wait feature', () => {
     spy.mockReset();
 
     const c = box(0);
-    waitFalsy(() => get(c) - 1).then(spy);
+    promiseFalsy(() => get(c) - 1).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
     put(c, 1);
@@ -82,7 +82,7 @@ describe('wait feature', () => {
   test('waitNext works', async () => {
     const spy = jest.fn();
     const a = box(0);
-    waitNext(a).then(spy);
+    promiseNext(a).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
     put(a, 1);
@@ -91,7 +91,7 @@ describe('wait feature', () => {
     spy.mockReset();
 
     const b = box(1);
-    waitNext(b).then(spy);
+    promiseNext(b).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
     put(b, 0);
@@ -100,7 +100,7 @@ describe('wait feature', () => {
     spy.mockReset();
 
     const c = event<number>();
-    waitNext(c).then(spy);
+    promiseNext(c).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
     c(1);
@@ -109,7 +109,7 @@ describe('wait feature', () => {
     spy.mockReset();
 
     const d = event<number>();
-    waitNext(d).then(spy);
+    promiseNext(d).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
     d(0);
@@ -123,7 +123,7 @@ describe('wait feature', () => {
     const spy_call = jest.fn();
 
     const a = box(0);
-    waitTruthy(() => (spy_call(), get(a) === 5)).then(spy);
+    promiseTruthy(() => (spy_call(), get(a) === 5)).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
     put(a, 1);
@@ -148,7 +148,7 @@ describe('wait feature', () => {
     const spy = jest.fn();
 
     const a = box(0);
-    waitTruthy(a).then(spy);
+    promiseTruthy(a).then(spy);
     put(a, 1);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(1)
@@ -159,7 +159,7 @@ describe('wait feature', () => {
     const spy = jest.fn();
 
     const a = box(5);
-    waitTruthy(() => get(a) - 5).then(spy);
+    promiseTruthy(() => get(a) - 5).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0)
     put(a, 1);
@@ -172,7 +172,7 @@ describe('wait feature', () => {
     const spy = jest.fn();
 
     const a = event<number>();
-    waitTruthy(a).then(spy);
+    promiseTruthy(a).then(spy);
     a(3);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(1)
