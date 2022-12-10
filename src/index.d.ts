@@ -12,12 +12,14 @@ export type Box<T, M extends Mode = 'readable'> = [
 
 export declare const box: <T>(value: T) => Box<T, 'writable'>;
 export declare const update: <P>(box: Box<P, 'writable'>, fn: (value: P) => P) => void;
-export declare const val: <P>(box: Box<P>) => P;
+export declare const get: <P>(box: Box<P>) => P;
 export declare const put: <P>(box: Box<P, 'writable'>, value: P) => void;
 
+/** @deprecated will be removed in 2.0.0, use "get" method instead */
+export declare const val: typeof get;
 
-/** @deprecated will be removed in 2.0.0, use "val" method instead */
-export declare const read: typeof val;
+/** @deprecated will be removed in 2.0.0, use "get" method instead */
+export declare const read: typeof get;
 
 /** @deprecated will be removed in 2.0.0, use "put" method instead */
 export declare const write: typeof put;

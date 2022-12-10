@@ -39,10 +39,10 @@ const
     // if not w, should be array with one element
     .concat(!w ? [] : untrack_fn((v) => w[1] ? w[1](v) : w(v))),
 
-  val = (r) => r[0](),
+  get = (r) => r[0](),
 
   put = (r, v) => r[1](v),
-  update = untrack_fn((r, fn) => put(r, fn(val(r)))),
+  update = untrack_fn((r, fn) => put(r, fn(get(r)))),
 
   readonly = (r) => [r[0]],
 
@@ -111,8 +111,9 @@ const
 //
 
   write = put,
-  read = val,
-  select = (r, f) => [sel(() => f(val(r)))[0]]
+  val = get,
+  read = get,
+  select = (r, f) => [sel(() => f(get(r)))[0]]
 
 
 //
@@ -121,7 +122,7 @@ const
 
 module.exports = {
   box,
-  val, put, update,
+  get, put, update,
   wrap,
   on, once, sync,
   readonly,
@@ -131,6 +132,7 @@ module.exports = {
   un,
 
   // deprecated, will remove in 2.0.0
+  val,
   read,
   write,
   select

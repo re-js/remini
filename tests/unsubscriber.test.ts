@@ -1,5 +1,5 @@
 import {
-  box, val, put,
+  box, get, put,
   on, sync
 } from 'remini';
 import {
@@ -32,7 +32,7 @@ describe('should works', () => {
     expect(spy_sync).toBeCalledTimes(0);
     expect(spy_on).toBeCalledTimes(0);
 
-    expect(val(a)).toBe(11);
+    expect(get(a)).toBe(11);
   });
 
 

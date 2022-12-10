@@ -1,16 +1,20 @@
 import {
-  read, write, select,
-  val, put, box, update
+  read, write, select, val,
+  get, put, box, update
 } from 'remini';
 
 describe('deprecated methods', () => {
+
+  test('val', () => {
+    expect(val).toBe(get);
+  });
 
   test('write', () => {
     expect(write).toBe(put);
   });
 
   test('read', () => {
-    expect(read).toBe(val);
+    expect(read).toBe(get);
   });
 
   test('select', () => {
@@ -19,14 +23,14 @@ describe('deprecated methods', () => {
 
     const k = select(a, (v) => v + 5);
     const n = select(k, (v) => '&' + v);
-    const m = select(b, (v) => v + val(n));
+    const m = select(b, (v) => v + get(n));
 
-    expect(val(m)).toBe('2&6');
+    expect(get(m)).toBe('2&6');
     put(a, 10);
-    expect(val(m)).toBe('2&15');
+    expect(get(m)).toBe('2&15');
 
     update(b, (v) => v + 3);
-    expect(val(m)).toBe('5&15');
+    expect(get(m)).toBe('5&15');
   });
 
 });

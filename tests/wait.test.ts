@@ -1,5 +1,5 @@
 import {
-  box, val, put,
+  box, get, put,
   waitTruthy, waitFalsy, waitNext,
   event
 } from 'remini';
@@ -23,7 +23,7 @@ describe('wait feature', () => {
     spy.mockReset();
 
     const b = box(0);
-    waitTruthy(() => val(a) && val(b)).then(spy);
+    waitTruthy(() => get(a) && get(b)).then(spy);
     put(a, 0);
     put(b, 1);
     await wait_next_tick();
@@ -71,7 +71,7 @@ describe('wait feature', () => {
     spy.mockReset();
 
     const c = box(0);
-    waitFalsy(() => val(c) - 1).then(spy);
+    waitFalsy(() => get(c) - 1).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
     put(c, 1);
@@ -123,7 +123,7 @@ describe('wait feature', () => {
     const spy_call = jest.fn();
 
     const a = box(0);
-    waitTruthy(() => (spy_call(), val(a) === 5)).then(spy);
+    waitTruthy(() => (spy_call(), get(a) === 5)).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
     put(a, 1);
@@ -159,7 +159,7 @@ describe('wait feature', () => {
     const spy = jest.fn();
 
     const a = box(5);
-    waitTruthy(() => val(a) - 5).then(spy);
+    waitTruthy(() => get(a) - 5).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0)
     put(a, 1);

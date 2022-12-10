@@ -1,5 +1,5 @@
 const { expr } = require('reactive-box');
-const { on, val } = require('remini');
+const { on, get } = require('remini');
 
 //
 // Bindings factory
@@ -68,7 +68,7 @@ module.exports = (useReducer, useEffect, useRef, useMemo, memo) => {
     return useBox(() => {
       let ret = Array.isArray(targets) ? [] : {};
       Object.keys(targets).forEach(key => {
-        ret[key] = val(targets[key])
+        ret[key] = get(targets[key])
       });
       return ret;
     }, deps);
