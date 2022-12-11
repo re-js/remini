@@ -122,9 +122,15 @@ const
 // Box classes
 //
 
-class BoxFacadeClass {
+class BoxFacadeReadableClass {
   constructor(b) {
     this[0] = b[0]
+  }
+}
+
+class BoxFacadeClass extends BoxFacadeReadableClass {
+  constructor(b) {
+    super(b)
     this[1] = b[1]
   }
 }
@@ -153,6 +159,7 @@ module.exports = {
 
   BoxClass,
   BoxFacadeClass,
+  BoxFacadeReadableClass,
 
   // deprecated, will remove in 2.0.0
   val, put,
