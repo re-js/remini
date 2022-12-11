@@ -23,10 +23,9 @@ import { $store } from './remini-store'
 
 export const $user = wrap(() => val($store).user)
 
-export const $fullName = wrap(() => {
-  const state = val($user)
-  return `${state.firstName} ${state.lastName}`
-});
+export const $fullName = wrap(
+  () => `${val($user).firstName} ${val($user).lastName}`
+);
 ```
 
 And use it everywhere.
