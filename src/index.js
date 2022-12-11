@@ -42,8 +42,8 @@ const
   getter = (r) => r[0],
   get = (r) => r[0](),
 
-  put = (r, v) => r[1](v),
-  update = untrack_fn((r, fn) => put(r, fn(get(r)))),
+  set = (r, v) => r[1](v),
+  update = untrack_fn((r, fn) => set(r, fn(get(r)))),
 
   readonly = (r) => [r[0]],
 
@@ -111,7 +111,8 @@ const
 // Deprecated, will remove in 2.0.0
 //
 
-  write = put,
+  put = set,
+  write = set,
   val = get,
   read = get,
   select = (r, f) => [sel(() => f(get(r)))[0]]
@@ -121,14 +122,19 @@ const
 // Box classes
 //
 
-function BoxClass(value) {
-  BoxFacadeClass.call(this, box(value))
+class BoxFacadeClass {
+  constructor(b) {
+    this[0] = b[0]
+    this[1] = b[1]
+  }
 }
 
-function BoxFacadeClass(b) {
-  this[0] = b[0];
-  this[1] = b[1];
+class BoxClass extends BoxFacadeClass {
+  constructor(value) {
+    super(box(value))
+  }
 }
+
 
 //
 // Exports
@@ -136,7 +142,7 @@ function BoxFacadeClass(b) {
 
 module.exports = {
   box,
-  getter, get, put, update,
+  getter, get, set, update,
   wrap,
   on, once, sync,
   readonly,
@@ -149,10 +155,8 @@ module.exports = {
   BoxFacadeClass,
 
   // deprecated, will remove in 2.0.0
-  val,
-  read,
-  write,
-  select
+  val, put,
+  read, write, select
 };
 
 

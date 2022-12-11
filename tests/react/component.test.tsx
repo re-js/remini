@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import { html } from 'htm/react';
 import { act } from 'react-dom/test-utils';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { box, get, put, update } from 'remini';
+import { box, get, set, update } from 'remini';
 import { component } from 'remini/react';
 
 type ForwardRefButtonProps = {
@@ -25,7 +25,7 @@ describe('should work react', () => {
 
     const A = component(() => {
       spy(get(h));
-      return html`<button onClick=${() => put(h, 20)} />`;
+      return html`<button onClick=${() => set(h, 20)} />`;
     });
 
     render(html`<${A} />`);
@@ -70,13 +70,13 @@ describe('should work react', () => {
 
     expect(spy).toBeCalledTimes(1); spy.mockReset();
 
-    act(() => put(a, 1));
+    act(() => set(a, 1));
     expect(spy).toBeCalledTimes(0);
-    act(() => put(b, 1));
+    act(() => set(b, 1));
     expect(spy).toBeCalledTimes(1); spy.mockReset();
-    act(() => put(b, 2));
+    act(() => set(b, 2));
     expect(spy).toBeCalledTimes(1); spy.mockReset();
-    act(() => put(a, 2));
+    act(() => set(a, 2));
     expect(spy).toBeCalledTimes(0);
   });
 

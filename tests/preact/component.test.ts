@@ -1,6 +1,6 @@
 import { html } from 'htm/preact';
 import { render, fireEvent, screen } from '@testing-library/preact';
-import { box, get, put } from 'remini';
+import { box, get, set } from 'remini';
 import { component } from 'remini/preact';
 
 describe('should work preact', () => {
@@ -11,7 +11,7 @@ describe('should work preact', () => {
 
     const A = component(() => {
       spy(get(b));
-      return html`<button onClick=${() => put(b, 20)} />`;
+      return html`<button onClick=${() => set(b, 20)} />`;
     });
 
     render(html`<${A} />`);

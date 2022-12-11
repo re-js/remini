@@ -14,7 +14,7 @@ export declare const box: <T = void>(value: T) => Box<T, 'writable'>;
 export declare const update: <P>(box: Box<P, 'writable'> | BoxFacadeClass<P>, fn: (value: P) => P) => void;
 export declare const get: <P>(box: Box<P> | BoxFacadeClass<P>) => P;
 export declare const getter: <P>(box: Box<P> | BoxFacadeClass<P>) => () => P;
-export declare const put: <P>(box: Box<P, 'writable'> | BoxFacadeClass<P>, value: P) => void;
+export declare const set: <P>(box: Box<P, 'writable'> | BoxFacadeClass<P>, value: P) => void;
 
 /** @deprecated will be removed in 2.0.0, use "get" method instead */
 export declare const val: typeof get;
@@ -22,8 +22,11 @@ export declare const val: typeof get;
 /** @deprecated will be removed in 2.0.0, use "get" method instead */
 export declare const read: typeof get;
 
-/** @deprecated will be removed in 2.0.0, use "put" method instead */
-export declare const write: typeof put;
+/** @deprecated will be removed in 2.0.0, use "set" method instead */
+export declare const put: typeof set;
+
+/** @deprecated will be removed in 2.0.0, use "set" method instead */
+export declare const write: typeof set;
 
 /** @deprecated will be removed in 2.0.0, use "wrap" method instead */
 export declare const select: {

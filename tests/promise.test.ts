@@ -1,5 +1,5 @@
 import {
-  box, get, put,
+  box, get, set,
   promiseTruthy, promiseFalsy, promiseNext,
   event
 } from 'remini';
@@ -14,21 +14,21 @@ describe('promise feature', () => {
     promiseTruthy(a).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
-    put(a, 1);
+    set(a, 1);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(1);
-    put(a, 2);
+    set(a, 2);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(1);
     spy.mockReset();
 
     const b = box(0);
     promiseTruthy(() => get(a) && get(b)).then(spy);
-    put(a, 0);
-    put(b, 1);
+    set(a, 0);
+    set(b, 1);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
-    put(a, 1);
+    set(a, 1);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(1);
     spy.mockReset();
@@ -74,7 +74,7 @@ describe('promise feature', () => {
     promiseFalsy(() => get(c) - 1).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
-    put(c, 1);
+    set(c, 1);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(1);
   });
@@ -85,7 +85,7 @@ describe('promise feature', () => {
     promiseNext(a).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
-    put(a, 1);
+    set(a, 1);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(1);
     spy.mockReset();
@@ -94,7 +94,7 @@ describe('promise feature', () => {
     promiseNext(b).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
-    put(b, 0);
+    set(b, 0);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(1);
     spy.mockReset();
@@ -126,21 +126,21 @@ describe('promise feature', () => {
     promiseTruthy(() => (spy_call(), get(a) === 5)).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
-    put(a, 1);
-    put(a, 2);
-    put(a, 3);
+    set(a, 1);
+    set(a, 2);
+    set(a, 3);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0);
     expect(spy_call).toBeCalledTimes(4);
     spy_call.mockReset();
 
-    put(a, 5);
+    set(a, 5);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(1);
     expect(spy_call).toBeCalledTimes(1);
     spy_call.mockReset();
 
-    put(a, 1);
+    set(a, 1);
     expect(spy_call).toBeCalledTimes(0);
   });
 
@@ -149,7 +149,7 @@ describe('promise feature', () => {
 
     const a = box(0);
     promiseTruthy(a).then(spy);
-    put(a, 1);
+    set(a, 1);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith(1);
@@ -162,7 +162,7 @@ describe('promise feature', () => {
     promiseTruthy(() => get(a) - 5).then(spy);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(0)
-    put(a, 1);
+    set(a, 1);
     await wait_next_tick();
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith(-4);

@@ -1,14 +1,14 @@
 import {
-  box, wrap, get, put, update, readonly,
+  box, wrap, get, set, update, readonly,
   on, once, sync,
   batch, untrack, getter
 } from 'remini';
 
 describe('should works', () => {
 
-  test('re, get, put', () => {
+  test('re, get, set', () => {
     const a = box(0);
-    put(a, 10);
+    set(a, 10);
     expect(get(a)).toBe(10);
   });
 
@@ -32,7 +32,7 @@ describe('should works', () => {
 
     const k = wrap(a);
     const p = wrap(() => get(a) + get(a));
-    const n = wrap(a, (v) => put(a, v + 1));
+    const n = wrap(a, (v) => set(a, v + 1));
     const m = wrap(() => get(a) + 2, (n) => update(b, (v) => v + n));
     const q = wrap(b, b);
 
@@ -41,13 +41,13 @@ describe('should works', () => {
     expect(get(n)).toBe(1);
     expect(get(m)).toBe(3);
 
-    put(n, 10);
+    set(n, 10);
     expect(get(k)).toBe(11);
     expect(get(p)).toBe(22);
     expect(get(n)).toBe(11);
     expect(get(m)).toBe(13);
 
-    put(m, 10);
+    set(m, 10);
     expect(get(b)).toBe(12);
 
     update(q, (v) => v + 10);
@@ -72,7 +72,7 @@ describe('should works', () => {
     update(a, (v) => v + 1);
     expect(get(k)).toBe(2);
 
-    expect(() => put(k as any, 10)).toThrow();
+    expect(() => set(k as any, 10)).toThrow();
     expect(() => update(k as any, (v: number) => v + 1)).toThrow();
   });
 
@@ -89,10 +89,10 @@ describe('should works', () => {
     expect(x).not.toBeCalled();
     expect(y).not.toBeCalled();
 
-    put(b, 3);
+    set(b, 3);
     expect(x).toBeCalledWith(4); x.mockReset();
 
-    put(a, 5);
+    set(a, 5);
     expect(x).toBeCalledWith(8);
     expect(y).toBeCalledWith(5);
   });
@@ -110,10 +110,10 @@ describe('should works', () => {
     expect(x).toBeCalledWith(3); x.mockReset();
     expect(y).toBeCalledWith(1); y.mockReset();
 
-    put(b, 3);
+    set(b, 3);
     expect(x).toBeCalledWith(4); x.mockReset();
 
-    put(a, 5);
+    set(a, 5);
     expect(x).toBeCalledWith(8);
     expect(y).toBeCalledWith(5);
   });
@@ -130,7 +130,7 @@ describe('should works', () => {
     expect(x).not.toBeCalled();
     expect(y).not.toBeCalled();
 
-    put(a, 3);
+    set(a, 3);
     expect(x).toBeCalledWith(3);
     expect(y).toBeCalledWith(3);
 
@@ -147,19 +147,19 @@ describe('should works', () => {
 
     on(() => get(x) + get(y), (v) => spy(v));
 
-    put(x, 1);
-    put(y, 1);
+    set(x, 1);
+    set(y, 1);
     expect(spy).toBeCalledTimes(2); spy.mockReset();
 
     batch(() => {
-      put(x, 2);
-      put(y, 2);
+      set(x, 2);
+      set(y, 2);
     });
     expect(spy).toBeCalledTimes(1); spy.mockReset();
 
     const fn = batch.fn((k: number) => {
-      put(x, k);
-      put(y, k);
+      set(x, k);
+      set(y, k);
     });
     fn(5);
     expect(spy).toBeCalledTimes(1); spy.mockReset();
@@ -190,10 +190,10 @@ describe('should works', () => {
     }, spy);
 
     spy.mockReset();
-    put(a, 1);
+    set(a, 1);
     expect(spy).toBeCalledTimes(1); spy.mockReset();
-    put(b, 1);
-    put(c, 1);
+    set(b, 1);
+    set(c, 1);
     expect(spy).toBeCalledTimes(0);
 
     untrack(spy, 10, 11, 12);

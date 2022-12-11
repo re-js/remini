@@ -1,6 +1,6 @@
 import { html } from 'htm/react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { box, put } from 'remini';
+import { box, set } from 'remini';
 import { useBox } from 'remini/react';
 
 describe('should work react', () => {
@@ -12,7 +12,7 @@ describe('should work react', () => {
     function A() {
       const val = useBox(h);
       spy(val);
-      return html`<button onClick=${() => put(h, 20)} />`;
+      return html`<button onClick=${() => set(h, 20)} />`;
     }
 
     render(html`<${A} />`);
