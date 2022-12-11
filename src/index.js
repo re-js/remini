@@ -39,6 +39,7 @@ const
     // if not w, should be array with one element
     .concat(!w ? [] : untrack_fn((v) => w[1] ? w[1](v) : w(v))),
 
+  getter = (r) => r[0],
   get = (r) => r[0](),
 
   put = (r, v) => r[1](v),
@@ -117,12 +118,25 @@ const
 
 
 //
+// Box classes
+//
+
+function BoxClass(value) {
+  BoxFacadeClass.call(this, box(value))
+}
+
+function BoxFacadeClass(b) {
+  this[0] = b[0];
+  this[1] = b[1];
+}
+
+//
 // Exports
 //
 
 module.exports = {
   box,
-  get, put, update,
+  getter, get, put, update,
   wrap,
   on, once, sync,
   readonly,
@@ -130,6 +144,9 @@ module.exports = {
   event,
   promiseTruthy, promiseFalsy, promiseNext,
   un,
+
+  BoxClass,
+  BoxFacadeClass,
 
   // deprecated, will remove in 2.0.0
   val,

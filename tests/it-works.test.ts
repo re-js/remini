@@ -1,7 +1,7 @@
 import {
   box, wrap, get, put, update, readonly,
   on, once, sync,
-  batch, untrack
+  batch, untrack, getter
 } from 'remini';
 
 describe('should works', () => {
@@ -10,6 +10,14 @@ describe('should works', () => {
     const a = box(0);
     put(a, 10);
     expect(get(a)).toBe(10);
+  });
+
+  test('getter', () => {
+    const a = box(0);
+    const fn = getter(a);
+    expect(fn()).toBe(0);
+    update(a, (v) => v + 3);
+    expect(fn()).toBe(3);
   });
 
   test('update', () => {

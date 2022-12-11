@@ -6,9 +6,9 @@ import {
 
 const wait_next_tick = () => new Promise<void>(r => r());
 
-describe('wait feature', () => {
+describe('promise feature', () => {
 
-  test('waitTruthy works', async () => {
+  test('promiseTruthy works', async () => {
     const spy = jest.fn();
     const a = box(0);
     promiseTruthy(a).then(spy);
@@ -46,7 +46,7 @@ describe('wait feature', () => {
     spy.mockReset();
   });
 
-  test('waitFalsy works', async () => {
+  test('promiseFalsy works', async () => {
     const spy = jest.fn();
     const a = box(0);
     promiseFalsy(a).then(spy);
@@ -79,7 +79,7 @@ describe('wait feature', () => {
     expect(spy).toBeCalledTimes(1);
   });
 
-  test('waitNext works', async () => {
+  test('promiseNext works', async () => {
     const spy = jest.fn();
     const a = box(0);
     promiseNext(a).then(spy);
