@@ -122,13 +122,13 @@ const
 // Box classes
 //
 
-class BoxFaceReadableClass {
+class BoxFaceClass {
   constructor(b) {
     this[0] = b[0]
   }
 }
 
-class BoxFaceClass extends BoxFaceReadableClass {
+class BoxFaceWritableClass extends BoxFaceClass {
   constructor(b) {
     super(b)
     this[1] = b[1]
@@ -151,8 +151,8 @@ module.exports = {
   promiseTruthy, promiseFalsy, promiseNext,
   un,
 
+  BoxFaceWritableClass,
   BoxFaceClass,
-  BoxFaceReadableClass,
 
   // deprecated, will remove in 2.0.0
   val, put, read, write, select
