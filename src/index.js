@@ -41,7 +41,7 @@ const
 
   getter = (r) => r[0],
   get = (r) => r[0](),
-
+  setter = (r) => r[1],
   set = (r, v) => r[1](v),
   update = untrack_fn((r, fn) => set(r, fn(get(r)))),
 
@@ -123,18 +123,24 @@ const
 //
 
 class BoxFaceClass {
-  constructor(b) {
-    this[0] = b[0]
+  constructor(getter) {
+    this[0] = getter
   }
 }
 
 class BoxFaceWritableClass extends BoxFaceClass {
-  constructor(b) {
-    super(b)
-    this[1] = b[1]
+  constructor(getter, setter) {
+    super(getter)
+    this[1] = setter
   }
 }
 
+class BoxClass extends BoxFaceWritableClass {
+  constructor(value) {
+    const b = box(value);
+    super(b[0], b[1])
+  }
+}
 
 //
 // Exports
@@ -142,7 +148,7 @@ class BoxFaceWritableClass extends BoxFaceClass {
 
 module.exports = {
   box,
-  getter, get, set, update,
+  getter, get, setter, set, update,
   wrap,
   on, once, sync,
   readonly,
@@ -153,6 +159,7 @@ module.exports = {
 
   BoxFaceWritableClass,
   BoxFaceClass,
+  BoxClass,
 
   // deprecated, will remove in 2.0.0
   val, put, read, write, select

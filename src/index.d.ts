@@ -15,6 +15,7 @@ export declare const update: <P>(box: Box<P, 'writable'> | BoxFaceWritableClass<
 export declare const get: <P>(box: Box<P> | BoxFaceClass<P>) => P;
 export declare const getter: <P>(box: Box<P> | BoxFaceClass<P>) => () => P;
 export declare const set: <P>(box: Box<P, 'writable'> | BoxFaceWritableClass<P>, value: P) => void;
+export declare const setter: <P>(box: Box<P, 'writable'> | BoxFaceWritableClass<P>) => (value: P) => P;
 
 /** @deprecated will be removed in 2.0.0, use "get" method instead */
 export declare const val: typeof get;
@@ -85,9 +86,12 @@ export declare const promiseNext: PromiseFunction;
 
 export declare class BoxFaceClass<T = void> {
   0: () => T;
-  constructor(b: Box<T> | BoxFaceClass<T>);
+  constructor(getter: () => T);
 }
 export declare class BoxFaceWritableClass<T = void> extends BoxFaceClass<T> {
   1: (value: T) => void;
-  constructor(b: Box<T, 'writable'> | BoxFaceWritableClass<T>);
+  constructor(getter: () => T, setter: (value: T) => void);
+}
+export declare class BoxClass<T = void> extends BoxFaceWritableClass<T> {
+  constructor(value: T);
 }

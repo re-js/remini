@@ -1,12 +1,12 @@
 import {
-  box, get, on,
-  BoxFaceWritableClass,
+  get, on,
+  BoxClass,
   update
 } from 'remini';
 
-class AB extends BoxFaceWritableClass<{ a: number; b: number; }> {
+class AB extends BoxClass<{ a: number; b: number; }> {
   constructor(a, b) {
-    super(box({ a, b }))
+    super({ a, b })
   }
   get a() {
     return get(this).a;
