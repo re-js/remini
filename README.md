@@ -70,13 +70,13 @@ export const $books = box([])
 export const $loading = box(false)
 
 export const load = async () => {
-  put($loading, true)
+  set($loading, true)
 
   const response = await fetch('https://example.com/api/books')
   const books = await response.json()
 
-  put($books, books)
-  put($loading, false)
+  set($books, books)
+  set($loading, false)
 }
 ```
 
@@ -133,7 +133,7 @@ One of the most frequently used functions during work with the state is the sele
 For example, your user state is big it has a lot of user settings and some stuff. If you have an avatar view component, it should be updated only when the avatar changes, not for each user state update.
 
 ```javascript
-import { box, val, wrap } from 'remini'
+import { box, get, wrap } from 'remini'
 
 const $user = box({
   name: 'Joe',
@@ -142,7 +142,7 @@ const $user = box({
   avatar: 'https://avatar.com/1.jpg'
 })
 
-const $avatar = wrap(() => val($user).avatar)
+const $avatar = wrap(() => get($user).avatar)
 ```
 
 ```javascript
@@ -166,13 +166,13 @@ You don't have to render everything. You should render only what you need! No mo
 Step by step on the application growing upstairs you will have cases of the necessary combination of multiple stores to one. It should be simple)
 
 ```javascript
-import { box, val, wrap } from 'remini'
+import { box, get, wrap } from 'remini'
 
 const $firstName = box('John')
 const $lastName = box('Doe')
 
 const $fullName = wrap(() => {
-  return val($firstName) + ' ' + val($lastName)
+  return get($firstName) + ' ' + get($lastName)
 })
 ```
 

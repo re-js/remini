@@ -4,13 +4,13 @@ It's easy! You can simply create Remini reactive variable from Redux store, and 
 
 ```javascript
 // ./remini-store.js
-import { box, put } from 'remini'
+import { box, set } from 'remini'
 import { store } from './redux-store'
 
 export const $store = box(store.getState())
 
 store.subscribe(() => {
-  put($store, store.getState())
+  set($store, store.getState())
 })
 ```
 
@@ -18,13 +18,13 @@ And you can make cached selectors for performance optimization reasons.
 
 ```javascript
 // ./remini-selectors.js
-import { val, wrap } from 'remini'
+import { get, wrap } from 'remini'
 import { $store } from './remini-store'
 
-export const $user = wrap(() => val($store).user)
+export const $user = wrap(() => get($store).user)
 
 export const $fullName = wrap(
-  () => `${val($user).firstName} ${val($user).lastName}`
+  () => `${get($user).firstName} ${get($user).lastName}`
 );
 ```
 

@@ -33,25 +33,25 @@ const Counter = () => {
 
 ```javascript
 // ./counter.shared.js
-import { box, wrap, val, put } from 'remini'
+import { box, wrap, get, set } from 'remini'
 
 export const $count = box(0)
-export const $next = wrap(() => val($count) + 1)
+export const $next = wrap(() => get($count) + 1)
 
 export const inc = () => update($count, n => n + 1)
-export const reset = () => put($count, 0)
+export const reset = () => set($count, 0)
 ```
 
 ```javascript
-import { val } from 'remini'
+import { get } from 'remini'
 import { component } from 'remini/react'
 import { $count, $next, inc, reset } from './counter.shared'
 
 const Counter = component(() => (
   <p>
-    {val($count)}
+    {get($count)}
     <button onClick={inc}>➪</button>
-    {val($next)}
+    {get($next)}
   </p>
 ))
 

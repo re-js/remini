@@ -55,10 +55,10 @@ And finally, we should make some code updates, because we almost forget to save 
 For accessing storage we will use the "localStorage" browser API. We will call "getItem" to retrieve the saved state, and call "setItem" to save it.
 
 ```javascript
-// import { put, on } from 'remini'
+// import { set, on } from 'remini'
 
 // get choice from previous browser session
-put($darkMode, localStorage.getItem('darkMode') === 'on')
+set($darkMode, localStorage.getItem('darkMode') === 'on')
 
 // update user choice in browser local storage each time then it changed
 on($darkMode, enabled => {
