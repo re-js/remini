@@ -1,11 +1,12 @@
+import { on, get } from 'remini';
+
 const { expr } = require('reactive-box');
-const { on, get } = require('remini');
 
 //
 // Bindings factory
 //
 
-module.exports = (useReducer, useEffect, useRef, useMemo, memo) => {
+export function bindings(useReducer, useEffect, useRef, useMemo, memo) {
 
   let context_is_observe;
   let observe_no_memo_flag;

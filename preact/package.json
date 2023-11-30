@@ -4,12 +4,24 @@
   "description": "Preact bindings for Remini",
   "private": true,
   "license": "MIT",
-  "main": "src/index.js",
   "types": "src/index.d.ts",
+  "main": "dist/preact.js",
+  "module": "dist/preact.module.js",
+  "umd:main": "dist/preact.umd.js",
+  "source": "src/index.js",
   "peerDependencies": {
     "preact": ">=10.2",
     "remini": ">=0.2"
   },
   "author": "Slava Bereza <mail@betula.co> (http://betula.co)",
-  "sideEffects": false
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "browser": "./dist/preact.module.js",
+      "umd": "./dist/preact.umd.js",
+      "import": "./dist/preact.mjs",
+      "require": "./dist/preact.js"
+    }
+  }
 }

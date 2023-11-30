@@ -1,14 +1,24 @@
-const { useReducer, useEffect, useRef, useMemo, memo } = require('react');
-const bindings = require('remini/hooks-bindings');
+import { useReducer, useEffect, useRef, useMemo, memo } from 'react';
+import { bindings } from 'remini/hooks-bindings';
 
 //
 // Exports
 //
 
-module.exports = bindings(
+const {
+  component,
+  useBox,
+  useBoxes,
+} = bindings(
   useReducer,
   useEffect,
   useRef,
   useMemo,
   memo
 );
+
+export {
+  component,
+  useBox,
+  useBoxes,
+}

@@ -4,12 +4,24 @@
   "description": "React bindings for Remini",
   "private": true,
   "license": "MIT",
-  "main": "src/index.js",
   "types": "src/index.d.ts",
+  "main": "dist/react.js",
+  "module": "dist/react.module.js",
+  "umd:main": "dist/react.umd.js",
+  "source": "src/index.js",
   "peerDependencies": {
     "react": ">=16.8",
     "remini": ">=0.2"
   },
   "author": "Slava Bereza <mail@betula.co> (http://betula.co)",
-  "sideEffects": false
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "browser": "./dist/react.module.js",
+      "umd": "./dist/react.umd.js",
+      "import": "./dist/react.mjs",
+      "require": "./dist/react.js"
+    }
+  }
 }

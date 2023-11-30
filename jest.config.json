@@ -1,5 +1,10 @@
 {
-  "preset": "ts-jest",
+  "transform": {
+    "^.+\\.js$": "babel-jest",
+    "^.+\\.mjs$": "babel-jest",
+    "^.+\\.ts$": "babel-jest",
+    "^.+\\.tsx$": "babel-jest"
+  },
   "testEnvironment": "jest-environment-jsdom",
   "modulePathIgnorePatterns": [
     "<rootDir>/src/"
@@ -20,6 +25,9 @@
     "^preact/hooks$": "<rootDir>/node_modules/preact/hooks/dist/hooks.umd.js",
     "^preact/test-utils$": "<rootDir>/node_modules/preact/test-utils/dist/testUtils.umd.js"
   },
+  "transformIgnorePatterns": [
+    "node_modules/(?!unsubscriber)"
+  ],
   "coveragePathIgnorePatterns": [
     "node_modules",
     "tests"

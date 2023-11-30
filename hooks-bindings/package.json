@@ -4,12 +4,24 @@
   "description": "Hooks based bindings factory for Remini",
   "private": true,
   "license": "MIT",
-  "main": "src/index.js",
   "types": "src/index.d.ts",
+  "main": "dist/hooks-bindings.js",
+  "module": "dist/hooks-bindings.module.js",
+  "umd:main": "dist/hooks-bindings.umd.js",
+  "source": "src/index.js",
   "peerDependencies": {
     "reactive-box": ">=0.8",
     "remini": ">=0.2"
   },
   "author": "Slava Bereza <mail@betula.co> (http://betula.co)",
-  "sideEffects": false
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "browser": "./dist/hooks-bindings.module.js",
+      "umd": "./dist/hooks-bindings.umd.js",
+      "import": "./dist/hooks-bindings.mjs",
+      "require": "./dist/hooks-bindings.js"
+    }
+  }
 }

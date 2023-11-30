@@ -10,24 +10,39 @@
   },
   "homepage": "https://github.com/re-js/remini#readme",
   "license": "MIT",
-  "main": "src/index.js",
   "types": "src/index.d.ts",
+  "main": "dist/provi.js",
+  "module": "dist/provi.module.js",
+  "umd:main": "dist/provi.umd.js",
+  "source": "src/index.js",
   "files": [
     "src",
-    "hooks-bindings",
-    "preact",
-    "react"
+    "dist",
+    "hooks-bindings/dist",
+    "hooks-bindings/src",
+    "hooks-bindings/package.json",
+    "preact/dist",
+    "preact/src",
+    "preact/package.json",
+    "react/dist",
+    "react/src",
+    "react/package.json"
   ],
   "scripts": {
     "test": "jest",
-    "clear-cache": "jest --clearCache"
+    "clear-cache": "jest --clearCache",
+    "build": "yarn clean && microbundle build --raw --target web --generateTypes false && microbundle build --raw --target web --cwd hooks-bindings --generateTypes false && microbundle build --raw --target node --cwd preact --generateTypes false && microbundle build --raw --target node --cwd react --generateTypes false",
+    "dev": "microbundle watch --raw --format cjs",
+    "clean": "rm -rf hooks-bindings/dist preact/dist react/dist dist"
   },
   "dependencies": {
     "reactive-box": ">=0.8.0",
-    "unsubscriber": ">=1.0.0",
+    "unsubscriber": "2.x.x",
     "evemin": ">=1.0.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "7.23.5",
+    "@babel/preset-typescript": "7.23.3",
     "@testing-library/preact": "3.2.2",
     "@testing-library/react": "13.2.0",
     "@types/jest": "27.5.0",
@@ -35,10 +50,10 @@
     "htm": "3.1.1",
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
+    "microbundle": "0.15.1",
     "preact": "10.8.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "ts-jest": "28.0.7",
     "typescript": "4.7.4"
   },
   "peerDependencies": {
@@ -80,5 +95,35 @@
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "browser": "./dist/remini.module.js",
+      "umd": "./dist/remini.umd.js",
+      "import": "./dist/remini.mjs",
+      "require": "./dist/remini.js"
+    },
+    "./hooks-bindings": {
+      "types": "./hooks-bindings/src/index.d.ts",
+      "browser": "./hooks-bindings/dist/hooks-bindings.module.js",
+      "umd": "./hooks-bindings/dist/hooks-bindings.umd.js",
+      "import": "./hooks-bindings/dist/hooks-bindings.mjs",
+      "require": "./hooks-bindings/dist/hooks-bindings.js"
+    },
+    "./preact": {
+      "types": "./preact/src/index.d.ts",
+      "browser": "./preact/dist/preact.module.js",
+      "umd": "./preact/dist/preact.umd.js",
+      "import": "./preact/dist/preact.mjs",
+      "require": "./preact/dist/preact.js"
+    },
+    "./react": {
+      "types": "./react/src/index.d.ts",
+      "browser": "./react/dist/react.module.js",
+      "umd": "./react/dist/react.umd.js",
+      "import": "./react/dist/react.mjs",
+      "require": "./react/dist/react.js"
+    }
   }
 }

@@ -1,6 +1,7 @@
+import { un, unsubscriber, run, collect } from 'unsubscriber'
+
 const
   { sel, expr, box, untrack: _re_untrack, batch: _re_batch } = require('reactive-box'),
-  { un, unsubscriber, run, collect } = require('unsubscriber'),
   { event, listen } = require('evemin'),
 
 
@@ -146,7 +147,7 @@ class BoxClass extends BoxFaceWritableClass {
 // Exports
 //
 
-module.exports = {
+export {
   box,
   getter, get, setter, set, update,
   wrap,
