@@ -17,14 +17,11 @@ export declare const getter: <P>(box: Box<P> | BoxFaceClass<P>) => () => P;
 export declare const set: <P>(box: Box<P, 'writable'> | BoxFaceWritableClass<P>, value: P) => void;
 export declare const setter: <P>(box: Box<P, 'writable'> | BoxFaceWritableClass<P>) => (value: P) => P;
 
-/** @deprecated will be removed in 2.0.0, use "get" method instead */
 export declare const val: typeof get;
+export declare const put: typeof set;
 
 /** @deprecated will be removed in 2.0.0, use "get" method instead */
 export declare const read: typeof get;
-
-/** @deprecated will be removed in 2.0.0, use "set" method instead */
-export declare const put: typeof set;
 
 /** @deprecated will be removed in 2.0.0, use "set" method instead */
 export declare const write: typeof set;
