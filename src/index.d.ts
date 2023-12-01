@@ -81,6 +81,10 @@ export declare const promiseTruthy: PromiseFunction;
 export declare const promiseFalsy: PromiseFunction;
 export declare const promiseNext: PromiseFunction;
 
+export declare const waitTruthy: PromiseFunction;
+export declare const waitFalsy: PromiseFunction;
+export declare const waitNext: PromiseFunction;
+
 export declare class BoxFaceClass<T = void> {
   0: () => T;
   constructor(getter: () => T);

@@ -107,6 +107,10 @@ const
   promiseFalsy = _promise_fn(2),
   promiseNext = _promise_fn(3),
 
+  waitTruthy = promiseTruthy,
+  waitFalsy = promiseFalsy,
+  waitNext = promiseNext,
+
 
 //
 // Deprecated, will remove in 2.0.0
@@ -156,6 +160,7 @@ export {
   batch, untrack,
   event,
   promiseTruthy, promiseFalsy, promiseNext,
+  waitTruthy, waitFalsy, waitNext,
   un,
 
   BoxFaceWritableClass,
