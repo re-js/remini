@@ -26,7 +26,7 @@
     "^preact/test-utils$": "<rootDir>/node_modules/preact/test-utils/dist/testUtils.umd.js"
   },
   "transformIgnorePatterns": [
-    "node_modules/(?!unsubscriber)"
+    "node_modules/(?!unsubscriber|reactive-box|evemin)"
   ],
   "coveragePathIgnorePatterns": [
     "node_modules",

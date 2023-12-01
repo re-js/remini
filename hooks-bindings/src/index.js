@@ -1,6 +1,5 @@
 import { on, get } from 'remini';
-
-const { expr } = require('reactive-box');
+import { expr } from 'reactive-box';
 
 //
 // Bindings factory

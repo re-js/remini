@@ -11,9 +11,9 @@
   "homepage": "https://github.com/re-js/remini#readme",
   "license": "MIT",
   "types": "src/index.d.ts",
-  "main": "dist/provi.js",
-  "module": "dist/provi.module.js",
-  "umd:main": "dist/provi.umd.js",
+  "main": "dist/remini.js",
+  "module": "dist/remini.module.js",
+  "umd:main": "dist/remini.umd.js",
   "source": "src/index.js",
   "files": [
     "src",
@@ -31,14 +31,14 @@
   "scripts": {
     "test": "jest",
     "clear-cache": "jest --clearCache",
-    "build": "yarn clean && microbundle build --raw --target web --generateTypes false && microbundle build --raw --target web --cwd hooks-bindings --generateTypes false && microbundle build --raw --target node --cwd preact --generateTypes false && microbundle build --raw --target node --cwd react --generateTypes false",
+    "build": "yarn clean && microbundle build --raw --generateTypes false && microbundle build --raw --target web --cwd hooks-bindings --generateTypes false && microbundle build --raw --target node --cwd preact --generateTypes false && microbundle build --raw --target node --cwd react --generateTypes false",
     "dev": "microbundle watch --raw --format cjs",
     "clean": "rm -rf hooks-bindings/dist preact/dist react/dist dist"
   },
   "dependencies": {
-    "reactive-box": ">=0.8.0",
+    "reactive-box": "0.9.x",
     "unsubscriber": "2.x.x",
-    "evemin": ">=1.0.0"
+    "evemin": "2.x.x"
   },
   "devDependencies": {
     "@babel/preset-env": "7.23.5",

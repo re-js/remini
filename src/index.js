@@ -1,9 +1,9 @@
 import { un, unsubscriber, run, collect } from 'unsubscriber'
+import { sel, expr, box, untrack as _re_untrack, batch as _re_batch } from 'reactive-box'
+import { event, listen } from 'evemin'
+
 
 const
-  { sel, expr, box, untrack: _re_untrack, batch: _re_batch } = require('reactive-box'),
-  { event, listen } = require('evemin'),
-
 
 //
 // Common
@@ -141,7 +141,7 @@ class BoxClass extends BoxFaceWritableClass {
     const b = box(value);
     super(b[0], b[1])
   }
-}
+};
 
 //
 // Exports
