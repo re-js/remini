@@ -1,6 +1,6 @@
 {
   "name": "remini",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Simple and powerful state management in React and Preact",
   "repository": {
     "url": "https://github.com/re-js/remini"
